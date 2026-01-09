@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Check, ArrowRight, BarChart3, Users, ShieldCheck, Zap } from "lucide-react";
 import { motion } from "framer-motion";
+import IntakeForm from "@/components/IntakeForm";
 
 export default function Home() {
   const fadeIn = {
@@ -42,12 +43,14 @@ export default function Home() {
                 Stop Paying for <span className="text-foreground">Promises.</span>
               </h1>
               <p className="text-xl text-muted-foreground leading-relaxed max-w-lg">
-                DocPropel is the only healthcare marketing partner that charges for results. We grow your patient base, you only pay when we deliver.
+                We grow your patient base. You only pay when we deliver. DocPropel is the performance-based growth partner for healthcare practices. No retainers. No long-term contracts. Just accountable patient growth.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <Button size="lg" className="bg-secondary hover:bg-secondary/90 text-white font-bold text-lg px-8 h-14 rounded-none shadow-lg shadow-secondary/20 transition-all hover:translate-y-[-2px]">
-                  Get Free Analysis <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
+                <IntakeForm trigger={
+                  <Button size="lg" className="bg-secondary hover:bg-secondary/90 text-white font-bold text-lg px-8 h-14 rounded-none shadow-lg shadow-secondary/20 transition-all hover:translate-y-[-2px]">
+                    Request a Practice Growth Brief <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                } />
                 <Button variant="outline" size="lg" className="border-2 border-primary/20 text-primary font-semibold text-lg px-8 h-14 rounded-none hover:bg-primary/5">
                   See How It Works
                 </Button>
@@ -104,18 +107,17 @@ export default function Home() {
         <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-border to-transparent"></div>
       </section>
 
-      {/* Problem/Solution Section */}
-      <section className="py-20 bg-muted/30 relative">
+      {/* How It Works Section */}
+      <section id="how-it-works" className="py-20 bg-muted/30 relative">
         <div className="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none" style={{ backgroundImage: 'url(/images/pulse-bg.jpg)', backgroundSize: 'cover' }}></div>
         <div className="container relative z-10">
           <motion.div 
             className="max-w-3xl mx-auto text-center mb-16"
             {...fadeIn}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-primary">The Old Agency Model is Broken</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-primary">Simple. Transparent. Aligned.</h2>
             <p className="text-lg text-muted-foreground">
-              Traditional agencies lock you into long contracts with high retainers and zero guarantees. 
-              We flipped the script to align our success with yours.
+              Our goal is to make growth predictable and accountable. We begin with a review of your practice’s current online presence, market demand, and growth potential.
             </p>
           </motion.div>
 
@@ -123,18 +125,18 @@ export default function Home() {
             {[
               {
                 icon: <ShieldCheck className="h-10 w-10 text-secondary" />,
-                title: "Zero Risk",
-                desc: "Stop gambling your marketing budget. With our performance model, you don't pay for empty promises."
+                title: "Deploy & Optimize",
+                desc: "We deploy and continuously optimize the right mix of channels based on your specialty and geography."
               },
               {
                 icon: <BarChart3 className="h-10 w-10 text-secondary" />,
-                title: "Total Transparency",
-                desc: "No vanity metrics. Our real-time dashboards show you exactly how many patients we've delivered."
+                title: "Deliver Patients",
+                desc: "We focus on delivering qualified patient inquiries and booked appointments. Reporting is real-time and outcome-focused."
               },
               {
                 icon: <Zap className="h-10 w-10 text-secondary" />,
-                title: "Aligned Incentives",
-                desc: "We only win when you win. Our team fights for every single lead because our revenue depends on it."
+                title: "Pay for Performance",
+                desc: "You pay when patients are delivered, not for activity. No vanity metrics, long contracts, or lock-ins."
               }
             ].map((item, i) => (
               <motion.div 
@@ -161,13 +163,15 @@ export default function Home() {
         <div className="container relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div {...fadeIn}>
-              <h2 className="text-3xl md:text-5xl font-bold mb-6">The DocPropel Difference</h2>
+              <h2 className="text-3xl md:text-5xl font-bold mb-6">Misaligned Incentives are the Problem.</h2>
               <p className="text-blue-100 text-lg mb-8 max-w-md">
-                See why hundreds of doctors, PTs, and dentists are switching from traditional agencies to our performance-based partnership.
+                Most agencies are paid regardless of results. That places all the risk on the practice and removes accountability. Our performance-based model shares risk and aligns incentives around patient growth.
               </p>
-              <Button size="lg" className="bg-white text-primary hover:bg-blue-50 font-bold rounded-none h-14 px-8">
-                Compare Full Plans
-              </Button>
+              <IntakeForm trigger={
+                <Button size="lg" className="bg-white text-primary hover:bg-blue-50 font-bold rounded-none h-14 px-8">
+                  Request a Practice Growth Brief
+                </Button>
+              } />
             </motion.div>
 
             <motion.div 
@@ -178,12 +182,12 @@ export default function Home() {
               transition={{ duration: 0.8 }}
             >
               <div className="absolute top-0 left-0 w-full h-2 bg-secondary"></div>
-              <h3 className="text-2xl font-bold mb-8 text-center">Agency Comparison</h3>
+              <h3 className="text-2xl font-bold mb-8 text-center">The DocPropel Difference</h3>
               
               <div className="space-y-6">
                 {[
                   { feature: "Pricing Model", us: "Performance-Based", them: "High Fixed Retainer" },
-                  { feature: "Financial Risk", us: "Minimal & Shared", them: "100% On You" },
+                  { feature: "Financial Risk", us: "Shared Risk", them: "100% On You" },
                   { feature: "Contract Terms", us: "Flexible, No Lock-in", them: "12-24 Month Lock-in" },
                   { feature: "Reporting", us: "Real-Time ROI", them: "Confusing PDFs" },
                   { feature: "Incentives", us: "Aligned with Growth", them: "Paid Regardless" }
@@ -208,9 +212,9 @@ export default function Home() {
       <section id="services" className="py-24 bg-background">
         <div className="container">
           <motion.div className="text-center max-w-3xl mx-auto mb-20" {...fadeIn}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">Everything You Need to Grow</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">One Growth System. Predictable Results.</h2>
             <p className="text-lg text-muted-foreground">
-              We handle every aspect of your digital marketing ecosystem. All included in one simple, performance-based plan.
+              You don't need multiple vendors or complex contracts. We manage your entire digital growth ecosystem under one performance-based model.
             </p>
           </motion.div>
 
@@ -218,33 +222,34 @@ export default function Home() {
             {[
               {
                 title: "Healthcare SEO",
-                desc: "Dominate local search results so patients find you first.",
+                desc: "We ensure you appear exactly where patients are actively searching for care in your local market.",
                 img: "/images/service-seo.jpg"
               },
               {
-                title: "Precision PPC",
-                desc: "Targeted ad campaigns that drive qualified leads instantly.",
+                title: "Paid Search",
+                desc: "Create immediate demand and convert intent into booked appointments, not just traffic.",
                 img: "/images/service-ppc.jpg"
               },
               {
-                title: "Medical Web Design",
-                desc: "High-converting, ADA compliant websites built for trust.",
+                title: "Website Design",
+                desc: "Built for trust, compliance, and conversion rather than just aesthetics.",
                 img: "/images/service-web.jpg"
               },
               {
                 title: "Reputation Management",
-                desc: "Build a 5-star reputation that attracts new patients automatically.",
+                desc: "Systematically build social proof that works continuously to attract new patients.",
                 img: null
               },
               {
-                title: "Social Media Marketing",
-                desc: "Engage your community and build a loyal patient following.",
+                title: "Social Media & Content",
+                desc: "Reinforce credibility, authority, and stay top of mind in your community.",
                 img: null
               },
               {
-                title: "Content Marketing",
-                desc: "Expert content that establishes you as the authority in your field.",
-                img: null
+                title: "Digital Brief",
+                desc: "A supportive, insight-led review of your digital ecosystem and experience.",
+                img: null,
+                cta: "Request a Digital Brief"
               }
             ].map((service, i) => (
               <motion.div 
@@ -267,12 +272,55 @@ export default function Home() {
                 <div className="p-8">
                   <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">{service.title}</h3>
                   <p className="text-muted-foreground mb-6">{service.desc}</p>
-                  <a href="#" className="inline-flex items-center text-sm font-bold text-secondary hover:text-secondary/80 uppercase tracking-wide">
-                    Learn More <ArrowRight className="ml-1 h-4 w-4" />
-                  </a>
+                  {service.cta ? (
+                    <IntakeForm trigger={
+                      <Button variant="outline" className="w-full border-secondary text-secondary hover:bg-secondary hover:text-white font-bold uppercase tracking-wide rounded-none">
+                        {service.cta}
+                      </Button>
+                    } />
+                  ) : (
+                    <div className="inline-flex items-center text-sm font-bold text-secondary uppercase tracking-wide">
+                      Included <Check className="ml-1 h-4 w-4" />
+                    </div>
+                  )}
                 </div>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* About Us Section */}
+      <section id="about" className="py-24 bg-muted/30">
+        <div className="container">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <motion.div {...fadeIn}>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-primary">Built for Healthcare. Without the Games.</h2>
+              <p className="text-lg text-muted-foreground mb-6">
+                We built DocPropel specifically for healthcare practices that want growth without the hype. We understand compliance, respect how practices actually operate, and avoid agency theatrics.
+              </p>
+              <p className="text-lg text-muted-foreground mb-8">
+                Our aim is to be a long-term growth partner, measured by results. No buzzwords, just accountable patient growth.
+              </p>
+              <IntakeForm trigger={
+                <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white font-bold rounded-none px-8 h-12">
+                  Request a Digital Brief
+                </Button>
+              } />
+            </motion.div>
+            <motion.div 
+              className="relative h-[400px] bg-white p-2 shadow-xl border border-border"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <img 
+                src="/images/hero-split.jpg" 
+                alt="Healthcare professionals" 
+                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+              />
+            </motion.div>
           </div>
         </div>
       </section>
@@ -287,12 +335,14 @@ export default function Home() {
             <div className="relative z-10 max-w-3xl mx-auto">
               <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Ready to Propel Your Practice?</h2>
               <p className="text-xl text-blue-100 mb-10">
-                See how many new patients you could be getting. Schedule your free, no-obligation Practice Growth Analysis today.
+                Get a high-level review of your practice’s growth opportunities and patient demand.
               </p>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
-                <Button size="lg" className="bg-secondary hover:bg-secondary/90 text-white font-bold text-lg px-10 h-16 rounded-none shadow-xl">
-                  Schedule Free Analysis
-                </Button>
+                <IntakeForm trigger={
+                  <Button size="lg" className="bg-secondary hover:bg-secondary/90 text-white font-bold text-lg px-10 h-16 rounded-none shadow-xl">
+                    Request a Practice Growth Brief
+                  </Button>
+                } />
                 <Button variant="outline" size="lg" className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-primary font-bold text-lg px-10 h-16 rounded-none">
                   Call 1-800-DOC-PROPEL
                 </Button>

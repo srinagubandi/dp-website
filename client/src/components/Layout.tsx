@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { useState } from "react";
+import IntakeForm from "@/components/IntakeForm";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,9 +31,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-8">
             <NavLinks />
-            <Button variant="default" className="bg-secondary hover:bg-secondary/90 text-white font-semibold rounded-none px-6">
-              Free Growth Analysis
-            </Button>
+            <IntakeForm trigger={
+              <Button variant="default" className="bg-secondary hover:bg-secondary/90 text-white font-semibold rounded-none px-6">
+                Request a Practice Growth Brief
+              </Button>
+            } />
           </nav>
 
           {/* Mobile Nav */}
@@ -45,9 +48,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
               <nav className="flex flex-col gap-6 mt-10">
                 <NavLinks />
-                <Button className="bg-secondary hover:bg-secondary/90 text-white font-semibold w-full rounded-none">
-                  Free Growth Analysis
-                </Button>
+                <IntakeForm trigger={
+                  <Button className="bg-secondary hover:bg-secondary/90 text-white font-semibold w-full rounded-none">
+                    Request a Practice Growth Brief
+                  </Button>
+                } />
               </nav>
             </SheetContent>
           </Sheet>
