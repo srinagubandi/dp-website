@@ -23,8 +23,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-20 items-center justify-between">
           <Link href="/">
-            <div className="flex items-center gap-2 font-bold text-2xl tracking-tight text-primary cursor-pointer">
-              <span className="text-secondary">doc</span>propel
+            <div className="flex items-center gap-2 cursor-pointer">
+              <img src="/images/logo.png" alt="DocPropel" className="h-10 w-auto" />
             </div>
           </Link>
 
@@ -69,9 +69,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <div className="container py-12 md:py-16">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
             <div className="space-y-4">
-              <h3 className="text-xl font-bold text-primary tracking-tight">
-                <span className="text-secondary">doc</span>propel
-              </h3>
+              <img src="/images/logo.png" alt="DocPropel" className="h-8 w-auto mb-4" />
               <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
                 The only performance-based marketing partner for healthcare practices. We grow your patient base, you only pay for results.
               </p>

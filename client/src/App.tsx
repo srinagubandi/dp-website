@@ -9,6 +9,7 @@ import Services from "./pages/Services";
 import HowItWorks from "./pages/HowItWorks";
 import Compare from "./pages/Compare";
 import About from "./pages/About";
+import PresenterApp from "./pages/presenter/PresenterApp";
 
 
 function Router() {
@@ -19,6 +20,7 @@ function Router() {
       <Route path={"/how-it-works"} component={HowItWorks} />
       <Route path={"/compare"} component={Compare} />
       <Route path={"/about"} component={About} />
+      <Route path={"/presenter"} component={PresenterApp} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
