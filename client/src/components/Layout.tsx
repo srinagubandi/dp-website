@@ -10,10 +10,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
   const NavLinks = () => (
     <>
-      <a href="#services" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>Services</a>
-      <a href="#how-it-works" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>How It Works</a>
-      <a href="#comparison" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>Compare</a>
-      <a href="#about" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>About Us</a>
+      <Link href="/services" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>Services</Link>
+      <Link href="/how-it-works" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>How It Works</Link>
+      <Link href="/compare" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>Compare</Link>
+      <Link href="/about" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>About Us</Link>
     </>
   );
 
@@ -23,9 +23,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-20 items-center justify-between">
           <Link href="/">
-            <a className="flex items-center gap-2 font-bold text-2xl tracking-tight text-primary">
+            <div className="flex items-center gap-2 font-bold text-2xl tracking-tight text-primary cursor-pointer">
               <span className="text-secondary">doc</span>propel
-            </a>
+            </div>
           </Link>
 
           {/* Desktop Nav */}
