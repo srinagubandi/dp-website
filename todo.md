@@ -1,0 +1,1 @@
+- [x] Update icons to flat 2D design for better visibility

@@ -19,10 +19,10 @@ export default function Home() {
   };
 
   const specialties = [
-    { icon: "/images/icon-doctor-v2.png", name: "Doctors", desc: "Primary Care & Specialists" },
-    { icon: "/images/icon-dentist-v2.png", name: "Dentists", desc: "General & Cosmetic" },
-    { icon: "/images/icon-pharmacy-v2.png", name: "Pharmacies", desc: "Independent & Retail" },
-    { icon: "/images/icon-pt-v2.png", name: "Physical Therapy / Occupational Therapy", desc: "Rehab & Therapy Clinics" },
+    { icon: "/images/icon-doctor-2d.png", name: "Doctors", desc: "Primary Care & Specialists" },
+    { icon: "/images/icon-dentist-2d.png", name: "Dentists", desc: "General & Cosmetic" },
+    { icon: "/images/icon-pharmacy-2d.png", name: "Pharmacies", desc: "Independent & Retail" },
+    { icon: "/images/icon-pt-2d.png", name: "Physical Therapy / Occupational Therapy", desc: "Rehab & Therapy Clinics" },
   ];
 
   return (
@@ -38,7 +38,7 @@ export default function Home() {
               transition={{ duration: 0.8 }}
             >
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 text-secondary text-xs font-bold tracking-wider uppercase">
-                <img src="/images/icon-performance-v2.png" alt="Growth" className="w-5 h-5 object-contain" />
+                <img src="/images/icon-performance-2d.png" alt="Growth" className="w-5 h-5 object-contain" />
                 Performance-Based Marketing
               </div>
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] text-primary">
@@ -107,25 +107,25 @@ export default function Home() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
-                icon: "/images/icon-doctor-v2.png",
+                icon: "/images/icon-doctor-2d.png",
                 title: "Doctors & Physicians",
                 items: ["Primary Care", "Internal Medicine", "Specialists", "Urgent Care"],
                 color: "bg-blue-50 border-primary"
               },
               {
-                icon: "/images/icon-dentist-v2.png",
+                icon: "/images/icon-dentist-2d.png",
                 title: "Dentists",
                 items: ["General Dentistry", "Cosmetic", "Orthodontics", "Oral Surgery"],
                 color: "bg-orange-50 border-secondary"
               },
               {
-                icon: "/images/icon-pharmacy-v2.png",
+                icon: "/images/icon-pharmacy-2d.png",
                 title: "Pharmacies",
                 items: ["Independent", "Compounding", "Specialty", "Retail"],
                 color: "bg-blue-50 border-primary"
               },
               {
-                icon: "/images/icon-pt-v2.png",
+                icon: "/images/icon-pt-2d.png",
                 title: "Physical Therapy / Occupational Therapy",
                 items: ["Physical Therapy", "Occupational Therapy", "Sports Rehab", "Pediatric"],
                 color: "bg-orange-50 border-secondary"
@@ -163,7 +163,7 @@ export default function Home() {
             {...fadeIn}
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-xs font-bold tracking-wider uppercase mb-4">
-              <img src="/images/icon-ai-v2.png" alt="AI" className="w-5 h-5 object-contain" />
+              <img src="/images/icon-ai-2d.png" alt="AI" className="w-5 h-5 object-contain" />
               Powered by Medical AI
             </div>
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-primary">Lower Costs. Higher Precision.</h2>
@@ -175,17 +175,17 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                icon: "/images/icon-target-v2.png",
+                icon: "/images/icon-target-2d.png",
                 title: "Zero Wasted Ad Spend",
                 desc: "Predictive algorithms optimize your budget in real-time, ensuring every dollar targets patients actively seeking care. No more paying for clicks that don't convert."
               },
               {
-                icon: "/images/icon-ai-v2.png",
+                icon: "/images/icon-ai-2d.png",
                 title: "24/7 Patient Capture",
                 desc: "Intelligent, HIPAA-compliant chatbots engage visitors instantly—even while you sleep—converting website traffic into booked appointments without adding staff."
               },
               {
-                icon: "/images/icon-performance-v2.png",
+                icon: "/images/icon-performance-2d.png",
                 title: "Automated Reactivation",
                 desc: "Smart campaigns identify and re-engage dormant patients automatically, filling your schedule without you lifting a finger."
               }
@@ -223,7 +223,7 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                icon: "/images/icon-shield-trust.png",
+                icon: "/images/icon-shield-2d.png",
                 step: "01",
                 title: "Deploy & Optimize",
                 desc: "We deploy and continuously optimize the right mix of channels based on your specialty and geography."
@@ -352,17 +352,17 @@ export default function Home() {
               {
                 title: "Healthcare SEO",
                 desc: "We ensure you appear exactly where patients are actively searching for care in your local market.",
-                icon: "/images/icon-target-v2.png"
+                icon: "/images/icon-target-2d.png"
               },
               {
                 title: "Paid Search",
                 desc: "Create immediate demand and convert intent into booked appointments, not just traffic.",
-                icon: "/images/icon-performance-v2.png"
+                icon: "/images/icon-performance-2d.png"
               },
               {
                 title: "Website Design",
                 desc: "Built for trust, compliance, and conversion rather than just aesthetics.",
-                icon: "/images/icon-ai-v2.png"
+                icon: "/images/icon-ai-2d.png"
               },
               {
                 title: "Reputation Management",
@@ -372,7 +372,7 @@ export default function Home() {
               {
                 title: "Social Media & Content",
                 desc: "Reinforce credibility, authority, and stay top of mind in your community.",
-                icon: "/images/icon-handshake-v2.png"
+                icon: "/images/icon-handshake-2d.png"
               },
               {
                 title: "Digital Brief",
@@ -448,12 +448,12 @@ export default function Home() {
                   <p className="text-sm text-muted-foreground mt-2">Healthcare-first approach</p>
                 </div>
                 <div className="bg-white p-6 shadow-lg border-t-4 border-secondary">
-                  <IconImage src="/images/icon-ai-v2.png" alt="AI" size={48} />
+                  <IconImage src="/images/icon-ai-2d.png" alt="AI" size={48} />
                   <h4 className="font-bold text-primary mt-3">AI-Powered</h4>
                   <p className="text-sm text-muted-foreground mt-2">Cutting-edge technology</p>
                 </div>
                 <div className="bg-white p-6 shadow-lg border-t-4 border-primary">
-                  <IconImage src="/images/icon-performance-v2.png" alt="Results" size={48} />
+                  <IconImage src="/images/icon-performance-2d.png" alt="Results" size={48} />
                   <h4 className="font-bold text-primary mt-3">Results-Driven</h4>
                   <p className="text-sm text-muted-foreground mt-2">Pay for performance only</p>
                 </div>
