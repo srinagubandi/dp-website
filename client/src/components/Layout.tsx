@@ -14,6 +14,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <Link href="/how-it-works" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>How It Works</Link>
       <Link href="/compare" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>Compare</Link>
       <Link href="/about" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>About Us</Link>
+      <Link href="/calculator" className="text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>ROI Calculator</Link>
     </>
   );
 

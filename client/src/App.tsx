@@ -8,7 +8,8 @@ import Home from "./pages/Home";
 import Services from "./pages/Services";
 import HowItWorks from "./pages/HowItWorks";
 import Compare from "./pages/Compare";
-import About from "./pages/About";
+import About from "@/pages/About";
+import Calculator from "@/pages/Calculator";
 import PresenterApp from "./pages/presenter/PresenterApp";
 
 
@@ -19,7 +20,8 @@ function Router() {
       <Route path={"/services"} component={Services} />
       <Route path={"/how-it-works"} component={HowItWorks} />
       <Route path={"/compare"} component={Compare} />
-      <Route path={"/about"} component={About} />
+      <Route path="/about" component={About} />
+      <Route path="/calculator" component={Calculator} />
       <Route path={"/presenter"} component={PresenterApp} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
