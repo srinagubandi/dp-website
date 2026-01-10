@@ -107,6 +107,54 @@ export default function Home() {
         <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-border to-transparent"></div>
       </section>
 
+      {/* AI Advantage Section */}
+      <section className="py-20 bg-background border-b border-border">
+        <div className="container">
+          <motion.div 
+            className="max-w-3xl mx-auto text-center mb-16"
+            {...fadeIn}
+          >
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-primary text-xs font-bold tracking-wider uppercase mb-4">
+              <Zap className="w-3 h-3 fill-current" />
+              Powered by Medical AI
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-primary">Lower Costs. Higher Precision.</h2>
+            <p className="text-lg text-muted-foreground">
+              Traditional agencies bill you for their bloat. We leverage cutting-edge medical AI to automate the heavy lifting, passing the savings directly to your practice.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                title: "Zero Wasted Ad Spend",
+                desc: "Predictive algorithms optimize your budget in real-time, ensuring every dollar targets patients actively seeking care. No more paying for clicks that don't convert."
+              },
+              {
+                title: "24/7 Patient Capture",
+                desc: "Intelligent, HIPAA-compliant chatbots engage visitors instantly—even while you sleep—converting website traffic into booked appointments without adding staff."
+              },
+              {
+                title: "Automated Reactivation",
+                desc: "Smart campaigns identify and re-engage dormant patients automatically, filling your schedule without you lifting a finger."
+              }
+            ].map((item, i) => (
+              <motion.div 
+                key={i}
+                className="bg-muted/30 p-8 border-l-4 border-secondary"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+              >
+                <h3 className="text-xl font-bold mb-3 text-primary">{item.title}</h3>
+                <p className="text-muted-foreground leading-relaxed">{item.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* How It Works Section */}
       <section id="how-it-works" className="py-20 bg-muted/30 relative">
         <div className="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none" style={{ backgroundImage: 'url(/images/pulse-bg.jpg)', backgroundSize: 'cover' }}></div>
@@ -187,9 +235,9 @@ export default function Home() {
               <div className="space-y-6">
                 {[
                   { feature: "Pricing Model", us: "Performance-Based", them: "High Fixed Retainer" },
+                  { feature: "Technology", us: "AI-Driven Real-Time Optimization", them: "Manual Reporting & Slow Updates" },
                   { feature: "Financial Risk", us: "Shared Risk", them: "100% On You" },
                   { feature: "Contract Terms", us: "Flexible, No Lock-in", them: "12-24 Month Lock-in" },
-                  { feature: "Reporting", us: "Real-Time ROI", them: "Confusing PDFs" },
                   { feature: "Incentives", us: "Aligned with Growth", them: "Paid Regardless" }
                 ].map((row, i) => (
                   <div key={i} className="grid grid-cols-3 gap-4 items-center border-b border-border pb-4 last:border-0 last:pb-0">
