@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Check, ArrowRight, BarChart3, Users, ShieldCheck, Zap } from "lucide-react";
 import { motion } from "framer-motion";
 import IntakeForm from "@/components/IntakeForm";
+import ROICalculator from "@/components/ROICalculator";
 
 export default function Home() {
   const fadeIn = {
@@ -203,6 +204,32 @@ export default function Home() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ROI Calculator Section */}
+      <section className="py-24 bg-muted/50">
+        <div className="container">
+          <motion.div 
+            className="max-w-3xl mx-auto text-center mb-12"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">Calculate Your Growth Potential</h2>
+            <p className="text-lg text-muted-foreground">
+              Don't guess. See exactly what a performance-based partnership could mean for your bottom line.
+            </p>
+          </motion.div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+          >
+            <ROICalculator />
+          </motion.div>
         </div>
       </section>
 
