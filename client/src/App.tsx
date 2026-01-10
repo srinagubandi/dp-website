@@ -10,10 +10,11 @@ import HowItWorks from "./pages/HowItWorks";
 import Compare from "./pages/Compare";
 import About from "@/pages/About";
 import Calculator from "@/pages/Calculator";
+import Results from "@/pages/Results";
 import PresenterApp from "./pages/presenter/PresenterApp";
 
-
 function Router() {
+  // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
       <Route path={"/"} component={Home} />
@@ -22,6 +23,7 @@ function Router() {
       <Route path={"/compare"} component={Compare} />
       <Route path="/about" component={About} />
       <Route path="/calculator" component={Calculator} />
+      <Route path="/results" component={Results} />
       <Route path={"/presenter"} component={PresenterApp} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}

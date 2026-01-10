@@ -1,28 +1,71 @@
 import { useState } from "react";
+import { trpc } from "@/lib/trpc";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowRight, Calculator, DollarSign, TrendingUp, Users } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
+const SPECIALTIES = {
+  "general": { label: "General Practice", growth: 0.25, avgValue: 500 },
+  "dental": { label: "Dental", growth: 0.35, avgValue: 1200 },
+  "ortho": { label: "Orthodontics", growth: 0.30, avgValue: 5000 },
+  "urgent": { label: "Urgent Care", growth: 0.40, avgValue: 250 },
+  "plastic": { label: "Plastic Surgery", growth: 0.20, avgValue: 8000 },
+  "pt": { label: "Physical Therapy", growth: 0.28, avgValue: 1500 },
+};
+
 export default function ROICalculator() {
+  const [specialty, setSpecialty] = useState("general");
   const [monthlyPatients, setMonthlyPatients] = useState(30);
   const [patientValue, setPatientValue] = useState(500);
   const [showResults, setShowResults] = useState(false);
   const [email, setEmail] = useState("");
 
-  // Calculation Logic (Conservative Estimates)
-  const growthRate = 0.25; // 25% growth
+  // Update defaults when specialty changes
+  const handleSpecialtyChange = (value: string) => {
+    setSpecialty(value);
+    setPatientValue(SPECIALTIES[value as keyof typeof SPECIALTIES].avgValue);
+  };
+
+  // Calculation Logic
+  const growthRate = SPECIALTIES[specialty as keyof typeof SPECIALTIES].growth;
   const additionalPatients = Math.round(monthlyPatients * growthRate);
   const monthlyRevenueIncrease = additionalPatients * patientValue;
   const annualRevenueIncrease = monthlyRevenueIncrease * 12;
 
-  const handleCalculate = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const submitLead = trpc.calculator.submitLead.useMutation({
+    onSuccess: () => {
+      toast.success("Your personalized report is on its way!");
+    },
+    onError: () => {
+      toast.error("Something went wrong. Please try again.");
+    },
+  });
+
+  const handleCalculate = async (e: React.FormEvent) => {
     e.preventDefault();
     if (email) {
-      setShowResults(true);
+      setIsSubmitting(true);
+      try {
+        await submitLead.mutateAsync({
+          email,
+          specialty: SPECIALTIES[specialty as keyof typeof SPECIALTIES].label,
+          monthlyPatients,
+          patientValue,
+          projectedGrowth: growthRate,
+          projectedAnnualRevenue: annualRevenueIncrease,
+        });
+        setShowResults(true);
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -45,6 +88,20 @@ export default function ROICalculator() {
           </CardHeader>
 
           <form onSubmit={handleCalculate} className="space-y-8 mt-6">
+            <div className="space-y-4">
+              <Label htmlFor="specialty" className="text-base font-medium">Practice Specialty</Label>
+              <Select value={specialty} onValueChange={handleSpecialtyChange}>
+                <SelectTrigger id="specialty" className="h-12 text-lg">
+                  <SelectValue placeholder="Select specialty" />
+                </SelectTrigger>
+                <SelectContent>
+                  {Object.entries(SPECIALTIES).map(([key, data]) => (
+                    <SelectItem key={key} value={key}>{data.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <Label htmlFor="patients" className="text-base font-medium">
@@ -80,7 +137,7 @@ export default function ROICalculator() {
               <Slider
                 id="value"
                 min={100}
-                max={5000}
+                max={10000}
                 step={50}
                 value={[patientValue]}
                 onValueChange={(vals) => setPatientValue(vals[0])}
@@ -109,8 +166,9 @@ export default function ROICalculator() {
                   type="submit" 
                   size="lg" 
                   className="h-12 px-6 bg-secondary hover:bg-secondary/90 text-white font-bold"
+                  disabled={isSubmitting}
                 >
-                  Calculate <ArrowRight className="ml-2 w-4 h-4" />
+                  {isSubmitting ? "Calculating..." : "Calculate"} <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
               </div>
               <p className="text-xs text-muted-foreground mt-2 flex items-center gap-1">
@@ -194,7 +252,7 @@ export default function ROICalculator() {
 
                 <div className="bg-blue-900/50 p-4 rounded-lg text-sm text-blue-100 border border-blue-800">
                   <p>
-                    <strong>Note:</strong> This is a conservative estimate based on a 25% increase in patient volume, which is typical for our partners in the first 6 months.
+                    <strong>Note:</strong> This projection is based on a conservative <strong>{Math.round(growthRate * 100)}% growth rate</strong>, typical for {SPECIALTIES[specialty as keyof typeof SPECIALTIES].label} practices in their first 6 months with DocPropel.
                   </p>
                 </div>
 
