@@ -4,6 +4,12 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { useState } from "react";
 import IntakeForm from "@/components/IntakeForm";
+import {
+  DoctorIcon,
+  DentistIcon,
+  PharmacyIcon,
+  PTOTIcon,
+} from "@/components/BrandIcons";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -75,25 +81,32 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
                 The only performance-based marketing partner for healthcare practices. We grow your patient base, you only pay for results.
               </p>
+              {/* Specialty Icons */}
+              <div className="flex gap-3 pt-2">
+                <DoctorIcon size={20} className="opacity-60 hover:opacity-100 transition-opacity" />
+                <DentistIcon size={20} className="opacity-60 hover:opacity-100 transition-opacity" />
+                <PharmacyIcon size={20} className="opacity-60 hover:opacity-100 transition-opacity" />
+                <PTOTIcon size={20} className="opacity-60 hover:opacity-100 transition-opacity" />
+              </div>
             </div>
             
             <div>
-              <h4 className="font-semibold mb-4 text-foreground">Services</h4>
+              <h4 className="font-semibold mb-4 text-foreground">Specialties</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#" className="hover:text-primary">SEO & Local Search</a></li>
-                <li><a href="#" className="hover:text-primary">PPC Advertising</a></li>
-                <li><a href="#" className="hover:text-primary">Website Design</a></li>
-                <li><a href="#" className="hover:text-primary">Reputation Management</a></li>
+                <li className="flex items-center gap-2"><DoctorIcon size={14} /><Link href="/services" className="hover:text-primary">Doctors & Physicians</Link></li>
+                <li className="flex items-center gap-2"><DentistIcon size={14} /><Link href="/services" className="hover:text-primary">Dentists</Link></li>
+                <li className="flex items-center gap-2"><PharmacyIcon size={14} /><Link href="/services" className="hover:text-primary">Pharmacies</Link></li>
+                <li className="flex items-center gap-2"><PTOTIcon size={14} /><Link href="/services" className="hover:text-primary">PT / OT Clinics</Link></li>
               </ul>
             </div>
 
             <div>
               <h4 className="font-semibold mb-4 text-foreground">Company</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><a href="#about" className="hover:text-primary">About Us</a></li>
-                <li><a href="#how-it-works" className="hover:text-primary">How It Works</a></li>
-                <li><a href="#" className="hover:text-primary">Case Studies</a></li>
-                <li><a href="#" className="hover:text-primary">Contact</a></li>
+                <li><Link href="/about" className="hover:text-primary">About Us</Link></li>
+                <li><Link href="/how-it-works" className="hover:text-primary">How It Works</Link></li>
+                <li><Link href="/results" className="hover:text-primary">Case Studies</Link></li>
+                <li><Link href="/calculator" className="hover:text-primary">ROI Calculator</Link></li>
               </ul>
             </div>
 
@@ -111,7 +124,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </div>
           </div>
           <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-foreground">
-            <p>&copy; {new Date().getFullYear()} DocPropel. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} DocPropel. All rights reserved. Serving Doctors, Dentists, Pharmacies & PT/OT Clinics.</p>
             <div className="flex gap-6">
               <a href="#" className="hover:text-foreground">Privacy Policy</a>
               <a href="#" className="hover:text-foreground">Terms of Service</a>

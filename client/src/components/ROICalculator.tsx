@@ -11,16 +11,16 @@ import { ArrowRight, Calculator, DollarSign, TrendingUp, Users } from "lucide-re
 import { motion, AnimatePresence } from "framer-motion";
 
 const SPECIALTIES = {
-  "general": { label: "General Practice", growth: 0.25, avgValue: 500 },
-  "dental": { label: "Dental", growth: 0.35, avgValue: 1200 },
-  "ortho": { label: "Orthodontics", growth: 0.30, avgValue: 5000 },
+  "doctors": { label: "Doctors / Physicians", growth: 0.25, avgValue: 500 },
+  "dentists": { label: "Dentists", growth: 0.35, avgValue: 1200 },
+  "pharmacy": { label: "Pharmacies", growth: 0.30, avgValue: 85 },
+  "pt_ot": { label: "PT / OT Clinics", growth: 0.28, avgValue: 1500 },
   "urgent": { label: "Urgent Care", growth: 0.40, avgValue: 250 },
-  "plastic": { label: "Plastic Surgery", growth: 0.20, avgValue: 8000 },
-  "pt": { label: "Physical Therapy", growth: 0.28, avgValue: 1500 },
+  "specialty": { label: "Specialty Practice", growth: 0.22, avgValue: 2500 },
 };
 
 export default function ROICalculator() {
-  const [specialty, setSpecialty] = useState("general");
+  const [specialty, setSpecialty] = useState("doctors");
   const [monthlyPatients, setMonthlyPatients] = useState(30);
   const [patientValue, setPatientValue] = useState(500);
   const [showResults, setShowResults] = useState(false);

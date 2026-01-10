@@ -1,10 +1,20 @@
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Check, ArrowRight, BarChart3, Users, ShieldCheck, Zap } from "lucide-react";
+import { Check, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import IntakeForm from "@/components/IntakeForm";
 import ROICalculator from "@/components/ROICalculator";
+import {
+  DoctorIcon,
+  DentistIcon,
+  PharmacyIcon,
+  PTOTIcon,
+  GrowthPulseIcon,
+  PerformanceIcon,
+  ShieldCheckIcon,
+  AIOptimizeIcon,
+  PatientGrowthIcon,
+} from "@/components/BrandIcons";
 
 export default function Home() {
   const fadeIn = {
@@ -14,37 +24,34 @@ export default function Home() {
     transition: { duration: 0.6 }
   };
 
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
-      }
-    }
-  };
+  const specialties = [
+    { icon: DoctorIcon, name: "Doctors", desc: "Primary Care & Specialists" },
+    { icon: DentistIcon, name: "Dentists", desc: "General & Cosmetic" },
+    { icon: PharmacyIcon, name: "Pharmacies", desc: "Independent & Retail" },
+    { icon: PTOTIcon, name: "PT / OT", desc: "Rehab & Therapy Clinics" },
+  ];
 
   return (
     <Layout>
-      {/* Hero Section - Asymmetrical Split */}
-      <section className="relative overflow-hidden bg-background pt-10 pb-20 md:pt-20 md:pb-32">
+      {/* Hero Section */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-background via-background to-blue-50/30 pt-10 pb-20 md:pt-20 md:pb-32">
         <div className="container relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             <motion.div 
-              className="lg:col-span-5 space-y-8"
+              className="lg:col-span-6 space-y-8"
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/10 text-secondary text-xs font-bold tracking-wider uppercase">
-                <span className="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 text-secondary text-xs font-bold tracking-wider uppercase">
+                <GrowthPulseIcon size={16} />
                 Performance-Based Marketing
               </div>
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] text-primary">
                 Stop Paying for <span className="text-foreground">Promises.</span>
               </h1>
               <p className="text-xl text-muted-foreground leading-relaxed max-w-lg">
-                We grow your patient base. You only pay when we deliver. DocPropel is the performance-based growth partner for healthcare practices. No retainers. No long-term contracts. Just accountable patient growth.
+                We grow your patient base. You only pay when we deliver. DocPropel is the performance-based growth partner for <strong>Doctors, Dentists, Pharmacies, and PT/OT clinics</strong>. No retainers. No long-term contracts. Just accountable growth.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <IntakeForm trigger={
@@ -59,64 +66,120 @@ export default function Home() {
             </motion.div>
             
             <motion.div 
-              className="lg:col-span-7 relative"
+              className="lg:col-span-6 relative"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <div className="relative rounded-none overflow-hidden shadow-2xl border-8 border-white bg-white">
-                <img 
-                  src="/images/hero-split.jpg" 
-                  alt="Doctor analyzing growth metrics" 
-                  className="w-full h-auto object-cover"
-                />
-                
-                {/* Floating Metric Card 1 */}
-                <motion.div 
-                  className="absolute top-10 left-10 bg-white/95 backdrop-blur p-4 shadow-xl border-l-4 border-secondary max-w-[180px]"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1, duration: 0.5 }}
-                >
-                  <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">New Patients</p>
-                  <div className="flex items-end gap-2">
-                    <span className="text-3xl font-bold text-primary font-mono">+124</span>
-                    <span className="text-xs text-green-600 font-bold mb-1">▲ 28%</span>
-                  </div>
-                </motion.div>
-
-                {/* Floating Metric Card 2 */}
-                <motion.div 
-                  className="absolute bottom-10 right-10 bg-primary text-white p-5 shadow-xl max-w-[200px]"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.2, duration: 0.5 }}
-                >
-                  <p className="text-xs text-blue-100 font-medium uppercase tracking-wider mb-1">ROI Guaranteed</p>
-                  <div className="text-2xl font-bold font-mono">Performance Model</div>
-                </motion.div>
+              {/* Specialty Cards Grid */}
+              <div className="grid grid-cols-2 gap-4">
+                {specialties.map((specialty, i) => (
+                  <motion.div
+                    key={specialty.name}
+                    className="bg-white p-6 shadow-lg border-l-4 border-secondary hover:shadow-xl transition-shadow"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
+                  >
+                    <specialty.icon size={48} className="mb-4" />
+                    <h3 className="text-lg font-bold text-primary">{specialty.name}</h3>
+                    <p className="text-sm text-muted-foreground">{specialty.desc}</p>
+                  </motion.div>
+                ))}
               </div>
               
-              {/* Decorative Elements */}
-              <div className="absolute -z-10 top-[-20px] right-[-20px] w-full h-full border-2 border-secondary/20"></div>
-              <div className="absolute -z-10 bottom-[-20px] left-[-20px] w-full h-full bg-muted"></div>
+              {/* Floating Stats */}
+              <motion.div 
+                className="absolute -bottom-6 -right-6 bg-primary text-white p-5 shadow-xl max-w-[200px]"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 1, duration: 0.5 }}
+              >
+                <p className="text-xs text-blue-100 font-medium uppercase tracking-wider mb-1">Average Growth</p>
+                <div className="text-3xl font-bold font-mono">+32%</div>
+                <p className="text-xs text-blue-200">New patients/month</p>
+              </motion.div>
             </motion.div>
           </div>
         </div>
         
-        {/* Pulse Line Background */}
-        <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-border to-transparent"></div>
+        {/* Decorative Pulse Line */}
+        <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-secondary/50 to-transparent"></div>
       </section>
 
-      {/* AI Advantage Section */}
-      <section className="py-20 bg-background border-b border-border">
+      {/* Specialties We Serve Section */}
+      <section className="py-20 bg-white border-b border-border">
         <div className="container">
           <motion.div 
             className="max-w-3xl mx-auto text-center mb-16"
             {...fadeIn}
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-primary text-xs font-bold tracking-wider uppercase mb-4">
-              <Zap className="w-3 h-3 fill-current" />
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-primary">Built for Healthcare Professionals</h2>
+            <p className="text-lg text-muted-foreground">
+              We specialize in growing patient volume for healthcare practices that value results over promises. Our AI-powered platform is tailored for each specialty.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              {
+                icon: DoctorIcon,
+                title: "Doctors & Physicians",
+                items: ["Primary Care", "Internal Medicine", "Specialists", "Urgent Care"],
+                color: "bg-blue-50 border-primary"
+              },
+              {
+                icon: DentistIcon,
+                title: "Dentists",
+                items: ["General Dentistry", "Cosmetic", "Orthodontics", "Oral Surgery"],
+                color: "bg-orange-50 border-secondary"
+              },
+              {
+                icon: PharmacyIcon,
+                title: "Pharmacies",
+                items: ["Independent", "Compounding", "Specialty", "Retail"],
+                color: "bg-blue-50 border-primary"
+              },
+              {
+                icon: PTOTIcon,
+                title: "PT / OT Clinics",
+                items: ["Physical Therapy", "Occupational Therapy", "Sports Rehab", "Pediatric"],
+                color: "bg-orange-50 border-secondary"
+              }
+            ].map((specialty, i) => (
+              <motion.div 
+                key={i}
+                className={`p-6 border-t-4 ${specialty.color} shadow-sm hover:shadow-lg transition-shadow`}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 0.5 }}
+              >
+                <specialty.icon size={40} className="mb-4" />
+                <h3 className="text-xl font-bold mb-4 text-primary">{specialty.title}</h3>
+                <ul className="space-y-2">
+                  {specialty.items.map((item, j) => (
+                    <li key={j} className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Check className="h-4 w-4 text-secondary" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* AI Advantage Section */}
+      <section className="py-20 bg-gradient-to-b from-muted/30 to-background">
+        <div className="container">
+          <motion.div 
+            className="max-w-3xl mx-auto text-center mb-16"
+            {...fadeIn}
+          >
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-xs font-bold tracking-wider uppercase mb-4">
+              <AIOptimizeIcon size={16} />
               Powered by Medical AI
             </div>
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-primary">Lower Costs. Higher Precision.</h2>
@@ -128,26 +191,30 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
+                icon: PerformanceIcon,
                 title: "Zero Wasted Ad Spend",
                 desc: "Predictive algorithms optimize your budget in real-time, ensuring every dollar targets patients actively seeking care. No more paying for clicks that don't convert."
               },
               {
+                icon: PatientGrowthIcon,
                 title: "24/7 Patient Capture",
                 desc: "Intelligent, HIPAA-compliant chatbots engage visitors instantly—even while you sleep—converting website traffic into booked appointments without adding staff."
               },
               {
+                icon: GrowthPulseIcon,
                 title: "Automated Reactivation",
                 desc: "Smart campaigns identify and re-engage dormant patients automatically, filling your schedule without you lifting a finger."
               }
             ].map((item, i) => (
               <motion.div 
                 key={i}
-                className="bg-muted/30 p-8 border-l-4 border-secondary"
+                className="bg-white p-8 border-l-4 border-secondary shadow-sm hover:shadow-md transition-shadow"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1, duration: 0.5 }}
               >
+                <item.icon size={48} className="mb-4" />
                 <h3 className="text-xl font-bold mb-3 text-primary">{item.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">{item.desc}</p>
               </motion.div>
@@ -157,47 +224,52 @@ export default function Home() {
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="py-20 bg-muted/30 relative">
-        <div className="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none" style={{ backgroundImage: 'url(/images/pulse-bg.jpg)', backgroundSize: 'cover' }}></div>
-        <div className="container relative z-10">
+      <section id="how-it-works" className="py-20 bg-white">
+        <div className="container">
           <motion.div 
             className="max-w-3xl mx-auto text-center mb-16"
             {...fadeIn}
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-primary">Simple. Transparent. Aligned.</h2>
             <p className="text-lg text-muted-foreground">
-              Our goal is to make growth predictable and accountable. We begin with a review of your practice’s current online presence, market demand, and growth potential.
+              Our goal is to make growth predictable and accountable. We begin with a review of your practice's current online presence, market demand, and growth potential.
             </p>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                icon: <ShieldCheck className="h-10 w-10 text-secondary" />,
+                icon: ShieldCheckIcon,
+                step: "01",
                 title: "Deploy & Optimize",
                 desc: "We deploy and continuously optimize the right mix of channels based on your specialty and geography."
               },
               {
-                icon: <BarChart3 className="h-10 w-10 text-secondary" />,
+                icon: PerformanceIcon,
+                step: "02",
                 title: "Deliver Patients",
                 desc: "We focus on delivering qualified patient inquiries and booked appointments. Reporting is real-time and outcome-focused."
               },
               {
-                icon: <Zap className="h-10 w-10 text-secondary" />,
+                icon: GrowthPulseIcon,
+                step: "03",
                 title: "Pay for Performance",
                 desc: "You pay when patients are delivered, not for activity. No vanity metrics, long contracts, or lock-ins."
               }
             ].map((item, i) => (
               <motion.div 
                 key={i}
-                className="bg-background border border-border p-8 hover:border-secondary/50 transition-colors duration-300 shadow-sm hover:shadow-md group"
+                className="relative bg-muted/30 border border-border p-8 hover:border-secondary/50 transition-colors duration-300 group"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1, duration: 0.5 }}
               >
-                <div className="mb-6 p-3 bg-secondary/10 w-fit rounded-none group-hover:bg-secondary group-hover:text-white transition-colors duration-300">
-                  {item.icon}
+                <div className="absolute -top-4 -left-4 w-12 h-12 bg-secondary text-white flex items-center justify-center font-bold text-lg">
+                  {item.step}
+                </div>
+                <div className="mb-6 pt-4">
+                  <item.icon size={48} />
                 </div>
                 <h3 className="text-xl font-bold mb-3">{item.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">{item.desc}</p>
@@ -208,7 +280,7 @@ export default function Home() {
       </section>
 
       {/* ROI Calculator Section */}
-      <section className="py-24 bg-muted/50">
+      <section className="py-24 bg-gradient-to-b from-muted/50 to-background">
         <div className="container">
           <motion.div 
             className="max-w-3xl mx-auto text-center mb-12"
@@ -218,7 +290,7 @@ export default function Home() {
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">Calculate Your Growth Potential</h2>
             <p className="text-lg text-muted-foreground">
-              Don't guess. See exactly what a performance-based partnership could mean for your bottom line.
+              Whether you're a dentist, doctor, pharmacy, or PT/OT clinic—see exactly what a performance-based partnership could mean for your bottom line.
             </p>
           </motion.div>
           
@@ -262,7 +334,7 @@ export default function Home() {
               <div className="space-y-6">
                 {[
                   { feature: "Pricing Model", us: "Performance-Based", them: "High Fixed Retainer" },
-                  { feature: "Technology", us: "AI-Driven Real-Time Optimization", them: "Manual Reporting & Slow Updates" },
+                  { feature: "Technology", us: "AI-Driven Optimization", them: "Manual Reporting" },
                   { feature: "Financial Risk", us: "Shared Risk", them: "100% On You" },
                   { feature: "Contract Terms", us: "Flexible, No Lock-in", them: "12-24 Month Lock-in" },
                   { feature: "Incentives", us: "Aligned with Growth", them: "Paid Regardless" }
@@ -283,123 +355,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Services Section */}
-      <section id="services" className="py-24 bg-background">
-        <div className="container">
-          <motion.div className="text-center max-w-3xl mx-auto mb-20" {...fadeIn}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-primary">One Growth System. Predictable Results.</h2>
-            <p className="text-lg text-muted-foreground">
-              You don't need multiple vendors or complex contracts. We manage your entire digital growth ecosystem under one performance-based model.
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Healthcare SEO",
-                desc: "We ensure you appear exactly where patients are actively searching for care in your local market.",
-                img: "/images/service-seo.jpg"
-              },
-              {
-                title: "Paid Search",
-                desc: "Create immediate demand and convert intent into booked appointments, not just traffic.",
-                img: "/images/service-ppc.jpg"
-              },
-              {
-                title: "Website Design",
-                desc: "Built for trust, compliance, and conversion rather than just aesthetics.",
-                img: "/images/service-web.jpg"
-              },
-              {
-                title: "Reputation Management",
-                desc: "Systematically build social proof that works continuously to attract new patients.",
-                img: null
-              },
-              {
-                title: "Social Media & Content",
-                desc: "Reinforce credibility, authority, and stay top of mind in your community.",
-                img: null
-              },
-              {
-                title: "Digital Brief",
-                desc: "A supportive, insight-led review of your digital ecosystem and experience.",
-                img: null,
-                cta: "Request a Digital Brief"
-              }
-            ].map((service, i) => (
-              <motion.div 
-                key={i}
-                className="group relative overflow-hidden border border-border bg-card hover:shadow-lg transition-all duration-300"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-              >
-                {service.img && (
-                  <div className="h-48 overflow-hidden bg-muted">
-                    <img 
-                      src={service.img} 
-                      alt={service.title} 
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  </div>
-                )}
-                <div className="p-8">
-                  <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">{service.title}</h3>
-                  <p className="text-muted-foreground mb-6">{service.desc}</p>
-                  {service.cta ? (
-                    <IntakeForm trigger={
-                      <Button variant="outline" className="w-full border-secondary text-secondary hover:bg-secondary hover:text-white font-bold uppercase tracking-wide rounded-none">
-                        {service.cta}
-                      </Button>
-                    } />
-                  ) : (
-                    <div className="inline-flex items-center text-sm font-bold text-secondary uppercase tracking-wide">
-                      Included <Check className="ml-1 h-4 w-4" />
-                    </div>
-                  )}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* About Us Section */}
-      <section id="about" className="py-24 bg-muted/30">
-        <div className="container">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <motion.div {...fadeIn}>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-primary">Built for Healthcare. Without the Games.</h2>
-              <p className="text-lg text-muted-foreground mb-6">
-                We built DocPropel specifically for healthcare practices that want growth without the hype. We understand compliance, respect how practices actually operate, and avoid agency theatrics.
-              </p>
-              <p className="text-lg text-muted-foreground mb-8">
-                Our aim is to be a long-term growth partner, measured by results. No buzzwords, just accountable patient growth.
-              </p>
-              <IntakeForm trigger={
-                <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white font-bold rounded-none px-8 h-12">
-                  Request a Digital Brief
-                </Button>
-              } />
-            </motion.div>
-            <motion.div 
-              className="relative h-[400px] bg-white p-2 shadow-xl border border-border"
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <img 
-                src="/images/hero-split.jpg" 
-                alt="Healthcare professionals" 
-                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
-              />
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
       {/* CTA Section */}
       <section className="py-24 bg-muted/50 border-t border-border">
         <div className="container">
@@ -409,9 +364,17 @@ export default function Home() {
             
             <div className="relative z-10 max-w-3xl mx-auto">
               <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">Ready to Propel Your Practice?</h2>
-              <p className="text-xl text-blue-100 mb-10">
-                Get a high-level review of your practice’s growth opportunities and patient demand.
+              <p className="text-xl text-blue-100 mb-6">
+                Whether you're a doctor, dentist, pharmacy, or PT/OT clinic—get a high-level review of your growth opportunities.
               </p>
+              <div className="flex flex-wrap justify-center gap-3 mb-10">
+                {specialties.map((s) => (
+                  <span key={s.name} className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 text-white text-sm font-medium rounded-full">
+                    <s.icon size={16} />
+                    {s.name}
+                  </span>
+                ))}
+              </div>
               <div className="flex flex-col sm:flex-row justify-center gap-4">
                 <IntakeForm trigger={
                   <Button size="lg" className="bg-secondary hover:bg-secondary/90 text-white font-bold text-lg px-10 h-16 rounded-none shadow-xl">
