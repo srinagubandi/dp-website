@@ -144,14 +144,15 @@ export default function Services() {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
               >
-                <div className="p-8 flex flex-col flex-grow">
-                  <div className="mb-4">
+                {/* Mobile: centered layout, Desktop: left-aligned */}
+                <div className="p-8 flex flex-col flex-grow text-center md:text-left">
+                  <div className="mb-4 flex justify-center md:justify-start">
                     <IconImage src={service.icon} alt={service.title} size={56} />
                   </div>
                   <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">{service.title}</h3>
                   <p className="text-muted-foreground mb-4 flex-grow">{service.desc}</p>
                   
-                  <div className="flex flex-wrap gap-2 mb-6">
+                  <div className="flex flex-wrap gap-2 mb-6 justify-center md:justify-start">
                     {service.specialties.map((spec, j) => (
                       <span key={j} className="text-xs bg-primary/5 text-primary px-2 py-1 rounded font-medium">
                         {spec}
@@ -166,7 +167,7 @@ export default function Services() {
                       </Button>
                     } />
                   ) : (
-                    <div className="inline-flex items-center text-sm font-bold text-secondary uppercase tracking-wide mt-auto">
+                    <div className="inline-flex items-center justify-center md:justify-start text-sm font-bold text-secondary uppercase tracking-wide mt-auto">
                       Included <Check className="ml-1 h-4 w-4" />
                     </div>
                   )}

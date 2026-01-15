@@ -198,14 +198,51 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <Menu className="h-6 w-6" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-              <nav className="flex flex-col gap-6 mt-10">
-                <NavLinks />
-                <IntakeForm trigger={
-                  <Button className="bg-secondary hover:bg-secondary/90 text-white font-semibold w-full rounded-none">
-                    Request a Practice Growth Brief
-                  </Button>
-                } />
+            <SheetContent side="right" className="w-full sm:w-full p-0">
+              {/* Full-screen mobile menu with centered links */}
+              <nav className="flex flex-col items-center justify-center h-full gap-8 py-16">
+                <Link 
+                  href="/services" 
+                  className="text-xl font-medium hover:text-primary transition-colors" 
+                  onClick={() => setIsOpen(false)}
+                >
+                  Services
+                </Link>
+                <Link 
+                  href="/how-it-works" 
+                  className="text-xl font-medium hover:text-primary transition-colors" 
+                  onClick={() => setIsOpen(false)}
+                >
+                  How It Works
+                </Link>
+                <Link 
+                  href="/compare" 
+                  className="text-xl font-medium hover:text-primary transition-colors" 
+                  onClick={() => setIsOpen(false)}
+                >
+                  Compare
+                </Link>
+                <Link 
+                  href="/about" 
+                  className="text-xl font-medium hover:text-primary transition-colors" 
+                  onClick={() => setIsOpen(false)}
+                >
+                  About Us
+                </Link>
+                <Link 
+                  href="/calculator" 
+                  className="text-xl font-medium hover:text-primary transition-colors" 
+                  onClick={() => setIsOpen(false)}
+                >
+                  ROI Calculator
+                </Link>
+                <Link 
+                  href="/results" 
+                  className="text-xl font-medium hover:text-primary transition-colors" 
+                  onClick={() => setIsOpen(false)}
+                >
+                  Results
+                </Link>
               </nav>
             </SheetContent>
           </Sheet>
@@ -234,7 +271,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <footer className="border-t border-border bg-muted/30">
         <div className="container py-12 md:py-16">
           
-          {/* Footer Grid - 4 columns on desktop, 1 column on mobile */}
+          {/* Footer Grid - 4 columns on desktop, 1 column centered on mobile */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
             
             {/* ---------------------------------------------------------------
@@ -243,13 +280,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 TO CHANGE DESCRIPTION: Edit the <p> text below
                 TO CHANGE LOGO: Edit the src="/images/logo.png" path
             --------------------------------------------------------------- */}
-            <div className="space-y-4">
-              <img 
-                src="/images/logo.png" 
-                alt="DocPropel" 
-                className="h-8 w-auto mb-4" 
-              />
-              <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
+            <div className="space-y-4 text-center md:text-left">
+              <div className="flex justify-center md:justify-start">
+                <img 
+                  src="/images/logo.png" 
+                  alt="DocPropel" 
+                  className="h-8 w-auto mb-4" 
+                />
+              </div>
+              <p className="text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto md:mx-0">
                 The only performance-based marketing partner for healthcare practices. 
                 We grow your patient base, you only pay for results.
               </p>
@@ -259,7 +298,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   TO REMOVE: Delete the entire <div> block below
                   TO CHANGE SIZE: Edit "size={20}" to a different number
               */}
-              <div className="flex gap-3 pt-2">
+              <div className="flex gap-3 pt-2 justify-center md:justify-start">
                 <DoctorIcon size={20} className="opacity-60 hover:opacity-100 transition-opacity" />
                 <DentistIcon size={20} className="opacity-60 hover:opacity-100 transition-opacity" />
                 <PharmacyIcon size={20} className="opacity-60 hover:opacity-100 transition-opacity" />
@@ -274,22 +313,22 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 TO REMOVE A SPECIALTY: Delete the entire <li> block
                 TO CHANGE LINK DESTINATION: Edit the href="/services" path
             --------------------------------------------------------------- */}
-            <div>
+            <div className="text-center md:text-left">
               <h4 className="font-semibold mb-4 text-foreground">Specialties</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li className="flex items-center gap-2">
+                <li className="flex items-center gap-2 justify-center md:justify-start">
                   <DoctorIcon size={14} />
                   <Link href="/services" className="hover:text-primary">Doctors & Physicians</Link>
                 </li>
-                <li className="flex items-center gap-2">
+                <li className="flex items-center gap-2 justify-center md:justify-start">
                   <DentistIcon size={14} />
                   <Link href="/services" className="hover:text-primary">Dentists</Link>
                 </li>
-                <li className="flex items-center gap-2">
+                <li className="flex items-center gap-2 justify-center md:justify-start">
                   <PharmacyIcon size={14} />
                   <Link href="/services" className="hover:text-primary">Pharmacies</Link>
                 </li>
-                <li className="flex items-center gap-2">
+                <li className="flex items-center gap-2 justify-center md:justify-start">
                   <PTOTIcon size={14} />
                   <Link href="/services" className="hover:text-primary">PT / OT Clinics</Link>
                 </li>
@@ -302,7 +341,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 TO ADD A LINK: Copy an <li> block and edit text + href
                 TO REMOVE A LINK: Delete the entire <li> block
             --------------------------------------------------------------- */}
-            <div>
+            <div className="text-center md:text-left">
               <h4 className="font-semibold mb-4 text-foreground">Company</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li><Link href="/about" className="hover:text-primary">About Us</Link></li>
@@ -319,7 +358,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 TO CHANGE EMAIL: Edit "hello@docpropel.com"
                 TO REMOVE CLIENT LOGIN BUTTON: Delete the <li> with Button
             --------------------------------------------------------------- */}
-            <div>
+            <div className="text-center md:text-left">
               <h4 className="font-semibold mb-4 text-foreground">Contact</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li>1-800-DOC-PROPEL</li>

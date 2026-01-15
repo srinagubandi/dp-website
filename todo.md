@@ -1,1 +1,4 @@
 - [x] Update icons to flat 2D design for better visibility
+- [x] Update mobile menu to full-screen overlay with centered links and close button
+- [x] Update service sections to centered layout on mobile with icons above text
+- [x] Update footer to centered layout on mobile with organized sections
