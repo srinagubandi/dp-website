@@ -16,3 +16,4 @@
 - [x] Implement WhatsApp notification integration
 - [x] Add notification settings UI in admin dashboard
 - [x] Display testimonials dynamically on Results page
+- [x] Add simple username/password admin login

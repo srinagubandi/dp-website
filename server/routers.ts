@@ -3,6 +3,7 @@ import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router, adminProcedure } from "./_core/trpc";
 import { z } from "zod";
+import crypto from "crypto";
 import { notifyOwner } from "./_core/notification";
 import { 
   getAllSiteContent, 
@@ -24,9 +25,79 @@ import {
 } from "./db";
 import { sendLeadNotifications } from "./notifications";
 
+/**
+ * ADMIN CREDENTIALS
+ * These can be overridden via environment variables:
+ * - ADMIN_USERNAME (default: "admin")
+ * - ADMIN_PASSWORD (default: "DocPropel2024!")
+ * 
+ * For Railway deployment, set these in your Railway dashboard under Variables.
+ */
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "admin";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "DocPropel2024!";
+const ADMIN_TOKEN_SECRET = process.env.JWT_SECRET || "docpropel-admin-secret-key";
+
+// Simple token generation for admin sessions
+function generateAdminToken(): string {
+  const payload = {
+    type: "admin",
+    exp: Date.now() + (24 * 60 * 60 * 1000), // 24 hours
+    rand: crypto.randomBytes(16).toString("hex")
+  };
+  return Buffer.from(JSON.stringify(payload)).toString("base64");
+}
+
+// Verify admin token
+function verifyAdminToken(token: string): boolean {
+  try {
+    const payload = JSON.parse(Buffer.from(token, "base64").toString());
+    return payload.type === "admin" && payload.exp > Date.now();
+  } catch {
+    return false;
+  }
+}
+
 export const appRouter = router({
   // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
   system: systemRouter,
+  
+  // =============================================================================
+  // ADMIN AUTHENTICATION (Username/Password based)
+  // =============================================================================
+  adminAuth: router({
+    /** Login with username and password */
+    login: publicProcedure
+      .input(z.object({
+        username: z.string(),
+        password: z.string(),
+      }))
+      .mutation(async ({ input }) => {
+        // Validate credentials against environment variables
+        if (input.username === ADMIN_USERNAME && input.password === ADMIN_PASSWORD) {
+          const token = generateAdminToken();
+          return {
+            success: true,
+            token,
+            message: "Login successful"
+          };
+        }
+        return {
+          success: false,
+          token: "",
+          message: "Invalid username or password"
+        };
+      }),
+    
+    /** Verify admin token */
+    verify: publicProcedure
+      .input(z.object({ token: z.string() }))
+      .query(({ input }) => {
+        return {
+          valid: verifyAdminToken(input.token)
+        };
+      }),
+  }),
+
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {
