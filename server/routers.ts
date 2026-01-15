@@ -27,15 +27,15 @@ import { sendLeadNotifications } from "./notifications";
 
 /**
  * ADMIN CREDENTIALS
- * These can be overridden via environment variables:
- * - ADMIN_USERNAME (default: "admin")
- * - ADMIN_PASSWORD (default: "DocPropel2024!")
+ * REQUIRED: Set these environment variables in your hosting platform (Railway, etc.):
+ * - ADMIN_USERNAME: The admin username for login
+ * - ADMIN_PASSWORD: The admin password for login
  * 
- * For Railway deployment, set these in your Railway dashboard under Variables.
+ * The admin login will not work until these are configured.
  */
-const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "admin";
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "DocPropel2024!";
-const ADMIN_TOKEN_SECRET = process.env.JWT_SECRET || "docpropel-admin-secret-key";
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+const ADMIN_TOKEN_SECRET = process.env.JWT_SECRET || crypto.randomBytes(32).toString("hex");
 
 // Simple token generation for admin sessions
 function generateAdminToken(): string {
@@ -72,6 +72,15 @@ export const appRouter = router({
         password: z.string(),
       }))
       .mutation(async ({ input }) => {
+        // Check if admin credentials are configured
+        if (!ADMIN_USERNAME || !ADMIN_PASSWORD) {
+          return {
+            success: false,
+            token: "",
+            message: "Admin credentials not configured. Please set ADMIN_USERNAME and ADMIN_PASSWORD environment variables."
+          };
+        }
+        
         // Validate credentials against environment variables
         if (input.username === ADMIN_USERNAME && input.password === ADMIN_PASSWORD) {
           const token = generateAdminToken();

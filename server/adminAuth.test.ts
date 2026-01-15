@@ -8,9 +8,9 @@
 import { describe, it, expect, beforeAll } from "vitest";
 import crypto from "crypto";
 
-// Default credentials (same as in routers.ts)
-const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "admin";
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "DocPropel2024!";
+// Test credentials - these would be set via environment variables in production
+const ADMIN_USERNAME = process.env.ADMIN_USERNAME || "testadmin";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "testpassword";
 
 describe("adminAuth", () => {
   describe("login", () => {

@@ -5,10 +5,10 @@
  * This bypasses Manus OAuth and uses environment-based credentials.
  * 
  * CREDENTIALS ARE SET VIA ENVIRONMENT VARIABLES:
- * - ADMIN_USERNAME (default: "admin")
- * - ADMIN_PASSWORD (default: "DocPropel2024!")
+ * - ADMIN_USERNAME: Required - set in your hosting platform
+ * - ADMIN_PASSWORD: Required - set in your hosting platform
  * 
- * For Railway deployment, set these in your Railway dashboard under Variables.
+ * The admin login will not work until these environment variables are configured.
  */
 
 import { useState } from "react";

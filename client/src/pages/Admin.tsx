@@ -14,7 +14,7 @@
  * 
  * RAILWAY DEPLOYMENT:
  *   Set ADMIN_USERNAME and ADMIN_PASSWORD environment variables
- *   Default credentials: admin / DocPropel2024!
+ *   Admin login will not work until these are configured
  * 
  * =============================================================================
  */

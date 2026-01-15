@@ -17,3 +17,4 @@
 - [x] Add notification settings UI in admin dashboard
 - [x] Display testimonials dynamically on Results page
 - [x] Add simple username/password admin login
+- [x] Remove hardcoded admin credentials - require environment variables only
