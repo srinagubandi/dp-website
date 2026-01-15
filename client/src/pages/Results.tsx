@@ -2,9 +2,10 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Star } from "lucide-react";
+import { ArrowRight, Star, Quote, Loader2 } from "lucide-react";
 import { motion } from "framer-motion";
 import IntakeForm from "@/components/IntakeForm";
+import { trpc } from "@/lib/trpc";
 import {
   DoctorIcon,
   DentistIcon,
@@ -13,6 +14,7 @@ import {
   GrowthPulseIcon,
 } from "@/components/BrandIcons";
 
+// Static case studies (fallback content)
 const CASE_STUDIES = [
   {
     specialty: "Dentists",
@@ -94,7 +96,21 @@ const CASE_STUDIES = [
   }
 ];
 
+// Helper to get icon for specialty
+function getSpecialtyIcon(specialty: string | null) {
+  switch (specialty) {
+    case "Doctors": return DoctorIcon;
+    case "Dentists": return DentistIcon;
+    case "Pharmacies": return PharmacyIcon;
+    case "PT/OT": return PTOTIcon;
+    default: return DoctorIcon;
+  }
+}
+
 export default function Results() {
+  // Fetch testimonials from database
+  const { data: testimonials, isLoading: testimonialsLoading } = trpc.testimonials.getVisible.useQuery();
+
   return (
     <Layout>
       <div className="bg-background min-h-screen">
@@ -139,9 +155,119 @@ export default function Results() {
           </div>
         </section>
 
+        {/* Client Testimonials Section (Dynamic from Database) */}
+        {testimonials && testimonials.length > 0 && (
+          <section className="py-20 bg-muted/20">
+            <div className="container">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="text-center mb-12"
+              >
+                <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+                  What Our Clients Say
+                </h2>
+                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                  Real testimonials from healthcare practices we've helped grow
+                </p>
+              </motion.div>
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {testimonials.map((testimonial, i) => {
+                  const SpecialtyIcon = getSpecialtyIcon(testimonial.specialty);
+                  return (
+                    <motion.div
+                      key={testimonial.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.1, duration: 0.5 }}
+                    >
+                      <Card className="h-full bg-white border-l-4 border-l-secondary">
+                        <CardContent className="pt-6">
+                          {/* Quote Icon */}
+                          <Quote className="w-8 h-8 text-secondary/30 mb-4" />
+                          
+                          {/* Quote Text */}
+                          <p className="text-muted-foreground italic mb-6 leading-relaxed">
+                            "{testimonial.quote}"
+                          </p>
+                          
+                          {/* Metrics */}
+                          {(testimonial.growthPercent || testimonial.newPatientsPerMonth) && (
+                            <div className="flex gap-4 mb-6 p-3 bg-muted/50 rounded-lg">
+                              {testimonial.growthPercent && (
+                                <div className="text-center">
+                                  <div className="text-2xl font-bold text-primary">+{testimonial.growthPercent}%</div>
+                                  <div className="text-xs text-muted-foreground">Growth</div>
+                                </div>
+                              )}
+                              {testimonial.newPatientsPerMonth && (
+                                <div className="text-center">
+                                  <div className="text-2xl font-bold text-secondary">{testimonial.newPatientsPerMonth}</div>
+                                  <div className="text-xs text-muted-foreground">New Patients/Mo</div>
+                                </div>
+                              )}
+                            </div>
+                          )}
+                          
+                          {/* Client Info */}
+                          <div className="flex items-center gap-3 pt-4 border-t border-border">
+                            <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                              <SpecialtyIcon size={24} />
+                            </div>
+                            <div>
+                              <div className="font-semibold text-foreground">{testimonial.clientName}</div>
+                              {testimonial.practiceName && (
+                                <div className="text-sm text-muted-foreground">{testimonial.practiceName}</div>
+                              )}
+                              {testimonial.location && (
+                                <div className="text-xs text-muted-foreground">{testimonial.location}</div>
+                              )}
+                            </div>
+                            <div className="ml-auto flex gap-0.5">
+                              {[...Array(testimonial.rating || 5)].map((_, starI) => (
+                                <Star key={starI} className="w-4 h-4 text-yellow-400 fill-current" />
+                              ))}
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Loading State for Testimonials */}
+        {testimonialsLoading && (
+          <section className="py-12 bg-muted/20">
+            <div className="container flex justify-center">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+          </section>
+        )}
+
         {/* Case Studies Grid */}
         <section className="py-20">
           <div className="container">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+                Case Studies
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Detailed breakdowns of how we've helped practices achieve measurable growth
+              </p>
+            </motion.div>
+
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {CASE_STUDIES.map((study, i) => (
                 <motion.div

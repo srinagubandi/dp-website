@@ -111,3 +111,69 @@ export const leadSubmissions = mysqlTable("lead_submissions", {
 
 export type LeadSubmission = typeof leadSubmissions.$inferSelect;
 export type InsertLeadSubmission = typeof leadSubmissions.$inferInsert;
+
+
+/**
+ * =============================================================================
+ * TESTIMONIALS TABLE
+ * =============================================================================
+ * 
+ * Stores client testimonials and case study highlights for display on the
+ * Results page and throughout the website.
+ * 
+ * Each testimonial includes:
+ *   - Client/practice information
+ *   - Quote or testimonial text
+ *   - Metrics (growth percentage, new patients, etc.)
+ *   - Display settings (featured, order, visibility)
+ * 
+ * =============================================================================
+ */
+export const testimonials = mysqlTable("testimonials", {
+  id: int("id").autoincrement().primaryKey(),
+  
+  /** Client/Practice name */
+  clientName: varchar("clientName", { length: 256 }).notNull(),
+  
+  /** Practice name or business name */
+  practiceName: varchar("practiceName", { length: 256 }),
+  
+  /** Specialty (Doctors, Dentists, Pharmacies, PT/OT) */
+  specialty: varchar("specialty", { length: 128 }),
+  
+  /** Location (city, state) */
+  location: varchar("location", { length: 256 }),
+  
+  /** The testimonial quote */
+  quote: text("quote").notNull(),
+  
+  /** Client photo URL (optional) */
+  photoUrl: varchar("photoUrl", { length: 512 }),
+  
+  /** Growth metrics - percentage increase */
+  growthPercent: int("growthPercent"),
+  
+  /** Growth metrics - new patients per month */
+  newPatientsPerMonth: int("newPatientsPerMonth"),
+  
+  /** Growth metrics - revenue increase */
+  revenueIncrease: varchar("revenueIncrease", { length: 64 }),
+  
+  /** Star rating (1-5) */
+  rating: int("rating").default(5),
+  
+  /** Whether this testimonial is featured prominently */
+  isFeatured: mysqlEnum("isFeatured", ["true", "false"]).default("false").notNull(),
+  
+  /** Whether this testimonial is visible on the site */
+  isVisible: mysqlEnum("isVisible", ["true", "false"]).default("true").notNull(),
+  
+  /** Display order (lower = first) */
+  sortOrder: int("sortOrder").default(0).notNull(),
+  
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Testimonial = typeof testimonials.$inferSelect;
+export type InsertTestimonial = typeof testimonials.$inferInsert;

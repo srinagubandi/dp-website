@@ -1,6 +1,6 @@
 import { eq, and, asc } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, siteContent, InsertSiteContent, SiteContent, leadSubmissions, InsertLeadSubmission, LeadSubmission } from "../drizzle/schema";
+import { InsertUser, users, siteContent, InsertSiteContent, SiteContent, leadSubmissions, InsertLeadSubmission, LeadSubmission, testimonials, InsertTestimonial, Testimonial } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -256,4 +256,96 @@ export async function deleteLeadSubmission(id: number): Promise<void> {
   }
 
   await db.delete(leadSubmissions).where(eq(leadSubmissions.id, id));
+}
+
+
+// =============================================================================
+// TESTIMONIAL QUERIES
+// =============================================================================
+
+/**
+ * Get all testimonials (for admin)
+ */
+export async function getAllTestimonials(): Promise<Testimonial[]> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get testimonials: database not available");
+    return [];
+  }
+
+  return await db.select().from(testimonials).orderBy(asc(testimonials.sortOrder));
+}
+
+/**
+ * Get visible testimonials (for public display)
+ */
+export async function getVisibleTestimonials(): Promise<Testimonial[]> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get testimonials: database not available");
+    return [];
+  }
+
+  return await db.select()
+    .from(testimonials)
+    .where(eq(testimonials.isVisible, "true"))
+    .orderBy(asc(testimonials.sortOrder));
+}
+
+/**
+ * Get featured testimonials
+ */
+export async function getFeaturedTestimonials(): Promise<Testimonial[]> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get testimonials: database not available");
+    return [];
+  }
+
+  return await db.select()
+    .from(testimonials)
+    .where(and(
+      eq(testimonials.isVisible, "true"),
+      eq(testimonials.isFeatured, "true")
+    ))
+    .orderBy(asc(testimonials.sortOrder));
+}
+
+/**
+ * Create a new testimonial
+ */
+export async function createTestimonial(testimonial: InsertTestimonial): Promise<void> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot create testimonial: database not available");
+    return;
+  }
+
+  await db.insert(testimonials).values(testimonial);
+}
+
+/**
+ * Update a testimonial
+ */
+export async function updateTestimonial(id: number, data: Partial<InsertTestimonial>): Promise<void> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot update testimonial: database not available");
+    return;
+  }
+
+  await db.update(testimonials).set(data).where(eq(testimonials.id, id));
+}
+
+/**
+ * Delete a testimonial
+ */
+export async function deleteTestimonial(id: number): Promise<void> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot delete testimonial: database not available");
+    return;
+  }
+
+  await db.delete(testimonials).where(eq(testimonials.id, id));
 }

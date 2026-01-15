@@ -6,15 +6,23 @@ import { z } from "zod";
 import { notifyOwner } from "./_core/notification";
 import { 
   getAllSiteContent, 
-  getSiteContentBySection, 
+  getSiteContentBySection,
+  getSiteContentValue, 
   upsertSiteContent, 
   updateSiteContentById,
   deleteSiteContentById,
   createLeadSubmission,
   getAllLeadSubmissions,
   updateLeadStatus,
-  deleteLeadSubmission
+  deleteLeadSubmission,
+  getAllTestimonials,
+  getVisibleTestimonials,
+  getFeaturedTestimonials,
+  createTestimonial,
+  updateTestimonial,
+  deleteTestimonial,
 } from "./db";
+import { sendLeadNotifications } from "./notifications";
 
 export const appRouter = router({
   // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -27,6 +35,20 @@ export const appRouter = router({
       return {
         success: true,
       } as const;
+    }),
+  }),
+
+  // =============================================================================
+  // PUBLIC ROUTES
+  // =============================================================================
+
+  /** Get visible testimonials for public display */
+  testimonials: router({
+    getVisible: publicProcedure.query(async () => {
+      return await getVisibleTestimonials();
+    }),
+    getFeatured: publicProcedure.query(async () => {
+      return await getFeaturedTestimonials();
     }),
   }),
 
@@ -50,7 +72,7 @@ export const appRouter = router({
           status: "new",
         });
 
-        // Notify the owner about the new lead
+        // Build notification content
         const notificationContent = `
 **New ROI Calculator Lead**
 
@@ -62,6 +84,15 @@ export const appRouter = router({
 - **Projected Annual Revenue Increase:** $${input.projectedAnnualRevenue.toLocaleString()}
         `.trim();
 
+        // Send notifications via configured channels (email, SMS, WhatsApp)
+        await sendLeadNotifications({
+          title: "New ROI Calculator Lead",
+          content: notificationContent,
+          leadEmail: input.email,
+          leadSpecialty: input.specialty,
+        });
+
+        // Also notify owner via Manus notification
         await notifyOwner({
           title: "New ROI Calculator Lead",
           content: notificationContent,
@@ -159,6 +190,122 @@ export const appRouter = router({
       .input(z.object({ id: z.number() }))
       .mutation(async ({ input }) => {
         await deleteLeadSubmission(input.id);
+        return { success: true };
+      }),
+
+    // -------------------------------------------------------------------------
+    // TESTIMONIAL MANAGEMENT
+    // -------------------------------------------------------------------------
+
+    /** Get all testimonials (including hidden) */
+    getAllTestimonials: adminProcedure.query(async () => {
+      return await getAllTestimonials();
+    }),
+
+    /** Create a new testimonial */
+    createTestimonial: adminProcedure
+      .input(z.object({
+        clientName: z.string(),
+        practiceName: z.string().optional(),
+        specialty: z.string().optional(),
+        location: z.string().optional(),
+        quote: z.string(),
+        photoUrl: z.string().optional(),
+        growthPercent: z.number().optional(),
+        newPatientsPerMonth: z.number().optional(),
+        revenueIncrease: z.string().optional(),
+        rating: z.number().min(1).max(5).optional(),
+        isFeatured: z.enum(["true", "false"]).optional(),
+        isVisible: z.enum(["true", "false"]).optional(),
+        sortOrder: z.number().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        await createTestimonial({
+          clientName: input.clientName,
+          practiceName: input.practiceName ?? null,
+          specialty: input.specialty ?? null,
+          location: input.location ?? null,
+          quote: input.quote,
+          photoUrl: input.photoUrl ?? null,
+          growthPercent: input.growthPercent ?? null,
+          newPatientsPerMonth: input.newPatientsPerMonth ?? null,
+          revenueIncrease: input.revenueIncrease ?? null,
+          rating: input.rating ?? 5,
+          isFeatured: input.isFeatured ?? "false",
+          isVisible: input.isVisible ?? "true",
+          sortOrder: input.sortOrder ?? 0,
+        });
+        return { success: true };
+      }),
+
+    /** Update a testimonial */
+    updateTestimonial: adminProcedure
+      .input(z.object({
+        id: z.number(),
+        clientName: z.string().optional(),
+        practiceName: z.string().optional(),
+        specialty: z.string().optional(),
+        location: z.string().optional(),
+        quote: z.string().optional(),
+        photoUrl: z.string().optional(),
+        growthPercent: z.number().optional(),
+        newPatientsPerMonth: z.number().optional(),
+        revenueIncrease: z.string().optional(),
+        rating: z.number().min(1).max(5).optional(),
+        isFeatured: z.enum(["true", "false"]).optional(),
+        isVisible: z.enum(["true", "false"]).optional(),
+        sortOrder: z.number().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const { id, ...data } = input;
+        await updateTestimonial(id, data);
+        return { success: true };
+      }),
+
+    /** Delete a testimonial */
+    deleteTestimonial: adminProcedure
+      .input(z.object({ id: z.number() }))
+      .mutation(async ({ input }) => {
+        await deleteTestimonial(input.id);
+        return { success: true };
+      }),
+
+    // -------------------------------------------------------------------------
+    // NOTIFICATION SETTINGS
+    // -------------------------------------------------------------------------
+
+    /** Get notification settings */
+    getNotificationSettings: adminProcedure.query(async () => {
+      const settings = await getSiteContentBySection("notifications");
+      const result: Record<string, string> = {};
+      for (const item of settings) {
+        result[item.key] = item.value;
+      }
+      return result;
+    }),
+
+    /** Update notification settings */
+    updateNotificationSettings: adminProcedure
+      .input(z.object({
+        email_enabled: z.string().optional(),
+        email_recipient: z.string().optional(),
+        sms_enabled: z.string().optional(),
+        sms_phone: z.string().optional(),
+        whatsapp_enabled: z.string().optional(),
+        whatsapp_phone: z.string().optional(),
+      }))
+      .mutation(async ({ input }) => {
+        const updates = Object.entries(input).filter(([_, v]) => v !== undefined);
+        for (const [key, value] of updates) {
+          await upsertSiteContent({
+            section: "notifications",
+            key,
+            value: value as string,
+            label: key.replace(/_/g, " ").replace(/\b\w/g, l => l.toUpperCase()),
+            contentType: "text",
+            sortOrder: 0,
+          });
+        }
         return { success: true };
       }),
   }),

@@ -6,7 +6,8 @@
  * This page allows administrators to:
  *   - View and manage site content (text, images, links)
  *   - View and manage lead submissions
- *   - Add/edit/delete content blocks
+ *   - Manage testimonials and case studies
+ *   - Configure notification settings (Email, SMS, WhatsApp)
  * 
  * ACCESS: Requires admin role. Regular users will be redirected.
  * 
@@ -22,6 +23,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
+import { Switch } from "@/components/ui/switch";
 import { 
   Select, 
   SelectContent, 
@@ -37,15 +39,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { 
   Settings, 
   FileText, 
@@ -58,9 +51,13 @@ import {
   Phone,
   Mail,
   Building,
-  Loader2
+  Loader2,
+  MessageSquare,
+  Bell,
+  Star,
+  Quote,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { toast } from "sonner";
 
@@ -68,7 +65,10 @@ export default function Admin() {
   const { user, loading: authLoading } = useAuth();
   const utils = trpc.useUtils();
   
-  // Fetch data
+  // =============================================================================
+  // DATA FETCHING
+  // =============================================================================
+  
   const { data: siteContent, isLoading: contentLoading } = trpc.admin.getAllContent.useQuery(
     undefined,
     { enabled: user?.role === "admin" }
@@ -77,8 +77,19 @@ export default function Admin() {
     undefined,
     { enabled: user?.role === "admin" }
   );
+  const { data: testimonials, isLoading: testimonialsLoading } = trpc.admin.getAllTestimonials.useQuery(
+    undefined,
+    { enabled: user?.role === "admin" }
+  );
+  const { data: notificationSettings, isLoading: notificationsLoading } = trpc.admin.getNotificationSettings.useQuery(
+    undefined,
+    { enabled: user?.role === "admin" }
+  );
 
-  // Mutations
+  // =============================================================================
+  // MUTATIONS
+  // =============================================================================
+
   const upsertContent = trpc.admin.upsertContent.useMutation({
     onSuccess: () => {
       utils.admin.getAllContent.invalidate();
@@ -117,7 +128,55 @@ export default function Admin() {
     },
   });
 
-  // Form state for adding new content
+  const createTestimonial = trpc.admin.createTestimonial.useMutation({
+    onSuccess: () => {
+      utils.admin.getAllTestimonials.invalidate();
+      toast.success("Testimonial created");
+      setNewTestimonial({
+        clientName: "",
+        practiceName: "",
+        specialty: "",
+        location: "",
+        quote: "",
+        growthPercent: undefined,
+        newPatientsPerMonth: undefined,
+        rating: 5,
+      });
+    },
+    onError: (error) => {
+      toast.error("Failed to create testimonial: " + error.message);
+    },
+  });
+
+  const updateTestimonial = trpc.admin.updateTestimonial.useMutation({
+    onSuccess: () => {
+      utils.admin.getAllTestimonials.invalidate();
+      toast.success("Testimonial updated");
+    },
+  });
+
+  const deleteTestimonial = trpc.admin.deleteTestimonial.useMutation({
+    onSuccess: () => {
+      utils.admin.getAllTestimonials.invalidate();
+      toast.success("Testimonial deleted");
+    },
+  });
+
+  const updateNotificationSettings = trpc.admin.updateNotificationSettings.useMutation({
+    onSuccess: () => {
+      utils.admin.getNotificationSettings.invalidate();
+      toast.success("Notification settings saved");
+    },
+    onError: (error) => {
+      toast.error("Failed to save settings: " + error.message);
+    },
+  });
+
+  // =============================================================================
+  // LOCAL STATE
+  // =============================================================================
+
+  // New content form
   const [newContent, setNewContent] = useState({
     section: "",
     key: "",
@@ -125,6 +184,46 @@ export default function Admin() {
     label: "",
     contentType: "text" as "text" | "textarea" | "image" | "link",
   });
+
+  // New testimonial form
+  const [newTestimonial, setNewTestimonial] = useState({
+    clientName: "",
+    practiceName: "",
+    specialty: "",
+    location: "",
+    quote: "",
+    growthPercent: undefined as number | undefined,
+    newPatientsPerMonth: undefined as number | undefined,
+    rating: 5,
+  });
+
+  // Notification settings form
+  const [notifForm, setNotifForm] = useState({
+    email_enabled: "false",
+    email_recipient: "",
+    sms_enabled: "false",
+    sms_phone: "",
+    whatsapp_enabled: "false",
+    whatsapp_phone: "",
+  });
+
+  // Sync notification settings when loaded
+  useEffect(() => {
+    if (notificationSettings) {
+      setNotifForm({
+        email_enabled: notificationSettings.email_enabled || "false",
+        email_recipient: notificationSettings.email_recipient || "",
+        sms_enabled: notificationSettings.sms_enabled || "false",
+        sms_phone: notificationSettings.sms_phone || "",
+        whatsapp_enabled: notificationSettings.whatsapp_enabled || "false",
+        whatsapp_phone: notificationSettings.whatsapp_phone || "",
+      });
+    }
+  }, [notificationSettings]);
+
+  // =============================================================================
+  // RENDER HELPERS
+  // =============================================================================
 
   // Loading state
   if (authLoading) {
@@ -183,6 +282,29 @@ export default function Admin() {
     setNewContent({ section: "", key: "", value: "", label: "", contentType: "text" });
   };
 
+  const handleAddTestimonial = () => {
+    if (!newTestimonial.clientName || !newTestimonial.quote) {
+      toast.error("Client name and quote are required");
+      return;
+    }
+    createTestimonial.mutate({
+      clientName: newTestimonial.clientName,
+      practiceName: newTestimonial.practiceName || undefined,
+      specialty: newTestimonial.specialty || undefined,
+      location: newTestimonial.location || undefined,
+      quote: newTestimonial.quote,
+      growthPercent: newTestimonial.growthPercent,
+      newPatientsPerMonth: newTestimonial.newPatientsPerMonth,
+      rating: newTestimonial.rating,
+      isVisible: "true",
+      isFeatured: "false",
+    });
+  };
+
+  const handleSaveNotificationSettings = () => {
+    updateNotificationSettings.mutate(notifForm);
+  };
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case "new": return "bg-blue-100 text-blue-800";
@@ -193,6 +315,10 @@ export default function Admin() {
       default: return "bg-gray-100 text-gray-800";
     }
   };
+
+  // =============================================================================
+  // MAIN RENDER
+  // =============================================================================
 
   return (
     <div className="min-h-screen bg-muted/30">
@@ -210,7 +336,7 @@ export default function Admin() {
                 <Settings className="h-5 w-5" />
                 Admin Dashboard
               </h1>
-              <p className="text-sm text-blue-100">Manage site content and leads</p>
+              <p className="text-sm text-blue-100">Manage site content, leads, and settings</p>
             </div>
           </div>
           <div className="flex items-center gap-4">
@@ -223,18 +349,28 @@ export default function Admin() {
       {/* Main Content */}
       <main className="container py-8">
         <Tabs defaultValue="content" className="space-y-6">
-          <TabsList className="grid w-full max-w-md grid-cols-2">
+          <TabsList className="grid w-full max-w-2xl grid-cols-4">
             <TabsTrigger value="content" className="flex items-center gap-2">
               <FileText className="h-4 w-4" />
-              Site Content
+              Content
             </TabsTrigger>
             <TabsTrigger value="leads" className="flex items-center gap-2">
               <Users className="h-4 w-4" />
               Leads ({leads?.length || 0})
             </TabsTrigger>
+            <TabsTrigger value="testimonials" className="flex items-center gap-2">
+              <Quote className="h-4 w-4" />
+              Testimonials
+            </TabsTrigger>
+            <TabsTrigger value="notifications" className="flex items-center gap-2">
+              <Bell className="h-4 w-4" />
+              Notifications
+            </TabsTrigger>
           </TabsList>
 
-          {/* Site Content Tab */}
+          {/* ================================================================= */}
+          {/* SITE CONTENT TAB */}
+          {/* ================================================================= */}
           <TabsContent value="content" className="space-y-6">
             {/* Add New Content Card */}
             <Card>
@@ -373,7 +509,9 @@ export default function Admin() {
             )}
           </TabsContent>
 
-          {/* Leads Tab */}
+          {/* ================================================================= */}
+          {/* LEADS TAB */}
+          {/* ================================================================= */}
           <TabsContent value="leads">
             <Card>
               <CardHeader>
@@ -396,7 +534,7 @@ export default function Admin() {
                         <TableHead>Specialty</TableHead>
                         <TableHead>Status</TableHead>
                         <TableHead>Notes</TableHead>
-                        <TableHead className="w-[150px]">Actions</TableHead>
+                        <TableHead className="w-[100px]">Actions</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -475,8 +613,371 @@ export default function Admin() {
                   </Table>
                 ) : (
                   <div className="py-8 text-center text-muted-foreground">
-                    No leads yet. Leads will appear here when visitors submit the ROI Calculator or Contact forms.
+                    No leads yet. Leads will appear here when visitors submit forms.
                   </div>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* ================================================================= */}
+          {/* TESTIMONIALS TAB */}
+          {/* ================================================================= */}
+          <TabsContent value="testimonials" className="space-y-6">
+            {/* Add New Testimonial */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Plus className="h-5 w-5" />
+                  Add New Testimonial
+                </CardTitle>
+                <CardDescription>
+                  Add client testimonials and case study highlights
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid gap-4 md:grid-cols-2">
+                  <div>
+                    <Label htmlFor="clientName">Client Name *</Label>
+                    <Input
+                      id="clientName"
+                      placeholder="Dr. John Smith"
+                      value={newTestimonial.clientName}
+                      onChange={(e) => setNewTestimonial({ ...newTestimonial, clientName: e.target.value })}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="practiceName">Practice Name</Label>
+                    <Input
+                      id="practiceName"
+                      placeholder="Smith Family Dental"
+                      value={newTestimonial.practiceName}
+                      onChange={(e) => setNewTestimonial({ ...newTestimonial, practiceName: e.target.value })}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="specialty">Specialty</Label>
+                    <Select
+                      value={newTestimonial.specialty}
+                      onValueChange={(value) => setNewTestimonial({ ...newTestimonial, specialty: value })}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select specialty" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Doctors">Doctors</SelectItem>
+                        <SelectItem value="Dentists">Dentists</SelectItem>
+                        <SelectItem value="Pharmacies">Pharmacies</SelectItem>
+                        <SelectItem value="PT/OT">PT/OT Clinics</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <Label htmlFor="location">Location</Label>
+                    <Input
+                      id="location"
+                      placeholder="Austin, TX"
+                      value={newTestimonial.location}
+                      onChange={(e) => setNewTestimonial({ ...newTestimonial, location: e.target.value })}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="growthPercent">Growth %</Label>
+                    <Input
+                      id="growthPercent"
+                      type="number"
+                      placeholder="32"
+                      value={newTestimonial.growthPercent || ""}
+                      onChange={(e) => setNewTestimonial({ ...newTestimonial, growthPercent: e.target.value ? parseInt(e.target.value) : undefined })}
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="newPatients">New Patients/Month</Label>
+                    <Input
+                      id="newPatients"
+                      type="number"
+                      placeholder="45"
+                      value={newTestimonial.newPatientsPerMonth || ""}
+                      onChange={(e) => setNewTestimonial({ ...newTestimonial, newPatientsPerMonth: e.target.value ? parseInt(e.target.value) : undefined })}
+                    />
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <Label htmlFor="quote">Testimonial Quote *</Label>
+                  <Textarea
+                    id="quote"
+                    placeholder="DocPropel transformed our practice..."
+                    value={newTestimonial.quote}
+                    onChange={(e) => setNewTestimonial({ ...newTestimonial, quote: e.target.value })}
+                    rows={3}
+                  />
+                </div>
+                <div className="mt-4">
+                  <Button onClick={handleAddTestimonial} disabled={createTestimonial.isPending}>
+                    {createTestimonial.isPending ? (
+                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                    ) : (
+                      <Plus className="h-4 w-4 mr-2" />
+                    )}
+                    Add Testimonial
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Existing Testimonials */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Existing Testimonials</CardTitle>
+              </CardHeader>
+              <CardContent>
+                {testimonialsLoading ? (
+                  <div className="flex justify-center py-8">
+                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                  </div>
+                ) : testimonials && testimonials.length > 0 ? (
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Client</TableHead>
+                        <TableHead>Specialty</TableHead>
+                        <TableHead>Quote</TableHead>
+                        <TableHead>Metrics</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead className="w-[100px]">Actions</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {testimonials.map((t) => (
+                        <TableRow key={t.id}>
+                          <TableCell>
+                            <div className="font-medium">{t.clientName}</div>
+                            {t.practiceName && (
+                              <div className="text-sm text-muted-foreground">{t.practiceName}</div>
+                            )}
+                            {t.location && (
+                              <div className="text-xs text-muted-foreground">{t.location}</div>
+                            )}
+                          </TableCell>
+                          <TableCell>{t.specialty || "-"}</TableCell>
+                          <TableCell className="max-w-[250px]">
+                            <p className="truncate text-sm italic">"{t.quote}"</p>
+                          </TableCell>
+                          <TableCell>
+                            <div className="space-y-1 text-sm">
+                              {t.growthPercent && <div>+{t.growthPercent}% growth</div>}
+                              {t.newPatientsPerMonth && <div>{t.newPatientsPerMonth} new/mo</div>}
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex flex-col gap-1">
+                              <Badge variant={t.isVisible === "true" ? "default" : "secondary"}>
+                                {t.isVisible === "true" ? "Visible" : "Hidden"}
+                              </Badge>
+                              {t.isFeatured === "true" && (
+                                <Badge className="bg-yellow-100 text-yellow-800">
+                                  <Star className="h-3 w-3 mr-1" /> Featured
+                                </Badge>
+                              )}
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex gap-1">
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                onClick={() => {
+                                  updateTestimonial.mutate({
+                                    id: t.id,
+                                    isVisible: t.isVisible === "true" ? "false" : "true",
+                                  });
+                                }}
+                              >
+                                {t.isVisible === "true" ? "👁" : "👁‍🗨"}
+                              </Button>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="text-destructive hover:text-destructive"
+                                onClick={() => {
+                                  if (confirm("Delete this testimonial?")) {
+                                    deleteTestimonial.mutate({ id: t.id });
+                                  }
+                                }}
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                ) : (
+                  <div className="py-8 text-center text-muted-foreground">
+                    No testimonials yet. Add your first testimonial above.
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* ================================================================= */}
+          {/* NOTIFICATIONS TAB */}
+          {/* ================================================================= */}
+          <TabsContent value="notifications">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Bell className="h-5 w-5" />
+                  Notification Settings
+                </CardTitle>
+                <CardDescription>
+                  Configure how you receive notifications when new leads come in.
+                  Enable Email, SMS, and/or WhatsApp notifications.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-8">
+                {notificationsLoading ? (
+                  <div className="flex justify-center py-8">
+                    <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                  </div>
+                ) : (
+                  <>
+                    {/* Email Notifications */}
+                    <div className="space-y-4 p-4 border rounded-lg">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <Mail className="h-5 w-5 text-primary" />
+                          <div>
+                            <h3 className="font-semibold">Email Notifications</h3>
+                            <p className="text-sm text-muted-foreground">
+                              Receive lead notifications via email (requires SendGrid API key)
+                            </p>
+                          </div>
+                        </div>
+                        <Switch
+                          checked={notifForm.email_enabled === "true"}
+                          onCheckedChange={(checked) => 
+                            setNotifForm({ ...notifForm, email_enabled: checked ? "true" : "false" })
+                          }
+                        />
+                      </div>
+                      {notifForm.email_enabled === "true" && (
+                        <div>
+                          <Label htmlFor="email_recipient">Recipient Email</Label>
+                          <Input
+                            id="email_recipient"
+                            type="email"
+                            placeholder="you@example.com"
+                            value={notifForm.email_recipient}
+                            onChange={(e) => setNotifForm({ ...notifForm, email_recipient: e.target.value })}
+                          />
+                        </div>
+                      )}
+                    </div>
+
+                    {/* SMS Notifications */}
+                    <div className="space-y-4 p-4 border rounded-lg">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <Phone className="h-5 w-5 text-primary" />
+                          <div>
+                            <h3 className="font-semibold">SMS Notifications</h3>
+                            <p className="text-sm text-muted-foreground">
+                              Receive lead notifications via SMS (requires Twilio credentials)
+                            </p>
+                          </div>
+                        </div>
+                        <Switch
+                          checked={notifForm.sms_enabled === "true"}
+                          onCheckedChange={(checked) => 
+                            setNotifForm({ ...notifForm, sms_enabled: checked ? "true" : "false" })
+                          }
+                        />
+                      </div>
+                      {notifForm.sms_enabled === "true" && (
+                        <div>
+                          <Label htmlFor="sms_phone">Phone Number</Label>
+                          <Input
+                            id="sms_phone"
+                            type="tel"
+                            placeholder="+1234567890"
+                            value={notifForm.sms_phone}
+                            onChange={(e) => setNotifForm({ ...notifForm, sms_phone: e.target.value })}
+                          />
+                          <p className="text-xs text-muted-foreground mt-1">
+                            Include country code (e.g., +1 for US)
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* WhatsApp Notifications */}
+                    <div className="space-y-4 p-4 border rounded-lg">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <MessageSquare className="h-5 w-5 text-green-600" />
+                          <div>
+                            <h3 className="font-semibold">WhatsApp Notifications</h3>
+                            <p className="text-sm text-muted-foreground">
+                              Receive lead notifications via WhatsApp (requires Twilio WhatsApp)
+                            </p>
+                          </div>
+                        </div>
+                        <Switch
+                          checked={notifForm.whatsapp_enabled === "true"}
+                          onCheckedChange={(checked) => 
+                            setNotifForm({ ...notifForm, whatsapp_enabled: checked ? "true" : "false" })
+                          }
+                        />
+                      </div>
+                      {notifForm.whatsapp_enabled === "true" && (
+                        <div>
+                          <Label htmlFor="whatsapp_phone">WhatsApp Number</Label>
+                          <Input
+                            id="whatsapp_phone"
+                            type="tel"
+                            placeholder="+1234567890"
+                            value={notifForm.whatsapp_phone}
+                            onChange={(e) => setNotifForm({ ...notifForm, whatsapp_phone: e.target.value })}
+                          />
+                          <p className="text-xs text-muted-foreground mt-1">
+                            Include country code. Must be registered with WhatsApp.
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Save Button */}
+                    <Button 
+                      onClick={handleSaveNotificationSettings}
+                      disabled={updateNotificationSettings.isPending}
+                      className="w-full"
+                    >
+                      {updateNotificationSettings.isPending ? (
+                        <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                      ) : (
+                        <Save className="h-4 w-4 mr-2" />
+                      )}
+                      Save Notification Settings
+                    </Button>
+
+                    {/* API Keys Notice */}
+                    <div className="p-4 bg-muted rounded-lg">
+                      <h4 className="font-semibold mb-2">Required API Keys</h4>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        To enable notifications, you need to configure the following environment variables:
+                      </p>
+                      <ul className="text-sm text-muted-foreground space-y-1">
+                        <li><code className="bg-background px-1 rounded">SENDGRID_API_KEY</code> - For email notifications</li>
+                        <li><code className="bg-background px-1 rounded">TWILIO_ACCOUNT_SID</code> - For SMS/WhatsApp</li>
+                        <li><code className="bg-background px-1 rounded">TWILIO_AUTH_TOKEN</code> - For SMS/WhatsApp</li>
+                        <li><code className="bg-background px-1 rounded">TWILIO_PHONE_NUMBER</code> - For SMS</li>
+                        <li><code className="bg-background px-1 rounded">TWILIO_WHATSAPP_NUMBER</code> - For WhatsApp</li>
+                      </ul>
+                    </div>
+                  </>
                 )}
               </CardContent>
             </Card>
@@ -487,7 +988,10 @@ export default function Admin() {
   );
 }
 
-// Editable content row component
+// =============================================================================
+// HELPER COMPONENTS
+// =============================================================================
+
 function ContentRow({ 
   item, 
   onUpdate, 

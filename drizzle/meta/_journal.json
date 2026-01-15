@@ -15,6 +15,13 @@
       "when": 1768504347776,
       "tag": "0001_fat_banshee",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1768504894909,
+      "tag": "0002_remarkable_colossus",
+      "breakpoints": true
     }
   ]
 }
