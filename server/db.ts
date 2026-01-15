@@ -1,6 +1,6 @@
-import { eq } from "drizzle-orm";
+import { eq, and, asc } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { InsertUser, users, siteContent, InsertSiteContent, SiteContent, leadSubmissions, InsertLeadSubmission, LeadSubmission } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -17,6 +17,10 @@ export async function getDb() {
   }
   return _db;
 }
+
+// =============================================================================
+// USER QUERIES
+// =============================================================================
 
 export async function upsertUser(user: InsertUser): Promise<void> {
   if (!user.openId) {
@@ -89,4 +93,167 @@ export async function getUserByOpenId(openId: string) {
   return result.length > 0 ? result[0] : undefined;
 }
 
-// TODO: add feature queries here as your schema grows.
+// =============================================================================
+// SITE CONTENT QUERIES
+// =============================================================================
+
+/**
+ * Get all site content entries
+ */
+export async function getAllSiteContent(): Promise<SiteContent[]> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get site content: database not available");
+    return [];
+  }
+
+  return await db.select().from(siteContent).orderBy(asc(siteContent.section), asc(siteContent.sortOrder));
+}
+
+/**
+ * Get site content by section
+ */
+export async function getSiteContentBySection(section: string): Promise<SiteContent[]> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get site content: database not available");
+    return [];
+  }
+
+  return await db.select().from(siteContent).where(eq(siteContent.section, section)).orderBy(asc(siteContent.sortOrder));
+}
+
+/**
+ * Get a specific site content entry by section and key
+ */
+export async function getSiteContentValue(section: string, key: string): Promise<string | null> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get site content: database not available");
+    return null;
+  }
+
+  const result = await db.select().from(siteContent)
+    .where(and(eq(siteContent.section, section), eq(siteContent.key, key)))
+    .limit(1);
+
+  return result.length > 0 ? result[0].value : null;
+}
+
+/**
+ * Upsert site content (create or update)
+ */
+export async function upsertSiteContent(content: InsertSiteContent): Promise<void> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot upsert site content: database not available");
+    return;
+  }
+
+  // Check if entry exists
+  const existing = await db.select().from(siteContent)
+    .where(and(eq(siteContent.section, content.section), eq(siteContent.key, content.key)))
+    .limit(1);
+
+  if (existing.length > 0) {
+    // Update existing
+    await db.update(siteContent)
+      .set({ 
+        value: content.value, 
+        label: content.label,
+        contentType: content.contentType,
+        sortOrder: content.sortOrder,
+      })
+      .where(eq(siteContent.id, existing[0].id));
+  } else {
+    // Insert new
+    await db.insert(siteContent).values(content);
+  }
+}
+
+/**
+ * Update site content by ID
+ */
+export async function updateSiteContentById(id: number, value: string): Promise<void> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot update site content: database not available");
+    return;
+  }
+
+  await db.update(siteContent).set({ value }).where(eq(siteContent.id, id));
+}
+
+/**
+ * Delete site content by ID
+ */
+export async function deleteSiteContentById(id: number): Promise<void> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot delete site content: database not available");
+    return;
+  }
+
+  await db.delete(siteContent).where(eq(siteContent.id, id));
+}
+
+// =============================================================================
+// LEAD SUBMISSION QUERIES
+// =============================================================================
+
+/**
+ * Create a new lead submission
+ */
+export async function createLeadSubmission(lead: InsertLeadSubmission): Promise<void> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot create lead: database not available");
+    return;
+  }
+
+  await db.insert(leadSubmissions).values(lead);
+}
+
+/**
+ * Get all lead submissions
+ */
+export async function getAllLeadSubmissions(): Promise<LeadSubmission[]> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get leads: database not available");
+    return [];
+  }
+
+  return await db.select().from(leadSubmissions).orderBy(asc(leadSubmissions.createdAt));
+}
+
+/**
+ * Update lead submission status
+ */
+export async function updateLeadStatus(id: number, status: LeadSubmission['status'], adminNotes?: string): Promise<void> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot update lead: database not available");
+    return;
+  }
+
+  const updateData: Partial<LeadSubmission> = { status };
+  if (adminNotes !== undefined) {
+    updateData.adminNotes = adminNotes;
+  }
+
+  await db.update(leadSubmissions).set(updateData).where(eq(leadSubmissions.id, id));
+}
+
+/**
+ * Delete lead submission by ID
+ */
+export async function deleteLeadSubmission(id: number): Promise<void> {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot delete lead: database not available");
+    return;
+  }
+
+  await db.delete(leadSubmissions).where(eq(leadSubmissions.id, id));
+}

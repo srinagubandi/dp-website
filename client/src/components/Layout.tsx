@@ -30,7 +30,7 @@
 import { Link } from "wouter";                    // For navigation links
 import { Button } from "@/components/ui/button";  // Button component
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"; // Mobile menu
-import { Menu } from "lucide-react";              // Hamburger menu icon
+import { Menu, Phone } from "lucide-react";      // Hamburger menu icon, Phone icon
 import { useState } from "react";                 // React state hook
 import IntakeForm from "@/components/IntakeForm"; // Lead capture form popup
 
@@ -164,6 +164,20 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </Link>
 
           {/* -----------------------------------------------------------------
+              PHONE NUMBER - Click-to-call
+              -----------------------------------------------------------------
+              TO CHANGE PHONE NUMBER: Edit both display text and tel: link
+              TO HIDE PHONE: Remove this entire block
+          ----------------------------------------------------------------- */}
+          <a 
+            href="tel:1-800-362-7767" 
+            className="hidden md:flex items-center gap-2 text-sm font-semibold text-primary hover:text-secondary transition-colors"
+          >
+            <Phone className="h-4 w-4" />
+            1-800-DOC-PROPEL
+          </a>
+
+          {/* -----------------------------------------------------------------
               DESKTOP NAVIGATION (visible on screens md and larger)
               -----------------------------------------------------------------
               TO CHANGE SPACING BETWEEN LINKS: Edit "gap-8" (gap-4, gap-6, gap-10)
@@ -201,6 +215,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <SheetContent side="right" className="w-full sm:w-full p-0">
               {/* Full-screen mobile menu with centered links */}
               <nav className="flex flex-col items-center justify-center h-full gap-8 py-16">
+                {/* Click-to-call phone number - prominent at top of mobile menu */}
+                <a 
+                  href="tel:1-800-362-7767" 
+                  className="flex items-center gap-2 text-xl font-bold text-secondary hover:text-secondary/80 transition-colors"
+                  onClick={() => setIsOpen(false)}
+                >
+                  <Phone className="h-5 w-5" />
+                  1-800-DOC-PROPEL
+                </a>
+                
+                <div className="w-16 h-px bg-border" />
+                
                 <Link 
                   href="/services" 
                   className="text-xl font-medium hover:text-primary transition-colors" 
@@ -242,6 +268,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   onClick={() => setIsOpen(false)}
                 >
                   Results
+                </Link>
+                <Link 
+                  href="/contact" 
+                  className="text-xl font-medium hover:text-primary transition-colors" 
+                  onClick={() => setIsOpen(false)}
+                >
+                  Contact Us
                 </Link>
               </nav>
             </SheetContent>
@@ -361,15 +394,32 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div className="text-center md:text-left">
               <h4 className="font-semibold mb-4 text-foreground">Contact</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li>1-800-DOC-PROPEL</li>
-                <li>hello@docpropel.com</li>
-                <li className="pt-2">
-                  <Button 
-                    variant="outline" 
-                    className="w-full border-primary text-primary hover:bg-primary hover:text-white rounded-none"
+                <li>
+                  <a 
+                    href="tel:1-800-362-7767" 
+                    className="flex items-center gap-2 hover:text-primary justify-center md:justify-start"
                   >
-                    Client Login
-                  </Button>
+                    <Phone className="h-4 w-4" />
+                    1-800-DOC-PROPEL
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="mailto:hello@docpropel.com" 
+                    className="hover:text-primary"
+                  >
+                    hello@docpropel.com
+                  </a>
+                </li>
+                <li className="pt-2">
+                  <Link href="/contact">
+                    <Button 
+                      variant="outline" 
+                      className="w-full border-secondary text-secondary hover:bg-secondary hover:text-white rounded-none"
+                    >
+                      Contact Us
+                    </Button>
+                  </Link>
                 </li>
               </ul>
             </div>

@@ -11,6 +11,8 @@ import Compare from "./pages/Compare";
 import About from "@/pages/About";
 import Calculator from "@/pages/Calculator";
 import Results from "@/pages/Results";
+import Contact from "@/pages/Contact";
+import Admin from "@/pages/Admin";
 import PresenterApp from "./pages/presenter/PresenterApp";
 
 function Router() {
@@ -24,6 +26,8 @@ function Router() {
       <Route path="/about" component={About} />
       <Route path="/calculator" component={Calculator} />
       <Route path="/results" component={Results} />
+      <Route path="/contact" component={Contact} />
+      <Route path="/admin" component={Admin} />
       <Route path={"/presenter"} component={PresenterApp} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}

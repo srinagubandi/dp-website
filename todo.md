@@ -2,3 +2,9 @@
 - [x] Update mobile menu to full-screen overlay with centered links and close button
 - [x] Update service sections to centered layout on mobile with icons above text
 - [x] Update footer to centered layout on mobile with organized sections
+- [x] Create Contact Us page with intake form and phone number
+- [x] Add visible click-to-call phone number in header (mobile and desktop)
+- [x] Add visible click-to-call phone number in footer
+- [x] Create database schema for site content management
+- [x] Create admin dashboard for content customization
+- [x] Add admin routes and navigation
