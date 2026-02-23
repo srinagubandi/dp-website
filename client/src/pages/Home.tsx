@@ -1,6 +1,6 @@
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
-import { Check, ArrowRight } from "lucide-react";
+import { Check, ArrowRight, Zap } from "lucide-react";
 import { motion } from "framer-motion";
 import IntakeForm from "@/components/IntakeForm";
 import ROICalculator from "@/components/ROICalculator";
@@ -126,19 +126,19 @@ export default function Home() {
       </section>
 
       {/* AI Advantage Section */}
-      <section className="py-20 bg-gradient-to-b from-muted/30 to-background">
+      <section className="py-20 bg-background border-b border-border">
         <div className="container">
           <motion.div 
             className="max-w-3xl mx-auto text-center mb-16"
             {...fadeIn}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-xs font-bold tracking-wider uppercase mb-4">
-              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/fkeHVnQjUJXtKRvn.png" alt="AI" className="w-5 h-5 object-contain" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-primary text-xs font-bold tracking-wider uppercase mb-4">
+              <Zap className="w-3 h-3 fill-current" />
               Powered by Medical AI
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-primary">Lower Costs. Higher Precision.</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-primary">AI-Driven Healthcare Marketing</h2>
             <p className="text-lg text-muted-foreground">
-              Traditional agencies bill you for their bloat. We leverage cutting-edge medical AI to automate the heavy lifting, passing the savings directly to your practice.
+              We leverage cutting-edge AI and automation to make marketing your practice effortless.
             </p>
           </motion.div>
 

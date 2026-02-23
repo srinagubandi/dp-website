@@ -31,3 +31,6 @@
 - [x] Hide reviews section with star ratings on homepage
 - [x] Remove hero image from homepage
 - [x] Fix broken Social Media & Content icon on Services page
+- [x] Hide testimonials section with client photos and reviews (not found on homepage)
+- [x] Update AI Advantage section title to match new messaging
+- [x] Ensure AI Services section is not duplicate of existing AI Advantage section
