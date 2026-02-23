@@ -30,20 +30,20 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-background via-background to-blue-50/30 pt-10 pb-20 md:pt-20 md:pb-32">
         <div className="container relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="max-w-4xl mx-auto text-center">
             <motion.div 
-              className="lg:col-span-6 space-y-8"
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
+              className="space-y-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] text-primary">
                 Stop Paying for <span className="text-foreground">Promises.</span>
               </h1>
-              <p className="text-xl text-muted-foreground leading-relaxed max-w-lg">
+              <p className="text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
                 We grow your patient base. You only pay when we deliver. DocPropel is the performance-based growth partner for <strong>Doctors, Dentists, Pharmacies, and Physical Therapy / Occupational Therapy clinics</strong>. Just accountable, results-driven growth.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center">
                 <IntakeForm trigger={
                   <Button size="lg" className="bg-secondary hover:bg-secondary/90 text-white font-bold text-lg px-8 h-14 rounded-none shadow-lg shadow-secondary/20 transition-all hover:translate-y-[-2px]">
                     Request a Practice Growth Brief <ArrowRight className="ml-2 h-5 w-5" />
@@ -52,22 +52,6 @@ export default function Home() {
                 <Button variant="outline" size="lg" className="border-2 border-primary/20 text-primary font-semibold text-lg px-8 h-14 rounded-none hover:bg-primary/5">
                   See How It Works
                 </Button>
-              </div>
-            </motion.div>
-            
-            <motion.div 
-              className="lg:col-span-6 relative"
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              {/* Hero Image */}
-              <div className="relative rounded-lg overflow-hidden shadow-2xl">
-                <img 
-                  src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/uzQInoijEpzkYDcR.png" 
-                  alt="Healthcare professionals analyzing growth metrics" 
-                  className="w-full h-auto object-cover"
-                />
               </div>
             </motion.div>
           </div>

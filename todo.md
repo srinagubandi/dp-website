@@ -29,3 +29,4 @@
 - [x] Review homepage for redundant content and remove duplicates
 - [x] Fix all broken icon images on homepage
 - [x] Hide reviews section with star ratings on homepage
+- [x] Remove hero image from homepage
