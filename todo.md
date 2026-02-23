@@ -22,3 +22,7 @@
 - [x] Extract and organize new images from zip file
 - [x] Update homepage with new images (without phone number from images)
 - [x] Remove all language about "no contracts" and "no long-term contracts"
+- [x] Fix broken hero image on homepage
+- [x] Upload and use new hero image from user
+- [x] Add new sections to homepage using DP_2 and DP_3 images
+- [x] Remove "Performance-Based Marketing" badge from hero section

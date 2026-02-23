@@ -37,10 +37,6 @@ export default function Home() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 text-secondary text-xs font-bold tracking-wider uppercase">
-                <img src="/images/icon-performance-2d.png" alt="Growth" className="w-5 h-5 object-contain" />
-                Performance-Based Marketing
-              </div>
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] text-primary">
                 Stop Paying for <span className="text-foreground">Promises.</span>
               </h1>
@@ -68,7 +64,7 @@ export default function Home() {
               {/* Hero Image */}
               <div className="relative rounded-lg overflow-hidden shadow-2xl">
                 <img 
-                  src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/JaZGPfiQwvypSoOe.png" 
+                  src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/uzQInoijEpzkYDcR.png" 
                   alt="Healthcare professionals analyzing growth metrics" 
                   className="w-full h-auto object-cover"
                 />
@@ -397,6 +393,88 @@ export default function Home() {
                 </div>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* New Section with DP_2 Image */}
+      <section className="py-24 bg-white">
+        <div className="container">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-primary">Real Results. Real Growth.</h2>
+              <p className="text-lg text-muted-foreground mb-6">
+                We don't just drive traffic—we deliver qualified patients ready to book appointments. Our performance-based model means we only succeed when you do.
+              </p>
+              <p className="text-lg text-muted-foreground mb-8">
+                See how our AI-powered platform has helped healthcare practices across the country grow their patient base consistently and predictably.
+              </p>
+              <IntakeForm trigger={
+                <Button size="lg" className="bg-secondary hover:bg-secondary/90 text-white font-bold text-lg px-8 h-14 rounded-none">
+                  Request a Practice Growth Brief
+                </Button>
+              } />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="relative rounded-lg overflow-hidden shadow-2xl">
+                <img
+                  src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/bOIPwdoCRoRxeZep.png"
+                  alt="Healthcare practice growth metrics"
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* New Section with DP_3 Image */}
+      <section className="py-24 bg-gradient-to-b from-muted/30 to-background">
+        <div className="container">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="order-2 lg:order-1"
+            >
+              <div className="relative rounded-lg overflow-hidden shadow-2xl">
+                <img
+                  src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/bQLtoQWiRrrgeVXi.png"
+                  alt="Healthcare marketing dashboard"
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="order-1 lg:order-2"
+            >
+              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-primary">Data-Driven. Patient-Focused.</h2>
+              <p className="text-lg text-muted-foreground mb-6">
+                Track every patient inquiry, appointment booked, and dollar spent in real-time. Our transparent reporting shows exactly where your growth is coming from.
+              </p>
+              <p className="text-lg text-muted-foreground mb-8">
+                No vanity metrics. No fluff. Just clear, actionable insights that help you understand your practice's growth trajectory.
+              </p>
+              <Button variant="outline" size="lg" className="border-2 border-primary/20 text-primary font-semibold text-lg px-8 h-14 rounded-none hover:bg-primary/5">
+                See How It Works
+              </Button>
+            </motion.div>
           </div>
         </div>
       </section>
