@@ -342,7 +342,7 @@ export default function Home() {
               {
                 title: "Social Media & Content",
                 desc: "Reinforce credibility, authority, and stay top of mind in your community.",
-                icon: "/images/icon-handshake-2d.png"
+                icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/iTgceqtSLqLOWeyy.png"
               },
               {
                 title: "Digital Brief",
