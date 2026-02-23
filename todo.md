@@ -26,3 +26,6 @@
 - [x] Upload and use new hero image from user
 - [x] Add new sections to homepage using DP_2 and DP_3 images
 - [x] Remove "Performance-Based Marketing" badge from hero section
+- [x] Review homepage for redundant content and remove duplicates
+- [x] Fix all broken icon images on homepage
+- [x] Hide reviews section with star ratings on homepage

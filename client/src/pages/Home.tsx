@@ -19,10 +19,10 @@ export default function Home() {
   };
 
   const specialties = [
-    { icon: "/images/icon-doctor-2d.png", name: "Doctors", desc: "Primary Care & Specialists" },
-    { icon: "/images/icon-dentist-2d.png", name: "Dentists", desc: "General & Cosmetic" },
-    { icon: "/images/icon-pharmacy-2d.png", name: "Pharmacies", desc: "Independent & Retail" },
-    { icon: "/images/icon-pt-2d.png", name: "Physical Therapy / Occupational Therapy", desc: "Rehab & Therapy Clinics" },
+    { icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/hgeCYmgWdFOTQFeJ.png", name: "Doctors", desc: "Primary Care & Specialists" },
+    { icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/xUduvXxBKpcYHKDu.png", name: "Dentists", desc: "General & Cosmetic" },
+    { icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/IPUuYqwwRkEoslEe.png", name: "Pharmacies", desc: "Independent & Retail" },
+    { icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/vTEcNtMTylllVefa.png", name: "Physical Therapy / Occupational Therapy", desc: "Rehab & Therapy Clinics" },
   ];
 
   return (
@@ -93,25 +93,25 @@ export default function Home() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
-                icon: "/images/icon-doctor-2d.png",
+                icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/hgeCYmgWdFOTQFeJ.png",
                 title: "Doctors & Physicians",
                 items: ["Primary Care", "Internal Medicine", "Specialists", "Urgent Care"],
                 color: "bg-blue-50 border-primary"
               },
               {
-                icon: "/images/icon-dentist-2d.png",
+                icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/xUduvXxBKpcYHKDu.png",
                 title: "Dentists",
                 items: ["General Dentistry", "Cosmetic", "Orthodontics", "Oral Surgery"],
                 color: "bg-orange-50 border-secondary"
               },
               {
-                icon: "/images/icon-pharmacy-2d.png",
+                icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/IPUuYqwwRkEoslEe.png",
                 title: "Pharmacies",
                 items: ["Independent", "Compounding", "Specialty", "Retail"],
                 color: "bg-blue-50 border-primary"
               },
               {
-                icon: "/images/icon-pt-2d.png",
+                icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/vTEcNtMTylllVefa.png",
                 title: "Physical Therapy / Occupational Therapy",
                 items: ["Physical Therapy", "Occupational Therapy", "Sports Rehab", "Pediatric"],
                 color: "bg-orange-50 border-secondary"
@@ -149,7 +149,7 @@ export default function Home() {
             {...fadeIn}
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-xs font-bold tracking-wider uppercase mb-4">
-              <img src="/images/icon-ai-2d.png" alt="AI" className="w-5 h-5 object-contain" />
+              <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/fkeHVnQjUJXtKRvn.png" alt="AI" className="w-5 h-5 object-contain" />
               Powered by Medical AI
             </div>
             <h2 className="text-3xl md:text-4xl font-bold mb-6 text-primary">Lower Costs. Higher Precision.</h2>
@@ -161,17 +161,17 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                icon: "/images/icon-target-2d.png",
+                icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/qANZOjHlFCcayAsG.png",
                 title: "Zero Wasted Ad Spend",
                 desc: "Predictive algorithms optimize your budget in real-time, ensuring every dollar targets patients actively seeking care. No more paying for clicks that don't convert."
               },
               {
-                icon: "/images/icon-ai-2d.png",
+                icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/fkeHVnQjUJXtKRvn.png",
                 title: "24/7 Patient Capture",
                 desc: "Intelligent, HIPAA-compliant chatbots engage visitors instantly—even while you sleep—converting website traffic into booked appointments without adding staff."
               },
               {
-                icon: "/images/icon-performance-2d.png",
+                icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/WBhDloOVGpaxRdbW.png",
                 title: "Automated Reactivation",
                 desc: "Smart campaigns identify and re-engage dormant patients automatically, filling your schedule without you lifting a finger."
               }
@@ -209,19 +209,19 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                icon: "/images/icon-shield-2d.png",
+                icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/woFUFmSxhgHLUyTo.png",
                 step: "01",
                 title: "Deploy & Optimize",
                 desc: "We deploy and continuously optimize the right mix of channels based on your specialty and geography."
               },
               {
-                icon: "/images/icon-growth-chart.png",
+                icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/EtYMzJocxPYxMecb.png",
                 step: "02",
                 title: "Deliver Patients",
                 desc: "We focus on delivering qualified patient inquiries and booked appointments. Reporting is real-time and outcome-focused."
               },
               {
-                icon: "/images/icon-roi-calculator.png",
+                icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/WBhDloOVGpaxRdbW.png",
                 step: "03",
                 title: "Pay for Performance",
                 desc: "You pay when patients are delivered, not for activity. No vanity metrics—just real, measurable results."
@@ -338,22 +338,22 @@ export default function Home() {
               {
                 title: "Healthcare SEO",
                 desc: "We ensure you appear exactly where patients are actively searching for care in your local market.",
-                icon: "/images/icon-target-2d.png"
+                icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/qANZOjHlFCcayAsG.png"
               },
               {
                 title: "Paid Search",
                 desc: "Create immediate demand and convert intent into booked appointments, not just traffic.",
-                icon: "/images/icon-performance-2d.png"
+                icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/WBhDloOVGpaxRdbW.png"
               },
               {
                 title: "Website Design",
                 desc: "Built for trust, compliance, and conversion rather than just aesthetics.",
-                icon: "/images/icon-ai-2d.png"
+                icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/fkeHVnQjUJXtKRvn.png"
               },
               {
                 title: "Reputation Management",
                 desc: "Systematically build social proof that works continuously to attract new patients.",
-                icon: "/images/icon-shield-trust.png"
+                icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/qMFufdufqNeqWknO.png"
               },
               {
                 title: "Social Media & Content",
@@ -363,7 +363,7 @@ export default function Home() {
               {
                 title: "Digital Brief",
                 desc: "A supportive, insight-led review of your digital ecosystem and experience.",
-                icon: "/images/icon-growth-chart.png",
+                icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/EtYMzJocxPYxMecb.png",
                 cta: "Request a Digital Brief"
               }
             ].map((service, i) => (
@@ -506,22 +506,22 @@ export default function Home() {
             >
               <div className="grid grid-cols-2 gap-4">
                 <div className="bg-white p-6 shadow-lg border-t-4 border-primary">
-                  <IconImage src="/images/icon-handshake-v2.png" alt="Partnership" size={48} />
+                  <IconImage src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/iTgceqtSLqLOWeyy.png" alt="Partnership" size={48} />
                   <h4 className="font-bold text-primary mt-3">True Partnership</h4>
                   <p className="text-sm text-muted-foreground mt-2">We succeed when you succeed</p>
                 </div>
                 <div className="bg-white p-6 shadow-lg border-t-4 border-secondary">
-                  <IconImage src="/images/icon-shield-trust.png" alt="Trust" size={48} />
+                  <IconImage src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/qMFufdufqNeqWknO.png" alt="Trust" size={48} />
                   <h4 className="font-bold text-primary mt-3">HIPAA Compliant</h4>
                   <p className="text-sm text-muted-foreground mt-2">Healthcare-first approach</p>
                 </div>
                 <div className="bg-white p-6 shadow-lg border-t-4 border-secondary">
-                  <IconImage src="/images/icon-ai-2d.png" alt="AI" size={48} />
+                  <IconImage src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/fkeHVnQjUJXtKRvn.png" alt="AI" size={48} />
                   <h4 className="font-bold text-primary mt-3">AI-Powered</h4>
                   <p className="text-sm text-muted-foreground mt-2">Cutting-edge technology</p>
                 </div>
                 <div className="bg-white p-6 shadow-lg border-t-4 border-primary">
-                  <IconImage src="/images/icon-performance-2d.png" alt="Results" size={48} />
+                  <IconImage src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/WBhDloOVGpaxRdbW.png" alt="Results" size={48} />
                   <h4 className="font-bold text-primary mt-3">Results-Driven</h4>
                   <p className="text-sm text-muted-foreground mt-2">Pay for performance only</p>
                 </div>
