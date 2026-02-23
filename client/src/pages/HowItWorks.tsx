@@ -42,7 +42,7 @@ export default function HowItWorks() {
               {
                 icon: <Zap className="h-10 w-10 text-secondary" />,
                 title: "3. Pay for Performance",
-                desc: "You pay when patients are delivered, not for activity. No vanity metrics, long contracts, or lock-ins."
+                desc: "You pay when patients are delivered, not for activity. No vanity metrics—just real, measurable results."
               }
             ].map((item, i) => (
               <motion.div 

@@ -113,7 +113,7 @@ export default function PresenterApp() {
                 {[
                   { title: "High Fixed Retainers", desc: "You pay thousands monthly regardless of results.", icon: "💸" },
                   { title: "Zero Accountability", desc: "Agencies focus on vanity metrics, not booked appointments.", icon: "📉" },
-                  { title: "Long-Term Lock-ins", desc: "12-24 month contracts trap you in bad relationships.", icon: "🔒" }
+                  { title: "Misaligned Incentives", desc: "Agencies get paid whether you grow or not.", icon: "🔒" }
                 ].map((item, i) => (
                   <div key={i} className="bg-white p-8 rounded-2xl shadow-lg border border-border text-center">
                     <div className="text-6xl mb-6">{item.icon}</div>

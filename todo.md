@@ -18,3 +18,7 @@
 - [x] Display testimonials dynamically on Results page
 - [x] Add simple username/password admin login
 - [x] Remove hardcoded admin credentials - require environment variables only
+- [x] Update favicon to pulse icon
+- [x] Extract and organize new images from zip file
+- [x] Update homepage with new images (without phone number from images)
+- [x] Remove all language about "no contracts" and "no long-term contracts"

@@ -45,7 +45,7 @@ export default function Home() {
                 Stop Paying for <span className="text-foreground">Promises.</span>
               </h1>
               <p className="text-xl text-muted-foreground leading-relaxed max-w-lg">
-                We grow your patient base. You only pay when we deliver. DocPropel is the performance-based growth partner for <strong>Doctors, Dentists, Pharmacies, and Physical Therapy / Occupational Therapy clinics</strong>. No retainers. No long-term contracts. Just accountable growth.
+                We grow your patient base. You only pay when we deliver. DocPropel is the performance-based growth partner for <strong>Doctors, Dentists, Pharmacies, and Physical Therapy / Occupational Therapy clinics</strong>. Just accountable, results-driven growth.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <IntakeForm trigger={
@@ -65,24 +65,14 @@ export default function Home() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              {/* Specialty Cards Grid */}
-              <div className="grid grid-cols-2 gap-4">
-                {specialties.map((specialty, i) => (
-                  <motion.div
-                    key={specialty.name}
-                    className="bg-white p-6 shadow-lg border-l-4 border-secondary hover:shadow-xl transition-shadow"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
-                  >
-                    <IconImage src={specialty.icon} alt={specialty.name} size={56} />
-                    <h3 className="text-lg font-bold text-primary mt-3">{specialty.name}</h3>
-                    <p className="text-sm text-muted-foreground">{specialty.desc}</p>
-                  </motion.div>
-                ))}
+              {/* Hero Image */}
+              <div className="relative rounded-lg overflow-hidden shadow-2xl">
+                <img 
+                  src="https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/JaZGPfiQwvypSoOe.png" 
+                  alt="Healthcare professionals analyzing growth metrics" 
+                  className="w-full h-auto object-cover"
+                />
               </div>
-              
-
             </motion.div>
           </div>
         </div>
@@ -238,7 +228,7 @@ export default function Home() {
                 icon: "/images/icon-roi-calculator.png",
                 step: "03",
                 title: "Pay for Performance",
-                desc: "You pay when patients are delivered, not for activity. No vanity metrics, long contracts, or lock-ins."
+                desc: "You pay when patients are delivered, not for activity. No vanity metrics—just real, measurable results."
               }
             ].map((item, i) => (
               <motion.div 
