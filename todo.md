@@ -35,3 +35,5 @@
 - [x] Update AI Advantage section title to match new messaging
 - [x] Ensure AI Services section is not duplicate of existing AI Advantage section
 - [x] Hide Results page from navigation menu (desktop, mobile, footer)
+- [x] Remove "Data-Driven. Patient-Focused." section from homepage
+- [x] Remove "Real Results. Real Growth." section with testimonials from homepage
