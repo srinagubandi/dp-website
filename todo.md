@@ -42,3 +42,5 @@
 - [x] Replace all contact buttons/links with intake form popup
 - [x] Remove all mailto links from site
 - [x] Add notes/additional information field to intake form
+- [x] Fix broken icons on Services page
+- [x] Fix broken image on About Us page

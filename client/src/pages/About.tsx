@@ -38,17 +38,26 @@ export default function About() {
               </div>
             </motion.div>
             <motion.div 
-              className="relative h-[500px] bg-white p-3 shadow-2xl border border-border rotate-2 hover:rotate-0 transition-all duration-500"
+              className="relative bg-gradient-to-br from-primary/10 to-secondary/10 p-12 rounded-lg"
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.8 }}
             >
-              <img 
-                src="/images/hero-split.jpg" 
-                alt="Healthcare professionals" 
-                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
-              />
+              <div className="space-y-8">
+                <div className="bg-white p-8 shadow-lg border-l-4 border-primary">
+                  <h3 className="text-2xl font-bold text-primary mb-3">Performance-Based</h3>
+                  <p className="text-muted-foreground">You only pay when we deliver qualified patient inquiries. No retainers, no wasted spend.</p>
+                </div>
+                <div className="bg-white p-8 shadow-lg border-l-4 border-secondary">
+                  <h3 className="text-2xl font-bold text-primary mb-3">Healthcare-First</h3>
+                  <p className="text-muted-foreground">HIPAA-compliant, specialty-specific strategies built for doctors, dentists, pharmacies, and PT/OT clinics.</p>
+                </div>
+                <div className="bg-white p-8 shadow-lg border-l-4 border-primary">
+                  <h3 className="text-2xl font-bold text-primary mb-3">AI-Powered</h3>
+                  <p className="text-muted-foreground">Cutting-edge automation and real-time optimization to maximize your ROI and minimize costs.</p>
+                </div>
+              </div>
             </motion.div>
           </div>
         </div>

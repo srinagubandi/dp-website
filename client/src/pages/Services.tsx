@@ -19,37 +19,37 @@ export default function Services() {
 
   const services = [
     {
-      icon: "/images/icon-target-v2.png",
+      icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/qANZOjHlFCcayAsG.png",
       title: "Healthcare SEO",
       desc: "We ensure you appear exactly where patients are actively searching for care in your local market. We focus on high-intent keywords that drive appointments, not just traffic.",
       specialties: ["Doctors", "Dentists", "Pharmacies", "Physical Therapy / Occupational Therapy"]
     },
     {
-      icon: "/images/icon-roi-calculator.png",
+      icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/WBhDloOVGpaxRdbW.png",
       title: "Paid Search & PPC",
       desc: "Create immediate demand and convert intent into booked appointments. We manage your ad spend to maximize ROI and eliminate waste.",
       specialties: ["Doctors", "Dentists", "Physical Therapy / Occupational Therapy"]
     },
     {
-      icon: "/images/icon-ai-v2.png",
+      icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/fkeHVnQjUJXtKRvn.png",
       title: "AI-Powered Website",
       desc: "Built for trust, compliance, and conversion rather than just aesthetics. Your site will be a patient-generating machine with 24/7 AI chat.",
       specialties: ["Doctors", "Dentists", "Pharmacies", "Physical Therapy / Occupational Therapy"]
     },
     {
-      icon: "/images/icon-shield-trust.png",
+      icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/qMFufdufqNeqWknO.png",
       title: "Reputation Management",
       desc: "Systematically build social proof that works continuously to attract new patients. We help you get more 5-star reviews and manage your online reputation.",
       specialties: ["Doctors", "Dentists", "Pharmacies", "Physical Therapy / Occupational Therapy"]
     },
     {
-      icon: "/images/icon-performance-v2.png",
+      icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/WBhDloOVGpaxRdbW.png",
       title: "Patient Reactivation",
       desc: "Smart campaigns identify and re-engage dormant patients automatically, filling your schedule without you lifting a finger.",
       specialties: ["Doctors", "Dentists", "Physical Therapy / Occupational Therapy"]
     },
     {
-      icon: "/images/icon-growth-chart.png",
+      icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/EtYMzJocxPYxMecb.png",
       title: "Digital Brief",
       desc: "A supportive, insight-led review of your digital ecosystem and experience. Identify gaps and opportunities for growth.",
       specialties: ["All Specialties"],
@@ -59,7 +59,7 @@ export default function Services() {
 
   const specialtyBenefits = [
     {
-      icon: "/images/icon-doctor-v2.png",
+      icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/hgeCYmgWdFOTQFeJ.png",
       title: "For Doctors & Physicians",
       benefits: [
         "Increase new patient appointments by 25-40%",
@@ -69,7 +69,7 @@ export default function Services() {
       ]
     },
     {
-      icon: "/images/icon-dentist-v2.png",
+      icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/xUduvXxBKpcYHKDu.png",
       title: "For Dentists",
       benefits: [
         "Fill hygiene schedules with recurring patients",
@@ -79,7 +79,7 @@ export default function Services() {
       ]
     },
     {
-      icon: "/images/icon-pharmacy-v2.png",
+      icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/IPUuYqwwRkEoslEe.png",
       title: "For Pharmacies",
       benefits: [
         "Drive prescription transfers from competitors",
@@ -89,7 +89,7 @@ export default function Services() {
       ]
     },
     {
-      icon: "/images/icon-pt-v2.png",
+      icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/vTEcNtMTylllVefa.png",
       title: "For Physical Therapy / Occupational Therapy Clinics",
       benefits: [
         "Capture direct-access patients online",
