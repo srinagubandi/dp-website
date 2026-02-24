@@ -114,14 +114,14 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         ROI Calculator
       </Link>
 
-      {/* Results/Case Studies Page Link */}
-      <Link 
+      {/* Results/Case Studies Page Link - HIDDEN */}
+      {/* <Link 
         href="/results" 
         className="text-sm font-medium hover:text-primary transition-colors" 
         onClick={() => setIsOpen(false)}
       >
         Results
-      </Link>
+      </Link> */}
     </>
   );
 
@@ -262,13 +262,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 >
                   ROI Calculator
                 </Link>
-                <Link 
+                {/* <Link 
                   href="/results" 
                   className="text-xl font-medium hover:text-primary transition-colors" 
                   onClick={() => setIsOpen(false)}
                 >
                   Results
-                </Link>
+                </Link> */}
                 <Link 
                   href="/contact" 
                   className="text-xl font-medium hover:text-primary transition-colors" 
@@ -379,7 +379,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li><Link href="/about" className="hover:text-primary">About Us</Link></li>
                 <li><Link href="/how-it-works" className="hover:text-primary">How It Works</Link></li>
-                <li><Link href="/results" className="hover:text-primary">Case Studies</Link></li>
+                {/* <li><Link href="/results" className="hover:text-primary">Case Studies</Link></li> */}
                 <li><Link href="/calculator" className="hover:text-primary">ROI Calculator</Link></li>
               </ul>
             </div>
