@@ -44,3 +44,4 @@
 - [x] Add notes/additional information field to intake form
 - [x] Fix broken icons on Services page
 - [x] Fix broken image on About Us page
+- [x] Fix blue button text color on Contact page to be white by default

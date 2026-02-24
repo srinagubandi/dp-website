@@ -75,7 +75,7 @@ export default function Contact() {
                 trigger={
                   <Button 
                     size="lg" 
-                    className="inline-flex items-center gap-2 border-2 border-primary text-primary hover:bg-primary hover:text-white font-bold text-lg px-8 h-14 rounded-none"
+                    className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 font-bold text-lg px-8 h-14 rounded-none shadow-lg transition-all"
                   >
                     <Mail className="h-5 w-5" />
                     Send Us a Message
