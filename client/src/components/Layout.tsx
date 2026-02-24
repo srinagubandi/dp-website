@@ -114,6 +114,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         ROI Calculator
       </Link>
 
+      {/* Contact Us Page Link */}
+      <Link 
+        href="/contact" 
+        className="text-sm font-medium hover:text-primary transition-colors" 
+        onClick={() => setIsOpen(false)}
+      >
+        Contact Us
+      </Link>
+
       {/* Results/Case Studies Page Link - HIDDEN */}
       {/* <Link 
         href="/results" 
@@ -404,12 +413,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   </a>
                 </li>
                 <li>
-                  <a 
-                    href="mailto:hello@docpropel.com" 
-                    className="hover:text-primary"
-                  >
-                    hello@docpropel.com
-                  </a>
+                  <IntakeForm 
+                    trigger={
+                      <button className="hover:text-primary text-left">
+                        Send us a message
+                      </button>
+                    }
+                  />
                 </li>
                 <li className="pt-2">
                   <Link href="/contact">

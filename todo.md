@@ -37,3 +37,8 @@
 - [x] Hide Results page from navigation menu (desktop, mobile, footer)
 - [x] Remove "Data-Driven. Patient-Focused." section from homepage
 - [x] Remove "Real Results. Real Growth." section with testimonials from homepage
+- [x] Add Contact Us link to top navigation
+- [x] Update Contact page with intake form (no mailto links)
+- [x] Replace all contact buttons/links with intake form popup
+- [x] Remove all mailto links from site
+- [x] Add notes/additional information field to intake form

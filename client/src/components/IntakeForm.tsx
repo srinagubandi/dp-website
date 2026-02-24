@@ -104,6 +104,11 @@ export default function IntakeForm({ trigger }: { trigger?: React.ReactNode }) {
             </div>
           </div>
 
+          <div className="space-y-2">
+            <Label htmlFor="notes">Additional Information (Optional)</Label>
+            <Textarea id="notes" placeholder="Any additional details or questions you'd like to share..." rows={3} />
+          </div>
+
           <div className="pt-4">
             <Button type="submit" className="w-full bg-secondary hover:bg-secondary/90 text-white font-bold h-12 text-lg rounded-none">
               Submit Request

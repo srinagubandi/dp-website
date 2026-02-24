@@ -71,13 +71,17 @@ export default function Contact() {
                 Call {phoneNumber}
               </a>
               <span className="text-muted-foreground">or</span>
-              <a 
-                href={`mailto:${email}`}
-                className="inline-flex items-center gap-2 border-2 border-primary text-primary hover:bg-primary hover:text-white font-bold text-lg px-8 py-4 rounded-none transition-all"
-              >
-                <Mail className="h-5 w-5" />
-                Email Us
-              </a>
+              <IntakeForm 
+                trigger={
+                  <Button 
+                    size="lg" 
+                    className="inline-flex items-center gap-2 border-2 border-primary text-primary hover:bg-primary hover:text-white font-bold text-lg px-8 h-14 rounded-none"
+                  >
+                    <Mail className="h-5 w-5" />
+                    Send Us a Message
+                  </Button>
+                }
+              />
             </div>
 
             {/* Specialty Icons */}
@@ -172,17 +176,21 @@ export default function Contact() {
                     <div className="p-3 bg-primary/10 rounded-lg">
                       <Mail className="h-6 w-6 text-primary" />
                     </div>
-                    <div>
-                      <h3 className="font-semibold text-lg mb-1">Email Us</h3>
-                      <a 
-                        href={`mailto:${email}`}
-                        className="text-xl font-bold text-primary hover:text-secondary transition-colors"
-                      >
-                        {email}
-                      </a>
-                      <p className="text-sm text-muted-foreground mt-1">
-                        We typically respond within 24 hours
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-lg mb-1">Send a Message</h3>
+                      <p className="text-muted-foreground mb-3">
+                        Fill out our brief form and we'll respond within 24 hours
                       </p>
+                      <IntakeForm 
+                        trigger={
+                          <Button 
+                            variant="outline" 
+                            className="border-primary text-primary hover:bg-primary hover:text-white font-semibold"
+                          >
+                            Open Contact Form
+                          </Button>
+                        }
+                      />
                     </div>
                   </div>
                 </CardContent>
