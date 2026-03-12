@@ -1,235 +1,272 @@
+/**
+ * =============================================================================
+ * SERVICES.TSX - DocPropel Services Page
+ * =============================================================================
+ *
+ * Design: Dark premium theme inspired by PropelDental.
+ * Sections:
+ *   1. Hero — left-aligned headline + specialty badges
+ *   2. Services Grid — 3-column card grid
+ *   3. Specialty Benefits — 4-card grid with bullet lists
+ *   4. Final CTA
+ *
+ * =============================================================================
+ */
+
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
-import { Check, ArrowRight } from "lucide-react";
-import { motion } from "framer-motion";
+import { Check, ArrowRight, Zap } from "lucide-react";
 import IntakeForm from "@/components/IntakeForm";
 
-// Custom icon component for image-based icons
 const IconImage = ({ src, alt, size = 48 }: { src: string; alt: string; size?: number }) => (
   <img src={src} alt={alt} className="object-contain" style={{ width: size, height: size }} />
 );
 
+const services = [
+  {
+    icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/qANZOjHlFCcayAsG.png",
+    title: "Healthcare SEO",
+    desc: "We ensure you appear exactly where patients are actively searching for care in your local market. We focus on high-intent keywords that drive appointments, not just traffic.",
+    specialties: ["Doctors", "Dentists", "Pharmacies", "PT / OT"],
+  },
+  {
+    icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/WBhDloOVGpaxRdbW.png",
+    title: "Paid Search & PPC",
+    desc: "Create immediate demand and convert intent into booked appointments. We manage your ad spend to maximize ROI and eliminate waste.",
+    specialties: ["Doctors", "Dentists", "PT / OT"],
+  },
+  {
+    icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/fkeHVnQjUJXtKRvn.png",
+    title: "AI-Powered Website",
+    desc: "Built for trust, compliance, and conversion rather than just aesthetics. Your site will be a patient-generating machine with 24/7 AI chat.",
+    specialties: ["Doctors", "Dentists", "Pharmacies", "PT / OT"],
+  },
+  {
+    icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/qMFufdufqNeqWknO.png",
+    title: "Reputation Management",
+    desc: "Systematically build social proof that works continuously to attract new patients. We help you get more 5-star reviews and manage your online reputation.",
+    specialties: ["Doctors", "Dentists", "Pharmacies", "PT / OT"],
+  },
+  {
+    icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/WBhDloOVGpaxRdbW.png",
+    title: "Patient Reactivation",
+    desc: "Smart campaigns identify and re-engage dormant patients automatically, filling your schedule without you lifting a finger.",
+    specialties: ["Doctors", "Dentists", "PT / OT"],
+  },
+  {
+    icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/EtYMzJocxPYxMecb.png",
+    title: "Digital Growth Brief",
+    desc: "A supportive, insight-led review of your digital ecosystem and experience. Identify gaps and opportunities for growth.",
+    specialties: ["All Specialties"],
+    cta: "Request a Digital Brief",
+  },
+];
+
+const specialtyBenefits = [
+  {
+    icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/hgeCYmgWdFOTQFeJ.png",
+    title: "For Doctors & Physicians",
+    benefits: [
+      "Increase new patient appointments by 25–40%",
+      "Reduce no-show rates with automated reminders",
+      "Build referral networks with local specialists",
+      "HIPAA-compliant marketing across all channels",
+    ],
+  },
+  {
+    icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/xUduvXxBKpcYHKDu.png",
+    title: "For Dentists",
+    benefits: [
+      "Fill hygiene schedules with recurring patients",
+      "Attract high-value cosmetic cases",
+      "Dominate local search for dental keywords",
+      "Convert website visitors into booked appointments",
+    ],
+  },
+  {
+    icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/IPUuYqwwRkEoslEe.png",
+    title: "For Pharmacies",
+    benefits: [
+      "Drive prescription transfers from competitors",
+      "Promote specialty services (compounding, immunizations)",
+      "Build community presence and loyalty",
+      "Compete effectively against big chains",
+    ],
+  },
+  {
+    icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/vTEcNtMTylllVefa.png",
+    title: "For Physical Therapy / OT Clinics",
+    benefits: [
+      "Capture direct-access patients online",
+      "Build physician referral relationships",
+      "Reduce patient drop-off rates",
+      "Expand to multiple locations with proven playbooks",
+    ],
+  },
+];
+
 export default function Services() {
-  const fadeIn = {
-    initial: { opacity: 0, y: 20 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true },
-    transition: { duration: 0.6 }
-  };
-
-  const services = [
-    {
-      icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/qANZOjHlFCcayAsG.png",
-      title: "Healthcare SEO",
-      desc: "We ensure you appear exactly where patients are actively searching for care in your local market. We focus on high-intent keywords that drive appointments, not just traffic.",
-      specialties: ["Doctors", "Dentists", "Pharmacies", "Physical Therapy / Occupational Therapy"]
-    },
-    {
-      icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/WBhDloOVGpaxRdbW.png",
-      title: "Paid Search & PPC",
-      desc: "Create immediate demand and convert intent into booked appointments. We manage your ad spend to maximize ROI and eliminate waste.",
-      specialties: ["Doctors", "Dentists", "Physical Therapy / Occupational Therapy"]
-    },
-    {
-      icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/fkeHVnQjUJXtKRvn.png",
-      title: "AI-Powered Website",
-      desc: "Built for trust, compliance, and conversion rather than just aesthetics. Your site will be a patient-generating machine with 24/7 AI chat.",
-      specialties: ["Doctors", "Dentists", "Pharmacies", "Physical Therapy / Occupational Therapy"]
-    },
-    {
-      icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/qMFufdufqNeqWknO.png",
-      title: "Reputation Management",
-      desc: "Systematically build social proof that works continuously to attract new patients. We help you get more 5-star reviews and manage your online reputation.",
-      specialties: ["Doctors", "Dentists", "Pharmacies", "Physical Therapy / Occupational Therapy"]
-    },
-    {
-      icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/WBhDloOVGpaxRdbW.png",
-      title: "Patient Reactivation",
-      desc: "Smart campaigns identify and re-engage dormant patients automatically, filling your schedule without you lifting a finger.",
-      specialties: ["Doctors", "Dentists", "Physical Therapy / Occupational Therapy"]
-    },
-    {
-      icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/EtYMzJocxPYxMecb.png",
-      title: "Digital Brief",
-      desc: "A supportive, insight-led review of your digital ecosystem and experience. Identify gaps and opportunities for growth.",
-      specialties: ["All Specialties"],
-      cta: "Request a Digital Brief"
-    }
-  ];
-
-  const specialtyBenefits = [
-    {
-      icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/hgeCYmgWdFOTQFeJ.png",
-      title: "For Doctors & Physicians",
-      benefits: [
-        "Increase new patient appointments by 25-40%",
-        "Reduce no-show rates with automated reminders",
-        "Build referral networks with local specialists",
-        "HIPAA-compliant marketing across all channels"
-      ]
-    },
-    {
-      icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/xUduvXxBKpcYHKDu.png",
-      title: "For Dentists",
-      benefits: [
-        "Fill hygiene schedules with recurring patients",
-        "Attract high-value cosmetic cases",
-        "Dominate local search for dental keywords",
-        "Convert website visitors into booked appointments"
-      ]
-    },
-    {
-      icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/IPUuYqwwRkEoslEe.png",
-      title: "For Pharmacies",
-      benefits: [
-        "Drive prescription transfers from competitors",
-        "Promote specialty services (compounding, immunizations)",
-        "Build community presence and loyalty",
-        "Compete effectively against big chains"
-      ]
-    },
-    {
-      icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/vTEcNtMTylllVefa.png",
-      title: "For Physical Therapy / Occupational Therapy Clinics",
-      benefits: [
-        "Capture direct-access patients online",
-        "Build physician referral relationships",
-        "Reduce patient drop-off rates",
-        "Expand to multiple locations with proven playbooks"
-      ]
-    }
-  ];
-
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-background to-blue-50/30 border-b border-border">
+
+      {/* =====================================================================
+          1. HERO
+      ===================================================================== */}
+      <section className="py-20 md:py-28 border-b border-border">
         <div className="container">
-          <motion.div className="text-center max-w-3xl mx-auto" {...fadeIn}>
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/10 text-secondary text-xs font-bold tracking-wider uppercase mb-6">
-              <img src="/images/icon-performance-v2.png" alt="Growth" className="w-4 h-4 object-contain" />
+          <div className="max-w-4xl">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/10 text-primary text-sm font-medium mb-6">
+              <Zap className="w-4 h-4" />
               Full-Service Growth
             </div>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-primary">One Growth System. Predictable Results.</h1>
-            <p className="text-xl text-muted-foreground mb-8">
-              You don't need multiple vendors or complex contracts. We manage your entire digital growth ecosystem under one performance-based model—tailored for <strong>doctors, dentists, pharmacies, and Physical Therapy / Occupational Therapy clinics</strong>.
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mb-6">
+              One Growth System.{" "}
+              <span className="text-primary">Predictable Results.</span>
+            </h1>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed mb-10">
+              You don't need multiple vendors or complex contracts. We manage your entire
+              digital growth ecosystem under one performance-based model — tailored for{" "}
+              <strong className="text-foreground">
+                doctors, dentists, pharmacies, and Physical Therapy / OT clinics
+              </strong>.
             </p>
-            <div className="flex flex-wrap justify-center gap-3">
+
+            {/* Specialty badges */}
+            <div className="flex flex-wrap gap-3">
               {[
-                { icon: "/images/icon-doctor-v2.png", name: "Doctors" },
-                { icon: "/images/icon-dentist-v2.png", name: "Dentists" },
-                { icon: "/images/icon-pharmacy-v2.png", name: "Pharmacies" },
-                { icon: "/images/icon-pt-v2.png", name: "Physical Therapy / Occupational Therapy" },
+                { icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/hgeCYmgWdFOTQFeJ.png", name: "Doctors" },
+                { icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/xUduvXxBKpcYHKDu.png", name: "Dentists" },
+                { icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/IPUuYqwwRkEoslEe.png", name: "Pharmacies" },
+                { icon: "https://files.manuscdn.com/user_upload_by_module/session_file/310519663082775454/vTEcNtMTylllVefa.png", name: "Physical Therapy / OT" },
               ].map((s) => (
-                <span key={s.name} className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-border text-sm font-medium rounded-full">
+                <span
+                  key={s.name}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-border bg-card text-sm font-medium"
+                >
                   <img src={s.icon} alt={s.name} className="w-5 h-5 object-contain" />
                   {s.name}
                 </span>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* Services Grid */}
-      <section className="py-20 bg-background">
+      {/* =====================================================================
+          2. SERVICES GRID
+      ===================================================================== */}
+      <section className="py-20 md:py-28 border-b border-border">
         <div className="container">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {services.map((service, i) => (
-              <motion.div 
+              <div
                 key={i}
-                className="group relative overflow-hidden border border-border bg-card hover:shadow-lg transition-all duration-300 flex flex-col"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
+                className="p-6 rounded-lg border border-border bg-card hover:border-primary/30 transition-colors group flex flex-col"
               >
-                {/* Mobile: centered layout, Desktop: left-aligned */}
-                <div className="p-8 flex flex-col flex-grow text-center md:text-left">
-                  <div className="mb-4 flex justify-center md:justify-start">
-                    <IconImage src={service.icon} alt={service.title} size={56} />
-                  </div>
-                  <h3 className="text-xl font-bold mb-3 group-hover:text-primary transition-colors">{service.title}</h3>
-                  <p className="text-muted-foreground mb-4 flex-grow">{service.desc}</p>
-                  
-                  <div className="flex flex-wrap gap-2 mb-6 justify-center md:justify-start">
-                    {service.specialties.map((spec, j) => (
-                      <span key={j} className="text-xs bg-primary/5 text-primary px-2 py-1 rounded font-medium">
-                        {spec}
-                      </span>
-                    ))}
-                  </div>
-                  
-                  {service.cta ? (
-                    <IntakeForm trigger={
-                      <Button variant="outline" className="w-full border-secondary text-secondary hover:bg-secondary hover:text-white font-bold uppercase tracking-wide rounded-none mt-auto">
+                <IconImage src={service.icon} alt={service.title} size={52} />
+                <h3 className="text-lg font-semibold mt-4 mb-3 group-hover:text-primary transition-colors">
+                  {service.title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-4 flex-grow">
+                  {service.desc}
+                </p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {service.specialties.map((spec, j) => (
+                    <span
+                      key={j}
+                      className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full font-medium"
+                    >
+                      {spec}
+                    </span>
+                  ))}
+                </div>
+                {service.cta ? (
+                  <IntakeForm
+                    trigger={
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="border-primary text-primary hover:bg-primary hover:text-primary-foreground w-full font-semibold"
+                      >
                         {service.cta}
                       </Button>
-                    } />
-                  ) : (
-                    <div className="inline-flex items-center justify-center md:justify-start text-sm font-bold text-secondary uppercase tracking-wide mt-auto">
-                      Included <Check className="ml-1 h-4 w-4" />
-                    </div>
-                  )}
-                </div>
-              </motion.div>
+                    }
+                  />
+                ) : (
+                  <span className="inline-flex items-center text-xs font-bold text-primary uppercase tracking-wide">
+                    Included <Check className="ml-1 w-3 h-3" />
+                  </span>
+                )}
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Specialty Benefits Section */}
-      <section className="py-20 bg-muted/30">
+      {/* =====================================================================
+          3. SPECIALTY BENEFITS
+      ===================================================================== */}
+      <section className="py-20 md:py-28 border-b border-border bg-card">
         <div className="container">
-          <motion.div className="text-center max-w-3xl mx-auto mb-16" {...fadeIn}>
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-primary">Tailored for Your Specialty</h2>
-            <p className="text-lg text-muted-foreground">
-              Every healthcare specialty has unique challenges. Our strategies are customized to address the specific growth opportunities in your field.
+          <div className="max-w-3xl mb-16">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Tailored for Your Specialty</h2>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              Every healthcare specialty has unique challenges. Our strategies are customized
+              to address the specific growth opportunities in your field.
             </p>
-          </motion.div>
+          </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {specialtyBenefits.map((specialty, i) => (
-              <motion.div
+              <div
                 key={i}
-                className="bg-white p-8 border-l-4 border-secondary shadow-sm"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
+                className="p-6 rounded-lg border border-border bg-background hover:border-primary/30 transition-colors"
               >
                 <div className="flex items-center gap-4 mb-6">
-                  <IconImage src={specialty.icon} alt={specialty.title} size={56} />
-                  <h3 className="text-xl font-bold text-primary">{specialty.title}</h3>
+                  <IconImage src={specialty.icon} alt={specialty.title} size={52} />
+                  <h3 className="text-lg font-semibold">{specialty.title}</h3>
                 </div>
                 <ul className="space-y-3">
                   {specialty.benefits.map((benefit, j) => (
                     <li key={j} className="flex items-start gap-3">
-                      <Check className="h-5 w-5 text-secondary shrink-0 mt-0.5" />
-                      <span className="text-muted-foreground">{benefit}</span>
+                      <Check className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                      <span className="text-sm text-muted-foreground">{benefit}</span>
                     </li>
                   ))}
                 </ul>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
       </section>
-      
-      {/* CTA Section */}
-      <section className="py-20 bg-primary text-white">
+
+      {/* =====================================================================
+          4. FINAL CTA
+      ===================================================================== */}
+      <section className="py-20 md:py-28 border-t border-border">
         <div className="container text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to simplify your growth?</h2>
-          <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
-            Whether you're a doctor, dentist, pharmacy, or Physical Therapy / Occupational Therapy clinic—we have a proven playbook for your specialty.
-          </p>
-          <IntakeForm trigger={
-            <Button size="lg" className="bg-secondary hover:bg-secondary/90 text-white font-bold text-lg px-10 h-16 rounded-none shadow-xl">
-              Request a Practice Growth Brief <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-          } />
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Ready to Simplify Your Growth?
+            </h2>
+            <p className="text-lg text-muted-foreground mb-10 leading-relaxed">
+              Whether you're a doctor, dentist, pharmacy, or PT/OT clinic — we have a proven
+              playbook for your specialty.
+            </p>
+            <IntakeForm
+              trigger={
+                <Button
+                  size="lg"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold h-14 px-8 text-lg"
+                >
+                  Request a Practice Growth Brief <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+              }
+            />
+          </div>
         </div>
       </section>
+
     </Layout>
   );
 }

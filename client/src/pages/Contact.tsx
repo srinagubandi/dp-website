@@ -1,263 +1,230 @@
 /**
  * =============================================================================
- * CONTACT.TSX - Contact Us Page
+ * CONTACT.TSX - DocPropel Contact Us Page
  * =============================================================================
- * 
- * This page provides visitors with multiple ways to get in touch:
- *   - INTAKE FORM: The main lead capture form for requesting a Practice Growth Brief
- *   - PHONE NUMBER: Click-to-call functionality for mobile users
- *   - EMAIL: Direct email contact
- *   - OFFICE HOURS: When the team is available
- * 
+ *
+ * Design: Dark premium theme inspired by PropelDental.
+ * Sections:
+ *   1. Hero — left-aligned headline + CTA buttons
+ *   2. Contact Info — 2-column: form card + info cards
+ *   3. What to Expect — 3-step process
+ *   4. Final CTA — phone number
+ *
  * HOW TO EDIT:
- *   - To change PHONE NUMBER: Edit the phoneNumber constant (line ~30)
- *   - To change EMAIL: Edit the email constant (line ~31)
- *   - To change OFFICE HOURS: Edit the officeHours constant (line ~32)
+ *   - To change PHONE NUMBER: Edit the phoneNumber constant below
+ *   - To change EMAIL: Edit the email constant below
+ *   - To change OFFICE HOURS: Edit the officeHours constant below
  *   - To change FORM FIELDS: Edit the IntakeForm component in components/IntakeForm.tsx
- * 
+ *
  * =============================================================================
  */
 
 import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Phone, Mail, Clock, MapPin, ArrowRight } from "lucide-react";
-import { motion } from "framer-motion";
+import { Phone, Mail, Clock, ArrowRight, CheckCircle2 } from "lucide-react";
 import IntakeForm from "@/components/IntakeForm";
-import {
-  DoctorIcon,
-  DentistIcon,
-  PharmacyIcon,
-  PTOTIcon,
-} from "@/components/BrandIcons";
 
 // -----------------------------------------------------------------------------
 // CONTACT INFORMATION - Edit these values to update contact details
 // -----------------------------------------------------------------------------
-const phoneNumber = "1-800-DOC-PROPEL";      // Display format
-const phoneNumberTel = "1-800-362-7767";     // Tel link format (numbers only)
+const phoneNumber = "1-800-DOC-PROPEL";
+const phoneNumberTel = "1-800-362-7767";
 const email = "hello@docpropel.com";
-const officeHours = "Monday - Friday, 9am - 6pm EST";
+const officeHours = "Monday – Friday, 9am – 6pm EST";
 
 export default function Contact() {
-  const fadeIn = {
-    initial: { opacity: 0, y: 20 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true },
-    transition: { duration: 0.6 }
-  };
-
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="py-16 md:py-20 bg-gradient-to-br from-background to-blue-50/30 border-b border-border">
+
+      {/* =====================================================================
+          1. HERO
+      ===================================================================== */}
+      <section className="py-20 md:py-28 border-b border-border">
         <div className="container">
-          <motion.div className="text-center max-w-3xl mx-auto" {...fadeIn}>
-            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-primary">
-              Let's Grow Your Practice
+          <div className="max-w-4xl">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.1] tracking-tight mb-6">
+              Let's Grow{" "}
+              <span className="text-primary">Your Practice.</span>
             </h1>
-            <p className="text-xl text-muted-foreground mb-8">
-              Ready to stop paying for promises and start paying for patients? 
-              Get in touch with our team to discuss your practice's growth potential.
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl leading-relaxed mb-10">
+              Ready to stop paying for promises and start paying for patients? Get in touch
+              with our team to discuss your practice's growth potential. No obligation,
+              no sales pressure.
             </p>
-            
-            {/* Click-to-Call Button - Prominent on Mobile */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-              <a 
-                href={`tel:${phoneNumberTel}`}
-                className="inline-flex items-center gap-2 bg-secondary hover:bg-secondary/90 text-white font-bold text-lg px-8 py-4 rounded-none shadow-lg transition-all hover:translate-y-[-2px]"
-              >
-                <Phone className="h-5 w-5" />
-                Call {phoneNumber}
-              </a>
-              <span className="text-muted-foreground">or</span>
-              <IntakeForm 
+
+            <div className="flex flex-col sm:flex-row gap-4">
+              <IntakeForm
                 trigger={
-                  <Button 
-                    size="lg" 
-                    className="inline-flex items-center gap-2 bg-primary text-white hover:bg-primary/90 font-bold text-lg px-8 h-14 rounded-none shadow-lg transition-all"
+                  <Button
+                    size="lg"
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold h-14 px-8 text-lg"
                   >
-                    <Mail className="h-5 w-5" />
-                    Send Us a Message
+                    Request a Practice Growth Brief <ArrowRight className="ml-2 w-5 h-5" />
                   </Button>
                 }
               />
-            </div>
-
-            {/* Specialty Icons */}
-            <div className="flex flex-wrap justify-center gap-3">
-              {[
-                { icon: DoctorIcon, name: "Doctors" },
-                { icon: DentistIcon, name: "Dentists" },
-                { icon: PharmacyIcon, name: "Pharmacies" },
-                { icon: PTOTIcon, name: "PT / OT" },
-              ].map((s) => (
-                <span 
-                  key={s.name} 
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-border text-sm font-medium rounded-full"
+              <a href={`tel:${phoneNumberTel}`}>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-border hover:bg-muted/50 h-14 px-8 text-lg font-semibold"
                 >
-                  <s.icon size={18} />
-                  {s.name}
-                </span>
-              ))}
+                  <Phone className="mr-2 w-5 h-5" />
+                  Call {phoneNumber}
+                </Button>
+              </a>
             </div>
-          </motion.div>
-        </div>
-      </section>
 
-      {/* Main Content - Form and Contact Info */}
-      <section className="py-16 md:py-20 bg-background">
-        <div className="container">
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
-            
-            {/* Left Column - Contact Form */}
-            <motion.div {...fadeIn}>
-              <Card className="border-t-4 border-t-secondary shadow-lg">
-                <CardHeader>
-                  <CardTitle className="text-2xl text-primary">
-                    Request a Practice Growth Brief
-                  </CardTitle>
-                  <p className="text-muted-foreground">
-                    Fill out the form below and we'll send you a customized analysis 
-                    of your practice's growth opportunities.
-                  </p>
-                </CardHeader>
-                <CardContent>
-                  {/* Embedded Intake Form */}
-                  <IntakeForm 
-                    trigger={
-                      <Button 
-                        size="lg" 
-                        className="w-full bg-secondary hover:bg-secondary/90 text-white font-bold text-lg h-14 rounded-none"
-                      >
-                        Start Your Growth Analysis <ArrowRight className="ml-2 h-5 w-5" />
-                      </Button>
-                    } 
-                  />
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            {/* Right Column - Contact Information */}
-            <motion.div 
-              className="space-y-6"
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              {/* Phone Card */}
-              <Card className="hover:shadow-md transition-shadow">
-                <CardContent className="p-6">
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-secondary/10 rounded-lg">
-                      <Phone className="h-6 w-6 text-secondary" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-lg mb-1">Call Us</h3>
-                      <a 
-                        href={`tel:${phoneNumberTel}`}
-                        className="text-2xl font-bold text-primary hover:text-secondary transition-colors"
-                      >
-                        {phoneNumber}
-                      </a>
-                      <p className="text-sm text-muted-foreground mt-1">
-                        Tap to call on mobile
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Email Card */}
-              <Card className="hover:shadow-md transition-shadow">
-                <CardContent className="p-6">
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-primary/10 rounded-lg">
-                      <Mail className="h-6 w-6 text-primary" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-lg mb-1">Send a Message</h3>
-                      <p className="text-muted-foreground mb-3">
-                        Fill out our brief form and we'll respond within 24 hours
-                      </p>
-                      <IntakeForm 
-                        trigger={
-                          <Button 
-                            variant="outline" 
-                            className="border-primary text-primary hover:bg-primary hover:text-white font-semibold"
-                          >
-                            Open Contact Form
-                          </Button>
-                        }
-                      />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Office Hours Card */}
-              <Card className="hover:shadow-md transition-shadow">
-                <CardContent className="p-6">
-                  <div className="flex items-start gap-4">
-                    <div className="p-3 bg-green-100 rounded-lg">
-                      <Clock className="h-6 w-6 text-green-600" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-lg mb-1">Office Hours</h3>
-                      <p className="text-lg font-medium text-foreground">
-                        {officeHours}
-                      </p>
-                      <p className="text-sm text-muted-foreground mt-1">
-                        After-hours inquiries answered next business day
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Why Contact Us */}
-              <div className="bg-muted/30 p-6 border-l-4 border-secondary">
-                <h3 className="font-bold text-lg mb-3">What to Expect</h3>
-                <ul className="space-y-2 text-muted-foreground">
-                  <li className="flex items-start gap-2">
-                    <span className="text-secondary font-bold">1.</span>
-                    <span>A brief discovery call to understand your practice</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-secondary font-bold">2.</span>
-                    <span>Custom analysis of your market and competition</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-secondary font-bold">3.</span>
-                    <span>Clear growth projections with no obligation</span>
-                  </li>
-                </ul>
-              </div>
-            </motion.div>
+            {/* Trust badges */}
+            <div className="flex flex-wrap gap-6 mt-10 text-sm text-muted-foreground">
+              <span className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-primary" /> No Obligation
+              </span>
+              <span className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-primary" /> Response Within 24 Hours
+              </span>
+              <span className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-primary" /> Free Practice Analysis
+              </span>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-16 bg-primary text-white">
-        <div className="container text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Prefer to Talk Now?
-          </h2>
-          <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">
-            Our team is ready to discuss how we can help grow your practice 
-            with our performance-based model.
-          </p>
-          <a 
-            href={`tel:${phoneNumberTel}`}
-            className="inline-flex items-center gap-3 bg-white text-primary hover:bg-blue-50 font-bold text-xl px-10 py-5 rounded-none shadow-xl transition-all hover:translate-y-[-2px]"
-          >
-            <Phone className="h-6 w-6" />
-            {phoneNumber}
-          </a>
+      {/* =====================================================================
+          2. CONTACT INFO — 2-column: form card + info cards
+      ===================================================================== */}
+      <section className="py-20 md:py-28 border-b border-border">
+        <div className="container">
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
+
+            {/* Left: form card */}
+            <div className="rounded-lg border border-border bg-card overflow-hidden">
+              <div className="h-1 bg-primary" />
+              <div className="p-8">
+                <h2 className="text-2xl font-bold mb-2">Request a Practice Growth Brief</h2>
+                <p className="text-muted-foreground mb-6">
+                  Fill out the form below and we'll send you a customized analysis of your
+                  practice's growth opportunities within 24 hours.
+                </p>
+                <IntakeForm
+                  trigger={
+                    <Button
+                      size="lg"
+                      className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold h-14 text-lg"
+                    >
+                      Start Your Growth Analysis <ArrowRight className="ml-2 w-5 h-5" />
+                    </Button>
+                  }
+                />
+              </div>
+            </div>
+
+            {/* Right: contact info cards */}
+            <div className="space-y-5">
+
+              {/* Phone */}
+              <div className="flex gap-4 p-6 rounded-lg border border-border bg-card hover:border-primary/30 transition-colors">
+                <div className="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                  <Phone className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-semibold mb-1">Call Us</h3>
+                  <a
+                    href={`tel:${phoneNumberTel}`}
+                    className="text-xl font-bold text-primary hover:text-primary/80 transition-colors"
+                  >
+                    {phoneNumber}
+                  </a>
+                  <p className="text-sm text-muted-foreground mt-1">Tap to call on mobile</p>
+                </div>
+              </div>
+
+              {/* Email */}
+              <div className="flex gap-4 p-6 rounded-lg border border-border bg-card hover:border-primary/30 transition-colors">
+                <div className="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                  <Mail className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-semibold mb-1">Send a Message</h3>
+                  <p className="text-muted-foreground text-sm mb-3">
+                    Fill out our brief form and we'll respond within 24 hours
+                  </p>
+                  <IntakeForm
+                    trigger={
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold"
+                      >
+                        Open Contact Form
+                      </Button>
+                    }
+                  />
+                </div>
+              </div>
+
+              {/* Office Hours */}
+              <div className="flex gap-4 p-6 rounded-lg border border-border bg-card hover:border-primary/30 transition-colors">
+                <div className="w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                  <Clock className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-semibold mb-1">Office Hours</h3>
+                  <p className="font-medium">{officeHours}</p>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    After-hours inquiries answered next business day
+                  </p>
+                </div>
+              </div>
+
+              {/* What to Expect */}
+              <div className="p-6 rounded-lg border border-border bg-card">
+                <h3 className="font-semibold mb-4">What to Expect</h3>
+                <div className="space-y-4">
+                  {[
+                    "A brief discovery call to understand your practice",
+                    "Custom analysis of your market and competition",
+                    "Clear growth projections with no obligation",
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-primary text-primary-foreground text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                        {i + 1}
+                      </div>
+                      <p className="text-sm text-muted-foreground">{item}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
+
+      {/* =====================================================================
+          3. FINAL CTA
+      ===================================================================== */}
+      <section className="py-20 md:py-28 border-t border-border bg-card">
+        <div className="container text-center">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">Prefer to Talk Now?</h2>
+            <p className="text-lg text-muted-foreground mb-10 leading-relaxed">
+              Our team is ready to discuss how we can help grow your practice with our
+              performance-based model. Real people, real conversations, real results.
+            </p>
+            <a href={`tel:${phoneNumberTel}`}>
+              <Button
+                size="lg"
+                className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold h-14 px-10 text-lg"
+              >
+                <Phone className="mr-2 w-5 h-5" />
+                {phoneNumber}
+              </Button>
+            </a>
+          </div>
+        </div>
+      </section>
+
     </Layout>
   );
 }

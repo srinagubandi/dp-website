@@ -43,88 +43,69 @@
 }
 
 :root {
-  /* DocPropel Blue: #1E73BE -> oklch(0.55 0.15 250) */
-  --primary: oklch(0.55 0.15 250);
-  --primary-foreground: oklch(1 0 0);
-  
-  /* DocPropel Orange: #F58220 -> oklch(0.7 0.18 50) */
-  --secondary: oklch(0.7 0.18 50);
+  /* ============================================================
+   * DocPropel Dark Premium Theme
+   * Design inspired by PropelDental's dark aesthetic
+   *
+   * Brand Colors (do NOT change these):
+   *   DocPropel Blue:   #1E73BE  → oklch(0.55 0.15 250)
+   *   DocPropel Orange: #F58220  → oklch(0.7 0.18 50)
+   *
+   * Primary accent = DocPropel Orange (CTAs, highlights, icons)
+   * Secondary = DocPropel Blue (links, badges, secondary CTAs)
+   * ============================================================ */
+
+  /* Primary: DocPropel Orange — used for CTAs, highlights, icons */
+  --primary: oklch(0.7 0.18 50);
+  --primary-foreground: oklch(0.1 0.01 260);
+
+  /* Secondary: DocPropel Blue — used for links, badges, secondary actions */
+  --secondary: oklch(0.55 0.15 250);
   --secondary-foreground: oklch(1 0 0);
-  
-  --sidebar-primary: oklch(0.55 0.15 250);
-  --sidebar-primary-foreground: oklch(1 0 0);
-  
-  --chart-1: oklch(0.55 0.15 250);
-  --chart-2: oklch(0.7 0.18 50);
-  --chart-3: oklch(0.85 0.05 250);
-  --chart-4: oklch(0.4 0.1 250);
-  --chart-5: oklch(0.3 0.05 250);
-  
-  --radius: 0rem; /* Sharp corners for Swiss/Clinical style */
-  
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.2 0.02 260); /* Deep Charcoal */
-  
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.2 0.02 260);
-  
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.2 0.02 260);
-  
-  --muted: oklch(0.96 0.01 260); /* Light Medical Gray */
-  --muted-foreground: oklch(0.5 0.02 260);
-  
-  --accent: oklch(0.96 0.01 260);
-  --accent-foreground: oklch(0.2 0.02 260);
-  
+
+  /* Sidebar */
+  --sidebar-primary: oklch(0.7 0.18 50);
+  --sidebar-primary-foreground: oklch(0.1 0.01 260);
+
+  /* Charts — orange gradient */
+  --chart-1: oklch(0.7 0.18 50);
+  --chart-2: oklch(0.62 0.16 50);
+  --chart-3: oklch(0.54 0.14 50);
+  --chart-4: oklch(0.46 0.12 50);
+  --chart-5: oklch(0.38 0.10 50);
+
+  /* Rounded corners — subtle, not sharp */
+  --radius: 0.5rem;
+
+  /* Dark backgrounds — deep navy/slate like PropelDental */
+  --background: oklch(0.13 0.01 260);
+  --foreground: oklch(0.93 0.005 60);
+
+  --card: oklch(0.17 0.01 260);
+  --card-foreground: oklch(0.93 0.005 60);
+
+  --popover: oklch(0.17 0.01 260);
+  --popover-foreground: oklch(0.93 0.005 60);
+
+  --muted: oklch(0.22 0.01 260);
+  --muted-foreground: oklch(0.6 0.01 260);
+
+  --accent: oklch(0.22 0.01 260);
+  --accent-foreground: oklch(0.93 0.005 60);
+
   --destructive: oklch(0.6 0.2 25);
   --destructive-foreground: oklch(1 0 0);
-  
-  --border: oklch(0.9 0.01 260);
-  --input: oklch(0.9 0.01 260);
-  --ring: oklch(0.55 0.15 250);
-  
-  --sidebar: oklch(0.98 0 0);
-  --sidebar-foreground: oklch(0.2 0.02 260);
-  --sidebar-accent: oklch(0.96 0.01 260);
-  --sidebar-accent-foreground: oklch(0.2 0.02 260);
-  --sidebar-border: oklch(0.9 0.01 260);
-  --sidebar-ring: oklch(0.55 0.15 250);
-}
 
-.dark {
-  --primary: var(--color-blue-700);
-  --primary-foreground: var(--color-blue-50);
-  --sidebar-primary: var(--color-blue-500);
-  --sidebar-primary-foreground: var(--color-blue-50);
-  --background: oklch(0.141 0.005 285.823);
-  --foreground: oklch(0.85 0.005 65);
-  --card: oklch(0.21 0.006 285.885);
-  --card-foreground: oklch(0.85 0.005 65);
-  --popover: oklch(0.21 0.006 285.885);
-  --popover-foreground: oklch(0.85 0.005 65);
-  --secondary: oklch(0.24 0.006 286.033);
-  --secondary-foreground: oklch(0.7 0.005 65);
-  --muted: oklch(0.274 0.006 286.033);
-  --muted-foreground: oklch(0.705 0.015 286.067);
-  --accent: oklch(0.274 0.006 286.033);
-  --accent-foreground:  oklch(0.92 0.005 65);
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.985 0 0);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.488 0.243 264.376);
-  --chart-1: var(--color-blue-300);
-  --chart-2: var(--color-blue-500);
-  --chart-3: var(--color-blue-600);
-  --chart-4: var(--color-blue-700);
-  --chart-5: var(--color-blue-800);
-  --sidebar: oklch(0.21 0.006 285.885);
-  --sidebar-foreground: oklch(0.85 0.005 65);
-  --sidebar-accent: oklch(0.274 0.006 286.033);
-  --sidebar-accent-foreground:  oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.488 0.243 264.376);
+  --border: oklch(0.28 0.01 260);
+  --input: oklch(0.22 0.01 260);
+  --ring: oklch(0.7 0.18 50);
+
+  --sidebar: oklch(0.15 0.01 260);
+  --sidebar-foreground: oklch(0.93 0.005 60);
+  --sidebar-accent: oklch(0.22 0.01 260);
+  --sidebar-accent-foreground: oklch(0.93 0.005 60);
+  --sidebar-border: oklch(0.28 0.01 260);
+  --sidebar-ring: oklch(0.7 0.18 50);
 }
 
 @layer base {
@@ -133,6 +114,8 @@
   }
   body {
     @apply bg-background text-foreground;
+    /* Inter is clean and professional — matches PropelDental's typography */
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
@@ -149,23 +132,15 @@
 
 @layer components {
   /**
-   * Custom container utility that centers content and adds responsive padding.
-   *
-   * This overrides Tailwind's default container behavior to:
-   * - Auto-center content (mx-auto)
-   * - Add responsive horizontal padding
-   * - Set max-width for large screens
-   *
-   * Usage: <div className="container">...</div>
-   *
-   * For custom widths, use max-w-* utilities directly:
-   * <div className="max-w-6xl mx-auto px-4">...</div>
+   * Custom container: auto-centers with responsive padding.
+   * Use <div className="container"> directly — no mx-auto needed.
+   * For custom widths: <div className="max-w-6xl mx-auto px-4">
    */
   .container {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 1rem; /* 16px - mobile padding */
+    padding-left: 1rem;
     padding-right: 1rem;
   }
 
@@ -176,16 +151,36 @@
 
   @media (min-width: 640px) {
     .container {
-      padding-left: 1.5rem; /* 24px - tablet padding */
+      padding-left: 1.5rem;
       padding-right: 1.5rem;
     }
   }
 
   @media (min-width: 1024px) {
     .container {
-      padding-left: 2rem; /* 32px - desktop padding */
+      padding-left: 2rem;
       padding-right: 2rem;
-      max-width: 1280px; /* Standard content width */
+      max-width: 1280px;
     }
   }
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: oklch(0.13 0.01 260);
+}
+::-webkit-scrollbar-thumb {
+  background: oklch(0.3 0.01 260);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.4 0.01 260);
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
 }

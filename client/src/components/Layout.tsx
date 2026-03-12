@@ -2,39 +2,30 @@
  * =============================================================================
  * LAYOUT.TSX - Main Website Layout Component
  * =============================================================================
- * 
- * This file controls the overall structure of every page on the website:
- *   - HEADER: Logo, navigation menu, and call-to-action button
- *   - MAIN CONTENT: Where each page's content is displayed
- *   - FOOTER: Company info, links, contact details
- * 
+ *
+ * Controls the overall structure of every page:
+ *   - HEADER: Logo, navigation links, phone number, CTA button
+ *   - MAIN CONTENT: Where each page's content is rendered
+ *   - FOOTER: Company info, specialty links, company links, contact
+ *
+ * Design: Dark premium theme inspired by PropelDental, using DocPropel
+ * brand colors (Orange = primary, Blue = secondary).
+ *
  * HOW TO EDIT:
- *   - To change the LOGO: Update the image path in the <img> tags (lines ~80, ~130)
- *   - To change NAV LINKS: Edit the NavLinks component (lines ~50-70)
- *   - To change FOOTER TEXT: Edit the footer section (lines ~125-190)
- *   - To change COLORS: Edit the className properties (bg-*, text-*, border-*)
- * 
- * COLOR REFERENCE:
- *   - primary = Blue (#0066B3) - Used for main headings, links
- *   - secondary = Orange (#F7941D) - Used for buttons, accents
- *   - muted-foreground = Gray text for descriptions
- *   - background = White background
- *   - border = Light gray borders
- * 
+ *   - Logo: Update src="/images/logo.png" (lines ~80, ~175)
+ *   - Nav links: Edit the navLinks array (lines ~55-65)
+ *   - Phone number: Edit "1-800-DOC-PROPEL" and "tel:1-800-362-7767"
+ *   - Footer columns: Edit the footer section (~lines 175+)
+ *   - Colors: Defined in client/src/index.css CSS variables
+ *
  * =============================================================================
  */
 
-// -----------------------------------------------------------------------------
-// IMPORTS - Required libraries and components
-// -----------------------------------------------------------------------------
-import { Link } from "wouter";                    // For navigation links
-import { Button } from "@/components/ui/button";  // Button component
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"; // Mobile menu
-import { Menu, Phone } from "lucide-react";      // Hamburger menu icon, Phone icon
-import { useState } from "react";                 // React state hook
-import IntakeForm from "@/components/IntakeForm"; // Lead capture form popup
-
-// Custom brand icons for the four specialties
+import { Link, useLocation } from "wouter";
+import { useState } from "react";
+import { Menu, X, Phone } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import IntakeForm from "@/components/IntakeForm";
 import {
   DoctorIcon,
   DentistIcon,
@@ -42,390 +33,249 @@ import {
   PTOTIcon,
 } from "@/components/BrandIcons";
 
-
-// -----------------------------------------------------------------------------
-// MAIN LAYOUT COMPONENT
-// -----------------------------------------------------------------------------
 export default function Layout({ children }: { children: React.ReactNode }) {
-  
-  // State for mobile menu open/close
-  const [isOpen, setIsOpen] = useState(false);
+  const [location] = useLocation();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // ---------------------------------------------------------------------------
-  // NAVIGATION LINKS COMPONENT
+  // NAVIGATION LINKS
+  // To add a page: add { href: "/page", label: "Page Name" }
+  // To remove: delete the entry
+  // To hide Results: it is commented out below
   // ---------------------------------------------------------------------------
-  // These are the links that appear in both desktop and mobile navigation.
-  // 
-  // TO ADD A NEW PAGE:
-  //   1. Add a new <Link> element below
-  //   2. Set href="/your-page-url"
-  //   3. Set the display text between the tags
-  //
-  // TO REMOVE A PAGE:
-  //   1. Delete the entire <Link>...</Link> line
-  //
-  // TO RENAME A PAGE:
-  //   1. Change the text between the <Link> tags
-  // ---------------------------------------------------------------------------
-  const NavLinks = () => (
-    <>
-      {/* Services Page Link */}
-      <Link 
-        href="/services" 
-        className="text-sm font-medium hover:text-primary transition-colors" 
-        onClick={() => setIsOpen(false)}
-      >
-        Services
-      </Link>
+  const navLinks = [
+    { href: "/services",     label: "Services" },
+    { href: "/how-it-works", label: "How It Works" },
+    { href: "/compare",      label: "Compare" },
+    { href: "/about",        label: "About Us" },
+    { href: "/calculator",   label: "ROI Calculator" },
+    { href: "/contact",      label: "Contact Us" },
+    // { href: "/results",   label: "Results" }, // Hidden — uncomment to show
+  ];
 
-      {/* How It Works Page Link */}
-      <Link 
-        href="/how-it-works" 
-        className="text-sm font-medium hover:text-primary transition-colors" 
-        onClick={() => setIsOpen(false)}
-      >
-        How It Works
-      </Link>
-
-      {/* Compare Page Link */}
-      <Link 
-        href="/compare" 
-        className="text-sm font-medium hover:text-primary transition-colors" 
-        onClick={() => setIsOpen(false)}
-      >
-        Compare
-      </Link>
-
-      {/* About Us Page Link */}
-      <Link 
-        href="/about" 
-        className="text-sm font-medium hover:text-primary transition-colors" 
-        onClick={() => setIsOpen(false)}
-      >
-        About Us
-      </Link>
-
-      {/* ROI Calculator Page Link */}
-      <Link 
-        href="/calculator" 
-        className="text-sm font-medium hover:text-primary transition-colors" 
-        onClick={() => setIsOpen(false)}
-      >
-        ROI Calculator
-      </Link>
-
-      {/* Contact Us Page Link */}
-      <Link 
-        href="/contact" 
-        className="text-sm font-medium hover:text-primary transition-colors" 
-        onClick={() => setIsOpen(false)}
-      >
-        Contact Us
-      </Link>
-
-      {/* Results/Case Studies Page Link - HIDDEN */}
-      {/* <Link 
-        href="/results" 
-        className="text-sm font-medium hover:text-primary transition-colors" 
-        onClick={() => setIsOpen(false)}
-      >
-        Results
-      </Link> */}
-    </>
-  );
-
-  // ---------------------------------------------------------------------------
-  // MAIN LAYOUT STRUCTURE
-  // ---------------------------------------------------------------------------
   return (
-    <div className="min-h-screen flex flex-col font-sans text-foreground bg-background">
-      
+    <div className="min-h-screen flex flex-col bg-background text-foreground">
+
       {/* =====================================================================
-          HEADER SECTION
-          =====================================================================
-          Contains: Logo, Navigation Links, CTA Button
-          
-          TO CHANGE HEADER HEIGHT: Edit "h-20" (h-16 = shorter, h-24 = taller)
-          TO CHANGE BACKGROUND: Edit "bg-background/95" 
-          TO REMOVE STICKY: Remove "sticky top-0" classes
+          HEADER
+          Sticky, dark background with subtle blur — matches PropelDental style.
+          TO CHANGE HEIGHT: edit h-16 / md:h-20
       ===================================================================== */}
-      <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-20 items-center justify-between">
-          
-          {/* -----------------------------------------------------------------
-              LOGO
-              -----------------------------------------------------------------
-              TO CHANGE LOGO:
-                1. Replace "/images/logo.png" with your new logo path
-                2. Upload new logo to: client/public/images/
-              
-              TO CHANGE LOGO SIZE:
-                - Edit "h-10" (h-8 = smaller, h-12 = larger)
-          ----------------------------------------------------------------- */}
-          <Link href="/">
-            <div className="flex items-center gap-2 cursor-pointer">
-              <img 
-                src="/images/logo.png" 
-                alt="DocPropel" 
-                className="h-10 w-auto" 
-              />
-            </div>
+      <header className="sticky top-0 z-50 border-b border-border/50 bg-background/95 backdrop-blur-md">
+        <div className="container flex items-center justify-between h-16 md:h-20">
+
+          {/* LOGO */}
+          <Link href="/" className="shrink-0">
+            <img
+              src="/images/logo.png"
+              alt="DocPropel"
+              className="h-10 w-auto"
+            />
           </Link>
 
-          {/* -----------------------------------------------------------------
-              PHONE NUMBER - Click-to-call
-              -----------------------------------------------------------------
-              TO CHANGE PHONE NUMBER: Edit both display text and tel: link
-              TO HIDE PHONE: Remove this entire block
-          ----------------------------------------------------------------- */}
-          <a 
-            href="tel:1-800-362-7767" 
-            className="hidden md:flex items-center gap-2 text-sm font-semibold text-primary hover:text-secondary transition-colors"
+          {/* PHONE NUMBER — click-to-call, desktop only */}
+          <a
+            href="tel:1-800-362-7767"
+            className="hidden lg:flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
           >
-            <Phone className="h-4 w-4" />
-            1-800-DOC-PROPEL
+            <Phone className="w-4 h-4" />
+            <span>1-800-DOC-PROPEL</span>
           </a>
 
-          {/* -----------------------------------------------------------------
-              DESKTOP NAVIGATION (visible on screens md and larger)
-              -----------------------------------------------------------------
-              TO CHANGE SPACING BETWEEN LINKS: Edit "gap-8" (gap-4, gap-6, gap-10)
-              TO HIDE ON DESKTOP: Change "hidden md:flex" to "hidden"
-          ----------------------------------------------------------------- */}
-          <nav className="hidden md:flex items-center gap-8">
-            <NavLinks />
-            
-            {/* CTA BUTTON - Opens the intake form popup
-                TO CHANGE BUTTON TEXT: Edit text inside the Button component
-                TO CHANGE BUTTON COLOR: Edit "bg-secondary" to "bg-primary" etc.
-            */}
-            <IntakeForm trigger={
-              <Button 
-                variant="default" 
-                className="bg-secondary hover:bg-secondary/90 text-white font-semibold rounded-none px-6"
+          {/* DESKTOP NAVIGATION */}
+          <nav className="hidden lg:flex items-center gap-1">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`px-3 py-2 text-sm font-medium transition-colors rounded-md ${
+                  location === link.href
+                    ? "text-primary bg-primary/10"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                }`}
               >
-                Request a Practice Growth Brief
-              </Button>
-            } />
+                {link.label}
+              </Link>
+            ))}
           </nav>
 
-          {/* -----------------------------------------------------------------
-              MOBILE NAVIGATION (hamburger menu, visible on small screens)
-              -----------------------------------------------------------------
-              This creates a slide-out menu for mobile devices.
-              TO CHANGE MENU WIDTH: Edit "w-[300px]" in SheetContent
-          ----------------------------------------------------------------- */}
-          <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild className="md:hidden">
-              <Button variant="ghost" size="icon">
-                <Menu className="h-6 w-6" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right" className="w-full sm:w-full p-0">
-              {/* Full-screen mobile menu with centered links */}
-              <nav className="flex flex-col items-center justify-center h-full gap-8 py-16">
-                {/* Click-to-call phone number - prominent at top of mobile menu */}
-                <a 
-                  href="tel:1-800-362-7767" 
-                  className="flex items-center gap-2 text-xl font-bold text-secondary hover:text-secondary/80 transition-colors"
-                  onClick={() => setIsOpen(false)}
-                >
-                  <Phone className="h-5 w-5" />
-                  1-800-DOC-PROPEL
-                </a>
-                
-                <div className="w-16 h-px bg-border" />
-                
-                <Link 
-                  href="/services" 
-                  className="text-xl font-medium hover:text-primary transition-colors" 
-                  onClick={() => setIsOpen(false)}
-                >
-                  Services
-                </Link>
-                <Link 
-                  href="/how-it-works" 
-                  className="text-xl font-medium hover:text-primary transition-colors" 
-                  onClick={() => setIsOpen(false)}
-                >
-                  How It Works
-                </Link>
-                <Link 
-                  href="/compare" 
-                  className="text-xl font-medium hover:text-primary transition-colors" 
-                  onClick={() => setIsOpen(false)}
-                >
-                  Compare
-                </Link>
-                <Link 
-                  href="/about" 
-                  className="text-xl font-medium hover:text-primary transition-colors" 
-                  onClick={() => setIsOpen(false)}
-                >
-                  About Us
-                </Link>
-                <Link 
-                  href="/calculator" 
-                  className="text-xl font-medium hover:text-primary transition-colors" 
-                  onClick={() => setIsOpen(false)}
-                >
-                  ROI Calculator
-                </Link>
-                {/* <Link 
-                  href="/results" 
-                  className="text-xl font-medium hover:text-primary transition-colors" 
-                  onClick={() => setIsOpen(false)}
-                >
-                  Results
-                </Link> */}
-                <Link 
-                  href="/contact" 
-                  className="text-xl font-medium hover:text-primary transition-colors" 
-                  onClick={() => setIsOpen(false)}
-                >
-                  Contact Us
-                </Link>
-              </nav>
-            </SheetContent>
-          </Sheet>
+          {/* DESKTOP CTA BUTTON */}
+          <div className="hidden lg:flex items-center">
+            <IntakeForm
+              trigger={
+                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-5">
+                  Request a Practice Growth Brief
+                </Button>
+              }
+            />
+          </div>
+
+          {/* MOBILE HAMBURGER BUTTON */}
+          <button
+            className="lg:hidden p-2 text-foreground"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
+
+        {/* MOBILE MENU DROPDOWN */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden border-t border-border bg-background">
+            <nav className="container py-4 space-y-1">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`block px-4 py-3 text-base font-medium rounded-md transition-colors ${
+                    location === link.href
+                      ? "text-primary bg-primary/10"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              ))}
+              <div className="pt-4 px-4 space-y-3">
+                <a
+                  href="tel:1-800-362-7767"
+                  className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  <Phone className="w-4 h-4" />
+                  <span>1-800-DOC-PROPEL</span>
+                </a>
+                <IntakeForm
+                  trigger={
+                    <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
+                      Request a Practice Growth Brief
+                    </Button>
+                  }
+                />
+              </div>
+            </nav>
+          </div>
+        )}
       </header>
 
       {/* =====================================================================
           MAIN CONTENT AREA
-          =====================================================================
-          This is where each page's content is rendered.
-          The {children} prop contains the page content.
-          DO NOT EDIT THIS SECTION unless changing overall page structure.
+          Each page's content is injected here via {children}.
+          DO NOT EDIT unless changing overall page structure.
       ===================================================================== */}
-      <main className="flex-1">
-        {children}
-      </main>
+      <main className="flex-1">{children}</main>
 
       {/* =====================================================================
-          FOOTER SECTION
-          =====================================================================
-          Contains: Company info, Specialty links, Company links, Contact info
-          
-          TO CHANGE FOOTER BACKGROUND: Edit "bg-muted/30"
-          TO CHANGE PADDING: Edit "py-12 md:py-16"
+          FOOTER
+          Dark card background with 4-column grid.
+          TO CHANGE BACKGROUND: edit "bg-card"
+          TO CHANGE PADDING: edit "py-16"
       ===================================================================== */}
-      <footer className="border-t border-border bg-muted/30">
-        <div className="container py-12 md:py-16">
-          
-          {/* Footer Grid - 4 columns on desktop, 1 column centered on mobile */}
+      <footer className="border-t border-border bg-card">
+        <div className="container py-16">
+
+          {/* Footer Grid: 4 columns on desktop, 1 on mobile */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
-            
-            {/* ---------------------------------------------------------------
-                COLUMN 1: Company Logo & Description
-                ---------------------------------------------------------------
-                TO CHANGE DESCRIPTION: Edit the <p> text below
-                TO CHANGE LOGO: Edit the src="/images/logo.png" path
-            --------------------------------------------------------------- */}
-            <div className="space-y-4 text-center md:text-left">
-              <div className="flex justify-center md:justify-start">
-                <img 
-                  src="/images/logo.png" 
-                  alt="DocPropel" 
-                  className="h-8 w-auto mb-4" 
-                />
-              </div>
-              <p className="text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto md:mx-0">
-                The only performance-based marketing partner for healthcare practices. 
-                We grow your patient base, you only pay for results.
+
+            {/* COLUMN 1: Brand + description */}
+            <div className="md:col-span-1">
+              <img
+                src="/images/logo.png"
+                alt="DocPropel"
+                className="h-8 w-auto mb-4"
+              />
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                The only performance-based marketing partner for healthcare
+                practices. We grow your patient base — you only pay for results.
               </p>
-              
-              {/* Specialty Icons Row
-                  These are the small icons showing the 4 specialties.
-                  TO REMOVE: Delete the entire <div> block below
-                  TO CHANGE SIZE: Edit "size={20}" to a different number
-              */}
-              <div className="flex gap-3 pt-2 justify-center md:justify-start">
-                <DoctorIcon size={20} className="opacity-60 hover:opacity-100 transition-opacity" />
-                <DentistIcon size={20} className="opacity-60 hover:opacity-100 transition-opacity" />
-                <PharmacyIcon size={20} className="opacity-60 hover:opacity-100 transition-opacity" />
-                <PTOTIcon size={20} className="opacity-60 hover:opacity-100 transition-opacity" />
-              </div>
+              <a
+                href="tel:1-800-362-7767"
+                className="flex items-center gap-2 mt-4 text-sm text-primary hover:text-primary/80 transition-colors"
+              >
+                <Phone className="w-4 h-4" />
+                1-800-DOC-PROPEL
+              </a>
             </div>
-            
-            {/* ---------------------------------------------------------------
-                COLUMN 2: Specialties Links
-                ---------------------------------------------------------------
-                TO ADD A SPECIALTY: Copy an <li> block and edit the text
-                TO REMOVE A SPECIALTY: Delete the entire <li> block
-                TO CHANGE LINK DESTINATION: Edit the href="/services" path
-            --------------------------------------------------------------- */}
-            <div className="text-center md:text-left">
-              <h4 className="font-semibold mb-4 text-foreground">Specialties</h4>
+
+            {/* COLUMN 2: Specialties */}
+            <div>
+              <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
+                Specialties
+              </h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li className="flex items-center gap-2 justify-center md:justify-start">
+                <li className="flex items-center gap-2">
                   <DoctorIcon size={14} />
-                  <Link href="/services" className="hover:text-primary">Doctors & Physicians</Link>
+                  <Link href="/services" className="hover:text-primary transition-colors">
+                    Doctors &amp; Physicians
+                  </Link>
                 </li>
-                <li className="flex items-center gap-2 justify-center md:justify-start">
+                <li className="flex items-center gap-2">
                   <DentistIcon size={14} />
-                  <Link href="/services" className="hover:text-primary">Dentists</Link>
+                  <Link href="/services" className="hover:text-primary transition-colors">
+                    Dentists
+                  </Link>
                 </li>
-                <li className="flex items-center gap-2 justify-center md:justify-start">
+                <li className="flex items-center gap-2">
                   <PharmacyIcon size={14} />
-                  <Link href="/services" className="hover:text-primary">Pharmacies</Link>
+                  <Link href="/services" className="hover:text-primary transition-colors">
+                    Pharmacies
+                  </Link>
                 </li>
-                <li className="flex items-center gap-2 justify-center md:justify-start">
+                <li className="flex items-center gap-2">
                   <PTOTIcon size={14} />
-                  <Link href="/services" className="hover:text-primary">PT / OT Clinics</Link>
+                  <Link href="/services" className="hover:text-primary transition-colors">
+                    PT / OT Clinics
+                  </Link>
                 </li>
               </ul>
             </div>
 
-            {/* ---------------------------------------------------------------
-                COLUMN 3: Company Links
-                ---------------------------------------------------------------
-                TO ADD A LINK: Copy an <li> block and edit text + href
-                TO REMOVE A LINK: Delete the entire <li> block
-            --------------------------------------------------------------- */}
-            <div className="text-center md:text-left">
-              <h4 className="font-semibold mb-4 text-foreground">Company</h4>
+            {/* COLUMN 3: Company links */}
+            <div>
+              <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
+                Company
+              </h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="/about" className="hover:text-primary">About Us</Link></li>
-                <li><Link href="/how-it-works" className="hover:text-primary">How It Works</Link></li>
-                {/* <li><Link href="/results" className="hover:text-primary">Case Studies</Link></li> */}
-                <li><Link href="/calculator" className="hover:text-primary">ROI Calculator</Link></li>
+                <li><Link href="/about"        className="hover:text-primary transition-colors">About Us</Link></li>
+                <li><Link href="/how-it-works" className="hover:text-primary transition-colors">How It Works</Link></li>
+                <li><Link href="/compare"      className="hover:text-primary transition-colors">Compare</Link></li>
+                <li><Link href="/calculator"   className="hover:text-primary transition-colors">ROI Calculator</Link></li>
+                <li><Link href="/contact"      className="hover:text-primary transition-colors">Contact Us</Link></li>
+                {/* <li><Link href="/results" className="hover:text-primary transition-colors">Case Studies</Link></li> */}
               </ul>
             </div>
 
-            {/* ---------------------------------------------------------------
-                COLUMN 4: Contact Information
-                ---------------------------------------------------------------
-                TO CHANGE PHONE NUMBER: Edit "1-800-DOC-PROPEL"
-                TO CHANGE EMAIL: Edit "hello@docpropel.com"
-                TO REMOVE CLIENT LOGIN BUTTON: Delete the <li> with Button
-            --------------------------------------------------------------- */}
-            <div className="text-center md:text-left">
-              <h4 className="font-semibold mb-4 text-foreground">Contact</h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
+            {/* COLUMN 4: Contact */}
+            <div>
+              <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
+                Contact
+              </h4>
+              <ul className="space-y-3 text-sm text-muted-foreground">
                 <li>
-                  <a 
-                    href="tel:1-800-362-7767" 
-                    className="flex items-center gap-2 hover:text-primary justify-center md:justify-start"
+                  <a
+                    href="tel:1-800-362-7767"
+                    className="flex items-center gap-2 hover:text-primary transition-colors"
                   >
                     <Phone className="h-4 w-4" />
                     1-800-DOC-PROPEL
                   </a>
                 </li>
                 <li>
-                  <IntakeForm 
+                  <IntakeForm
                     trigger={
-                      <button className="hover:text-primary text-left">
+                      <button className="hover:text-primary transition-colors text-left">
                         Send us a message
                       </button>
                     }
                   />
                 </li>
-                <li className="pt-2">
+                <li className="pt-1">
                   <Link href="/contact">
-                    <Button 
-                      variant="outline" 
-                      className="w-full border-secondary text-secondary hover:bg-secondary hover:text-white rounded-none"
+                    <Button
+                      variant="outline"
+                      className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground"
                     >
                       Contact Us
                     </Button>
@@ -435,22 +285,15 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </div>
           </div>
 
-          {/* -----------------------------------------------------------------
-              FOOTER BOTTOM BAR
-              -----------------------------------------------------------------
-              Contains: Copyright text, Privacy Policy, Terms of Service
-              
-              TO CHANGE COPYRIGHT TEXT: Edit the <p> content below
-              TO ADD/REMOVE LINKS: Edit the <a> elements
-          ----------------------------------------------------------------- */}
-          <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-foreground">
-            <p>
-              &copy; {new Date().getFullYear()} DocPropel. All rights reserved. 
-              Serving Doctors, Dentists, Pharmacies & PT/OT Clinics.
+          {/* Footer bottom bar */}
+          <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-xs text-muted-foreground">
+              &copy; {new Date().getFullYear()} DocPropel. All rights reserved.
+              Serving Doctors, Dentists, Pharmacies &amp; PT/OT Clinics.
             </p>
-            <div className="flex gap-6">
-              <a href="#" className="hover:text-foreground">Privacy Policy</a>
-              <a href="#" className="hover:text-foreground">Terms of Service</a>
+            <div className="flex gap-6 text-xs text-muted-foreground">
+              <span className="hover:text-primary transition-colors cursor-pointer">Privacy Policy</span>
+              <span className="hover:text-primary transition-colors cursor-pointer">Terms of Service</span>
             </div>
           </div>
         </div>

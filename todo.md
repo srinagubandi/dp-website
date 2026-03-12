@@ -45,3 +45,7 @@
 - [x] Fix broken icons on Services page
 - [x] Fix broken image on About Us page
 - [x] Fix blue button text color on Contact page to be white by default
+- [x] Analyze PropelDental design from GitHub
+- [x] Redesign Layout/Navigation to match PropelDental style
+- [x] Redesign Home page to match PropelDental style
+- [x] Redesign Services, About, Contact pages to match PropelDental style
