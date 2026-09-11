@@ -1,8 +1,8 @@
 import { ArrowRight, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import IntakeForm from "@/components/IntakeForm";
 import "../v2.css";
+import V2BriefForm from "./V2BriefForm";
 
 const links = [
   { href: "/v2/services", label: "Services" },
@@ -27,7 +27,7 @@ function Logo() {
 
 function RequestBriefButton({ light = false }: { light?: boolean }) {
   return (
-    <IntakeForm
+    <V2BriefForm
       trigger={
         <button className={`v2-button ${light ? "v2-button--light" : ""}`}>
           Request a Growth Brief <ArrowRight size={15} strokeWidth={1.7} />
