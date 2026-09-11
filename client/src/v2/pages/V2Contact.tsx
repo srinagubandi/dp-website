@@ -27,7 +27,7 @@ export default function V2Contact() {
         eyebrow="Contact DocPropel"
         title="Let's grow your practice with more clarity."
         lede="Ready to discuss the practice, the market, and the patient path you want to improve? Start a conversation without a long sales process or pressure."
-        image="/images/v2/final-invitation.webp"
+        image="/images/v2/final-invitation-clean.webp"
       />
       <section className="v2-section v2-section--cream">
         <div className="v2-shell v2-contact-grid">
@@ -116,7 +116,7 @@ export default function V2Contact() {
       </section>
       <section className="v2-final">
         <img
-          src="/images/v2/final-invitation.webp"
+          src="/images/v2/final-invitation-clean.webp"
           alt="A welcoming practice consultation room"
         />
         <div className="v2-shell">

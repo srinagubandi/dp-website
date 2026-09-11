@@ -22,6 +22,7 @@ import V2Compare from "./v2/pages/V2Compare";
 import V2About from "./v2/pages/V2About";
 import V2Calculator from "./v2/pages/V2Calculator";
 import V2Contact from "./v2/pages/V2Contact";
+import V2Results from "./v2/pages/V2Results";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
@@ -34,6 +35,7 @@ function Router() {
       <Route path="/v2/about" component={V2About} />
       <Route path="/v2/calculator" component={V2Calculator} />
       <Route path="/v2/contact" component={V2Contact} />
+      <Route path="/v2/results" component={V2Results} />
       <Route path={"/"} component={Home} />
       <Route path={"/services"} component={Services} />
       <Route path={"/how-it-works"} component={HowItWorks} />

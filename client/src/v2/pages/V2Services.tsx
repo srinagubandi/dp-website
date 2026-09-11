@@ -161,7 +161,7 @@ export default function V2Services() {
       </section>
       <section className="v2-final">
         <img
-          src="/images/v2/final-invitation.webp"
+          src="/images/v2/final-invitation-clean.webp"
           alt="A calm practice space at sunset"
         />
         <div className="v2-shell">

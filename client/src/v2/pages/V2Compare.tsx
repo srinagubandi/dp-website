@@ -17,7 +17,7 @@ export default function V2Compare() {
         eyebrow="Why performance"
         title="Misaligned incentives are the problem."
         lede="Most agencies are paid regardless of results. That places the risk on the practice and removes accountability. Our performance-based model is designed to share risk and align the work around patient growth."
-        image="/images/v2/accountability.webp"
+        image="/images/v2/accountability-clean.webp"
       />
       <section className="v2-section v2-section--cream">
         <div className="v2-shell v2-comparison">
@@ -75,14 +75,14 @@ export default function V2Compare() {
         </div>
         <div className="v2-photo-story-media">
           <img
-            src="/images/v2/local-demand.webp"
+            src="/images/v2/local-demand-clean.webp"
             alt="Local neighborhood context for patient demand"
           />
         </div>
       </section>
       <section className="v2-final">
         <img
-          src="/images/v2/final-invitation.webp"
+          src="/images/v2/final-invitation-clean.webp"
           alt="A quiet practice conversation setting"
         />
         <div className="v2-shell">
