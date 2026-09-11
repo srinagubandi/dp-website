@@ -155,7 +155,7 @@ export function V2Footer() {
           <span>
             © {new Date().getFullYear()} DocPropel. All rights reserved.
           </span>
-          <span>Version 2 approval preview</span>
+          <span>Performance-based healthcare growth</span>
         </div>
       </div>
     </footer>
