@@ -23,11 +23,29 @@ import V2About from "./v2/pages/V2About";
 import V2Calculator from "./v2/pages/V2Calculator";
 import V2Contact from "./v2/pages/V2Contact";
 import V2Results from "./v2/pages/V2Results";
+import V5Home from "./v5/V5Home";
+import {
+  V5About,
+  V5CalculatorPage,
+  V5Compare,
+  V5Contact,
+  V5HowItWorks,
+  V5Results,
+  V5Services,
+} from "./v5/V5Pages";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
+      <Route path="/v5" component={V5Home} />
+      <Route path="/v5/services" component={V5Services} />
+      <Route path="/v5/how-it-works" component={V5HowItWorks} />
+      <Route path="/v5/compare" component={V5Compare} />
+      <Route path="/v5/results" component={V5Results} />
+      <Route path="/v5/about" component={V5About} />
+      <Route path="/v5/calculator" component={V5CalculatorPage} />
+      <Route path="/v5/contact" component={V5Contact} />
       <Route path="/v2" component={V2Home} />
       <Route path="/v2/services" component={V2Services} />
       <Route path="/v2/how-it-works" component={V2HowItWorks} />
