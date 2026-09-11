@@ -15,11 +15,25 @@ import Contact from "@/pages/Contact";
 import Admin from "@/pages/Admin";
 import AdminLogin from "@/pages/AdminLogin";
 import PresenterApp from "./pages/presenter/PresenterApp";
+import V2Home from "./v2/pages/V2Home";
+import V2Services from "./v2/pages/V2Services";
+import V2HowItWorks from "./v2/pages/V2HowItWorks";
+import V2Compare from "./v2/pages/V2Compare";
+import V2About from "./v2/pages/V2About";
+import V2Calculator from "./v2/pages/V2Calculator";
+import V2Contact from "./v2/pages/V2Contact";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
+      <Route path="/v2" component={V2Home} />
+      <Route path="/v2/services" component={V2Services} />
+      <Route path="/v2/how-it-works" component={V2HowItWorks} />
+      <Route path="/v2/compare" component={V2Compare} />
+      <Route path="/v2/about" component={V2About} />
+      <Route path="/v2/calculator" component={V2Calculator} />
+      <Route path="/v2/contact" component={V2Contact} />
       <Route path={"/"} component={Home} />
       <Route path={"/services"} component={Services} />
       <Route path={"/how-it-works"} component={HowItWorks} />
