@@ -33,7 +33,7 @@ export default function V2About() {
         eyebrow="About DocPropel"
         title="Not an agency. A growth partner."
         lede="DocPropel was built from a familiar frustration: many healthcare practices are sold retainers, generic activity, and dashboards that do not explain what is really changing."
-        image="/images/v2/first-impression.webp"
+        image="/images/v2/first-impression-clean.webp"
       />
       <section className="v2-photo-story v2-section--cream">
         <div className="v2-photo-story-copy">
@@ -54,7 +54,7 @@ export default function V2About() {
         </div>
         <div className="v2-photo-story-media">
           <img
-            src="/images/v2/local-demand.webp"
+            src="/images/v2/local-demand-clean.webp"
             alt="A neighborhood practice context"
           />
         </div>
@@ -88,7 +88,7 @@ export default function V2About() {
       </section>
       <section className="v2-final">
         <img
-          src="/images/v2/final-invitation.webp"
+          src="/images/v2/final-invitation-clean.webp"
           alt="A calm setting for a growth conversation"
         />
         <div className="v2-shell">

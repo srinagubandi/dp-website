@@ -1,6 +1,6 @@
-import ROICalculator from "@/components/ROICalculator";
 import V2Layout, { RequestBriefButton } from "../components/V2Layout";
 import V2PageHero from "../components/V2PageHero";
+import V2GrowthCalculator from "../components/V2GrowthCalculator";
 
 const contexts = [
   ["Doctors", "Primary care, specialists, urgent care"],
@@ -16,7 +16,7 @@ export default function V2Calculator() {
         eyebrow="Interactive planning tool"
         title="Explore your practice's growth potential."
         lede="Use the original calculator to frame a discussion about potential revenue opportunity, then ground it in the practice, market, specialty, and current capacity."
-        image="/images/v2/accountability.webp"
+        image="/images/v2/accountability-clean.webp"
       />
       <section className="v2-section v2-section--cream">
         <div className="v2-shell">
@@ -40,18 +40,13 @@ export default function V2Calculator() {
             ))}
           </div>
           <div className="v2-calculator-wrap">
-            <ROICalculator />
+            <V2GrowthCalculator />
           </div>
-          <p className="v2-copy" style={{ marginTop: 22, fontSize: ".82rem" }}>
-            Illustrative projections are not a guarantee of results. A Practice
-            Growth Brief is the appropriate next step for a market-specific
-            assessment.
-          </p>
         </div>
       </section>
       <section className="v2-final">
         <img
-          src="/images/v2/final-invitation.webp"
+          src="/images/v2/final-invitation-clean.webp"
           alt="A practice room prepared for a conversation"
         />
         <div className="v2-shell">

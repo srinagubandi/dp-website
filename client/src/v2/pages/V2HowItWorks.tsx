@@ -81,14 +81,14 @@ export default function V2HowItWorks() {
         </div>
         <div className="v2-photo-story-media">
           <img
-            src="/images/v2/accountability.webp"
+            src="/images/v2/accountability-clean.webp"
             alt="A practical growth planning scene"
           />
         </div>
       </section>
       <section className="v2-final">
         <img
-          src="/images/v2/final-invitation.webp"
+          src="/images/v2/final-invitation-clean.webp"
           alt="Practice consultation space with a neighborhood view"
         />
         <div className="v2-shell">
