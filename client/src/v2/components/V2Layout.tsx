@@ -121,6 +121,9 @@ export function V2Footer() {
               <li>
                 <Link href="/v2/compare">Why performance</Link>
               </li>
+              <li>
+                <Link href="/v2/results">Results &amp; case studies</Link>
+              </li>
             </ul>
           </div>
           <div>

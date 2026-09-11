@@ -569,6 +569,345 @@
   background: transparent !important;
 }
 
+.v2-calc {
+  display: grid;
+  grid-template-columns: minmax(250px, 0.72fr) minmax(360px, 1fr) minmax(
+      250px,
+      0.72fr
+    );
+  border-top: 1px solid var(--v2-line);
+  border-bottom: 1px solid var(--v2-line);
+  background: var(--v2-cream);
+}
+.v2-calc-intro,
+.v2-calc-form,
+.v2-calc-result {
+  padding: 38px;
+}
+.v2-calc-intro {
+  border-right: 1px solid var(--v2-line);
+}
+.v2-calc-intro h2 {
+  max-width: 8ch;
+  margin-top: 20px;
+  font-family: "Newsreader", Georgia, serif;
+  font-size: clamp(2.4rem, 3.7vw, 4rem);
+  font-weight: 500;
+  line-height: 0.94;
+  letter-spacing: -0.05em;
+}
+.v2-calc-intro > p {
+  max-width: 29ch;
+  margin-top: 22px;
+  color: rgba(22, 56, 74, 0.72);
+  font-size: 0.93rem;
+  line-height: 1.65;
+}
+.v2-calc-route {
+  display: grid;
+  gap: 12px;
+  margin-top: 70px;
+  color: var(--v2-river);
+  font:
+    0.6rem/1.4 "DM Mono",
+    monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.v2-calc-route i {
+  display: block;
+  position: relative;
+  height: 2px;
+  background: var(--v2-river);
+}
+.v2-calc-route i::after {
+  content: "";
+  position: absolute;
+  top: -5px;
+  right: 21%;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--v2-orange);
+}
+.v2-calc-form {
+  display: grid;
+  gap: 28px;
+  border-right: 1px solid var(--v2-line);
+}
+.v2-calc-field > label,
+.v2-calc-email > label {
+  display: block;
+  color: var(--v2-ink);
+  font-family: "Newsreader", Georgia, serif;
+  font-size: 1.45rem;
+  font-weight: 500;
+  line-height: 1;
+}
+.v2-calc-field > p,
+.v2-calc-email > p {
+  margin-top: 8px;
+  color: rgba(22, 56, 74, 0.58);
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+.v2-calc-field select {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 14px;
+  padding: 0 12px;
+  border: 1px solid rgba(22, 56, 74, 0.3);
+  border-radius: 0;
+  background: var(--v2-paper);
+  color: var(--v2-ink);
+  font:
+    500 0.82rem/1 "DM Sans",
+    sans-serif;
+}
+.v2-calc-field-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+.v2-calc-field-head span {
+  color: var(--v2-orange-deep);
+  font:
+    500 0.78rem/1 "DM Mono",
+    monospace;
+}
+.v2-calc-control {
+  display: grid;
+  grid-template-columns: 32px 1fr 32px;
+  align-items: center;
+  gap: 13px;
+  margin-top: 15px;
+}
+.v2-calc-control button {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid rgba(22, 56, 74, 0.3);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--v2-ink);
+  cursor: pointer;
+}
+.v2-calc-control button:hover {
+  border-color: var(--v2-orange-deep);
+  color: var(--v2-orange-deep);
+}
+.v2-calc-control input[type="range"] {
+  width: 100%;
+  height: 4px;
+  accent-color: var(--v2-orange);
+  cursor: pointer;
+}
+.v2-calc-email {
+  padding-top: 26px;
+  border-top: 1px solid var(--v2-line);
+}
+.v2-calc-email > div {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  margin-top: 14px;
+}
+.v2-calc-email input {
+  min-width: 0;
+  min-height: 48px;
+  padding: 0 13px;
+  border: 1px solid rgba(22, 56, 74, 0.3);
+  border-radius: 0;
+  background: var(--v2-paper);
+  color: var(--v2-ink);
+  font:
+    0.9rem/1 "DM Sans",
+    sans-serif;
+}
+.v2-calc-email input::placeholder {
+  color: rgba(22, 56, 74, 0.45);
+}
+.v2-calc-email .v2-button {
+  min-height: 48px;
+  padding-inline: 16px;
+}
+.v2-calc-result {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--v2-ink);
+  color: var(--v2-cream);
+}
+.v2-calc-result-label {
+  color: #b4d3e5;
+  font:
+    0.62rem/1 "DM Mono",
+    monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.v2-calc-result-number {
+  margin-top: 13px;
+  font-family: "Newsreader", Georgia, serif;
+  font-size: clamp(3rem, 4.5vw, 5.15rem);
+  font-weight: 500;
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+}
+.v2-calc-result-copy {
+  margin-top: 18px;
+  color: rgba(255, 253, 248, 0.76);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.v2-calc-metrics {
+  display: grid;
+  gap: 0;
+  margin-top: 30px;
+  border-top: 1px solid rgba(255, 253, 248, 0.2);
+}
+.v2-calc-metrics > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 13px 0;
+  border-bottom: 1px solid rgba(255, 253, 248, 0.2);
+}
+.v2-calc-metrics span {
+  color: rgba(255, 253, 248, 0.67);
+  font-size: 0.75rem;
+  line-height: 1.3;
+}
+.v2-calc-metrics strong {
+  color: var(--v2-cream);
+  font:
+    500 0.78rem/1.3 "DM Mono",
+    monospace;
+  text-align: right;
+}
+.v2-calc-status {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin-top: 26px;
+  color: #b4d3e5;
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+.v2-calc-status svg {
+  flex: 0 0 auto;
+  color: var(--v2-orange);
+}
+.v2-calc-disclaimer {
+  margin-top: 22px;
+  color: rgba(255, 253, 248, 0.5);
+  font-size: 0.68rem;
+  line-height: 1.5;
+}
+
+.v2-results-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin-top: 54px;
+  border-top: 1px solid var(--v2-line);
+  border-left: 1px solid var(--v2-line);
+}
+.v2-result-story {
+  min-height: 335px;
+  display: flex;
+  flex-direction: column;
+  padding: 28px;
+  border-right: 1px solid var(--v2-line);
+  border-bottom: 1px solid var(--v2-line);
+  background: var(--v2-cream);
+}
+.v2-result-story > svg {
+  color: var(--v2-orange-deep);
+}
+.v2-result-story > h3 {
+  max-width: 16ch;
+  margin-top: 25px;
+  color: var(--v2-ink);
+  font-family: "Newsreader", Georgia, serif;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+}
+.v2-result-story > p {
+  max-width: 38ch;
+  margin-top: 18px;
+  color: rgba(22, 56, 74, 0.72);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+.v2-result-story > div:last-child {
+  display: grid;
+  gap: 3px;
+  margin-top: auto;
+  padding-top: 24px;
+  color: rgba(22, 56, 74, 0.65);
+  font-size: 0.78rem;
+}
+.v2-result-story > div:last-child strong {
+  color: var(--v2-ink);
+  font-family: "Newsreader", Georgia, serif;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+.v2-result-kicker {
+  color: var(--v2-river);
+  font:
+    0.62rem/1 "DM Mono",
+    monospace;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.v2-result-metric {
+  margin-top: 50px;
+  color: var(--v2-orange-deep);
+  font-family: "Newsreader", Georgia, serif;
+  font-size: 3.1rem;
+  font-weight: 500;
+  letter-spacing: -0.06em;
+  line-height: 0.9;
+}
+.v2-result-metric span {
+  display: block;
+  margin-top: 8px;
+  color: var(--v2-river);
+  font:
+    0.62rem/1.4 "DM Mono",
+    monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.v2-result-metric + h3 {
+  margin-top: 28px;
+}
+.v2-result-tags {
+  display: flex !important;
+  grid-auto-flow: unset !important;
+  grid-template-columns: unset !important;
+  flex-wrap: wrap;
+  gap: 7px !important;
+  margin-top: auto !important;
+  padding-top: 24px !important;
+}
+.v2-result-tags span {
+  padding: 5px 7px;
+  border: 1px solid var(--v2-line);
+  color: var(--v2-river);
+  font:
+    0.58rem/1 "DM Mono",
+    monospace;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
 .v2-contact-grid {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
@@ -773,6 +1112,16 @@
     grid-template-columns: 1fr;
     gap: 48px;
   }
+  .v2-calc {
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1fr);
+  }
+  .v2-calc-result {
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--v2-line);
+  }
+  .v2-results-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
   .v2-footer-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -832,6 +1181,32 @@
   }
   .v2-footer-bottom {
     flex-direction: column;
+  }
+  .v2-calc {
+    grid-template-columns: 1fr;
+  }
+  .v2-calc-intro,
+  .v2-calc-form {
+    border-right: 0;
+    border-bottom: 1px solid var(--v2-line);
+  }
+  .v2-calc-intro,
+  .v2-calc-form,
+  .v2-calc-result {
+    padding: 28px 20px;
+  }
+  .v2-calc-route {
+    margin-top: 34px;
+  }
+  .v2-calc-email > div {
+    grid-template-columns: 1fr;
+  }
+  .v2-results-grid {
+    grid-template-columns: 1fr;
+  }
+  .v2-result-story {
+    min-height: 285px;
+    padding: 24px;
   }
 }
 

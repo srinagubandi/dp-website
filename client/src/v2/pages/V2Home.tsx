@@ -9,8 +9,8 @@ import {
   TrendingUp,
 } from "lucide-react";
 import { Link } from "wouter";
-import ROICalculator from "@/components/ROICalculator";
 import V2Layout, { RequestBriefButton } from "../components/V2Layout";
+import V2GrowthCalculator from "../components/V2GrowthCalculator";
 
 const specialties = [
   {
@@ -159,7 +159,7 @@ export default function V2Home() {
         </div>
         <div className="v2-photo-story-media">
           <img
-            src="/images/v2/first-impression.webp"
+            src="/images/v2/first-impression-clean.webp"
             alt="A neighborhood practice at golden hour"
           />
         </div>
@@ -196,7 +196,7 @@ export default function V2Home() {
         </div>
         <div className="v2-photo-story-media">
           <img
-            src="/images/v2/patient-pathway.webp"
+            src="/images/v2/patient-pathway-clean.webp"
             alt="A calm practice reception path"
           />
         </div>
@@ -289,7 +289,7 @@ export default function V2Home() {
         </div>
         <div className="v2-photo-story-media">
           <img
-            src="/images/v2/accountability.webp"
+            src="/images/v2/accountability-clean.webp"
             alt="A practice planning table in warm daylight"
           />
         </div>
@@ -352,14 +352,14 @@ export default function V2Home() {
             evaluated against your practice context.
           </p>
           <div className="v2-calculator-wrap">
-            <ROICalculator />
+            <V2GrowthCalculator />
           </div>
         </div>
       </section>
 
       <section className="v2-final">
         <img
-          src="/images/v2/final-invitation.webp"
+          src="/images/v2/final-invitation-clean.webp"
           alt="A calm consultation room looking out to the neighborhood at sunset"
         />
         <div className="v2-shell">
