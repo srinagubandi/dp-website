@@ -2,8 +2,21 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { useState } from "react";
 
 export default function IntakeForm({ trigger }: { trigger?: React.ReactNode }) {
@@ -24,7 +37,8 @@ export default function IntakeForm({ trigger }: { trigger?: React.ReactNode }) {
           <div className="text-center py-10">
             <h3 className="text-2xl font-bold text-primary mb-4">Thank you.</h3>
             <p className="text-muted-foreground">
-              We’ll review your information and follow up if there is a clear opportunity where our model can add value.
+              We’ll review your information and follow up if there is a clear
+              opportunity where our model can add value.
             </p>
           </div>
         </DialogContent>
@@ -39,17 +53,25 @@ export default function IntakeForm({ trigger }: { trigger?: React.ReactNode }) {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-primary">Practice Growth Brief Request</DialogTitle>
+          <DialogTitle className="text-2xl font-bold text-primary">
+            Practice Growth Brief Request
+          </DialogTitle>
           <DialogDescription className="text-base pt-2">
-            This brief helps us understand your practice, market, and growth goals so we can determine whether our performance-based model is a fit. There is no obligation and no sales pressure.
+            This brief helps us understand your practice, market, and growth
+            goals so we can determine whether our performance-based model is a
+            fit. There is no obligation and no sales pressure.
           </DialogDescription>
         </DialogHeader>
-        
+
         <form onSubmit={handleSubmit} className="space-y-6 pt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <Label htmlFor="practiceName">Practice Name</Label>
-              <Input id="practiceName" required placeholder="e.g. City Dental Care" />
+              <Input
+                id="practiceName"
+                required
+                placeholder="e.g. City Dental Care"
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="specialty">Primary Specialty</Label>
@@ -59,7 +81,9 @@ export default function IntakeForm({ trigger }: { trigger?: React.ReactNode }) {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="dental">Dental</SelectItem>
-                  <SelectItem value="medical">Medical / Primary Care</SelectItem>
+                  <SelectItem value="medical">
+                    Medical / Primary Care
+                  </SelectItem>
                   <SelectItem value="pt">Physical Therapy</SelectItem>
                   <SelectItem value="pharmacy">Pharmacy</SelectItem>
                   <SelectItem value="other">Other</SelectItem>
@@ -90,7 +114,11 @@ export default function IntakeForm({ trigger }: { trigger?: React.ReactNode }) {
 
           <div className="space-y-2">
             <Label htmlFor="goal">Primary Growth Goal or Challenge</Label>
-            <Textarea id="goal" required placeholder="What is the main outcome you are looking to achieve?" />
+            <Textarea
+              id="goal"
+              required
+              placeholder="What is the main outcome you are looking to achieve?"
+            />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -100,18 +128,30 @@ export default function IntakeForm({ trigger }: { trigger?: React.ReactNode }) {
             </div>
             <div className="space-y-2">
               <Label htmlFor="email">Best Contact Email</Label>
-              <Input id="email" type="email" required placeholder="doctor@practice.com" />
+              <Input
+                id="email"
+                type="email"
+                required
+                placeholder="doctor@practice.com"
+              />
             </div>
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="notes">Additional Information (Optional)</Label>
-            <Textarea id="notes" placeholder="Any additional details or questions you'd like to share..." rows={3} />
+            <Textarea
+              id="notes"
+              placeholder="Any additional details or questions you'd like to share..."
+              rows={3}
+            />
           </div>
 
           <div className="pt-4">
-            <Button type="submit" className="w-full bg-secondary hover:bg-secondary/90 text-white font-bold h-12 text-lg rounded-none">
-              Submit Request
+            <Button
+              type="submit"
+              className="signal-button w-full bg-primary text-primary-foreground font-semibold text-lg hover:bg-[#ff9639]"
+            >
+              Submit Growth Brief Request
             </Button>
           </div>
         </form>
