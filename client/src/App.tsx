@@ -23,11 +23,27 @@ import V2About from "./v2/pages/V2About";
 import V2Calculator from "./v2/pages/V2Calculator";
 import V2Contact from "./v2/pages/V2Contact";
 import V2Results from "./v2/pages/V2Results";
+import V3Home from "./v3/pages/V3Home";
+import V3Services from "./v3/pages/V3Services";
+import V3HowItWorks from "./v3/pages/V3HowItWorks";
+import V3Compare from "./v3/pages/V3Compare";
+import V3Results from "./v3/pages/V3Results";
+import V3About from "./v3/pages/V3About";
+import V3Calculator from "./v3/pages/V3Calculator";
+import V3Contact from "./v3/pages/V3Contact";
 
 function Router() {
   // make sure to consider if you need authentication for certain routes
   return (
     <Switch>
+      <Route path="/v3" component={V3Home} />
+      <Route path="/v3/services" component={V3Services} />
+      <Route path="/v3/how-it-works" component={V3HowItWorks} />
+      <Route path="/v3/compare" component={V3Compare} />
+      <Route path="/v3/results" component={V3Results} />
+      <Route path="/v3/about" component={V3About} />
+      <Route path="/v3/calculator" component={V3Calculator} />
+      <Route path="/v3/contact" component={V3Contact} />
       <Route path="/v2" component={V2Home} />
       <Route path="/v2/services" component={V2Services} />
       <Route path="/v2/how-it-works" component={V2HowItWorks} />
