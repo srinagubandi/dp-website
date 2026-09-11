@@ -1,189 +1,190 @@
 import { useState } from "react";
-import { trpc } from "@/lib/trpc";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  ArrowRight,
+  Calculator,
+  DollarSign,
+  ShieldCheck,
+  TrendingUp,
+  Users,
+} from "lucide-react";
 import { toast } from "sonner";
+import { trpc } from "@/lib/trpc";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowRight, Calculator, DollarSign, TrendingUp, Users } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import IntakeForm from "@/components/IntakeForm";
 
 const SPECIALTIES = {
-  "doctors": { label: "Doctors / Physicians", growth: 0.25, avgValue: 500 },
-  "dentists": { label: "Dentists", growth: 0.35, avgValue: 1200 },
-  "pharmacy": { label: "Pharmacies", growth: 0.30, avgValue: 85 },
-  "pt_ot": { label: "PT / OT Clinics", growth: 0.28, avgValue: 1500 },
-  "urgent": { label: "Urgent Care", growth: 0.40, avgValue: 250 },
-  "specialty": { label: "Specialty Practice", growth: 0.22, avgValue: 2500 },
+  doctors: { label: "Doctors / Physicians", defaultValue: 500 },
+  dentists: { label: "Dentists", defaultValue: 1200 },
+  pharmacy: { label: "Pharmacies", defaultValue: 85 },
+  pt_ot: { label: "PT / OT Clinics", defaultValue: 1500 },
+  urgent: { label: "Urgent Care", defaultValue: 250 },
+  specialty: { label: "Specialty Practice", defaultValue: 2500 },
 };
 
 export default function ROICalculator() {
   const [specialty, setSpecialty] = useState("doctors");
   const [monthlyPatients, setMonthlyPatients] = useState(30);
   const [patientValue, setPatientValue] = useState(500);
+  const [scenarioRate, setScenarioRate] = useState(20);
   const [showResults, setShowResults] = useState(false);
   const [email, setEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Update defaults when specialty changes
-  const handleSpecialtyChange = (value: string) => {
-    setSpecialty(value);
-    setPatientValue(SPECIALTIES[value as keyof typeof SPECIALTIES].avgValue);
-  };
-
-  // Calculation Logic
-  const growthRate = SPECIALTIES[specialty as keyof typeof SPECIALTIES].growth;
-  const additionalPatients = Math.round(monthlyPatients * growthRate);
+  const selectedSpecialty = SPECIALTIES[specialty as keyof typeof SPECIALTIES];
+  const additionalPatients = Math.round(monthlyPatients * (scenarioRate / 100));
   const monthlyRevenueIncrease = additionalPatients * patientValue;
   const annualRevenueIncrease = monthlyRevenueIncrease * 12;
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   const submitLead = trpc.calculator.submitLead.useMutation({
-    onSuccess: () => {
-      toast.success("Your personalized report is on its way!");
-    },
-    onError: () => {
-      toast.error("Something went wrong. Please try again.");
-    },
+    onSuccess: () => toast.success("Your planning scenario is ready."),
+    onError: () => toast.error("Something went wrong. Please try again."),
   });
 
-  const handleCalculate = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) {
-      setIsSubmitting(true);
-      try {
-        await submitLead.mutateAsync({
-          email,
-          specialty: SPECIALTIES[specialty as keyof typeof SPECIALTIES].label,
-          monthlyPatients,
-          patientValue,
-          projectedGrowth: growthRate,
-          projectedAnnualRevenue: annualRevenueIncrease,
-        });
-        setShowResults(true);
-      } finally {
-        setIsSubmitting(false);
-      }
+  const handleSpecialtyChange = (value: string) => {
+    setSpecialty(value);
+    setPatientValue(
+      SPECIALTIES[value as keyof typeof SPECIALTIES].defaultValue
+    );
+  };
+
+  const handleCalculate = async (event: React.FormEvent) => {
+    event.preventDefault();
+    if (!email) return;
+    setIsSubmitting(true);
+    try {
+      await submitLead.mutateAsync({
+        email,
+        specialty: selectedSpecialty.label,
+        monthlyPatients,
+        patientValue,
+        projectedGrowth: scenarioRate / 100,
+        projectedAnnualRevenue: annualRevenueIncrease,
+      });
+      setShowResults(true);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <Card className="w-full max-w-4xl mx-auto overflow-hidden shadow-2xl border-t-4 border-t-secondary">
-      <div className="grid md:grid-cols-2">
-        {/* Input Section */}
-        <div className="p-6 md:p-8 bg-background">
-          <CardHeader className="px-0 pt-0">
-            <div className="flex items-center gap-2 text-secondary mb-2">
-              <Calculator className="w-5 h-5" />
-              <span className="text-sm font-bold uppercase tracking-wider">Growth Calculator</span>
+    <Card className="mx-auto w-full max-w-5xl overflow-hidden border border-border bg-card shadow-[10px_10px_0_rgba(0,0,0,0.16)]">
+      <div className="grid md:grid-cols-[1.05fr_0.95fr]">
+        <div className="border-b border-border bg-card p-6 sm:p-8 md:border-b-0 md:border-r">
+          <div className="flex items-start justify-between gap-5 border-b border-border pb-6">
+            <div>
+              <p className="eyebrow text-secondary">
+                Calculator / planning input
+              </p>
+              <h3 className="mt-2 text-2xl font-semibold tracking-[-0.03em] sm:text-3xl">
+                Build an illustrative scenario.
+              </h3>
             </div>
-            <CardTitle className="text-2xl md:text-3xl font-bold text-primary">
-              Calculate Your Potential
-            </CardTitle>
-            <CardDescription className="text-base mt-2">
-              See how much revenue you could be missing out on. Enter your current metrics below.
-            </CardDescription>
-          </CardHeader>
+            <Calculator className="h-7 w-7 shrink-0 text-primary" />
+          </div>
+          <p className="mt-5 text-sm leading-relaxed text-muted-foreground">
+            Set the inputs you want to discuss. The scenario rate is your chosen
+            planning assumption, not a forecast or performance claim.
+          </p>
 
-          <form onSubmit={handleCalculate} className="space-y-8 mt-6">
-            <div className="space-y-4">
-              <Label htmlFor="specialty" className="text-base font-medium">Practice Specialty</Label>
+          <form onSubmit={handleCalculate} className="mt-7 space-y-7">
+            <div className="space-y-3">
+              <Label htmlFor="specialty" className="text-sm font-medium">
+                Practice specialty
+              </Label>
               <Select value={specialty} onValueChange={handleSpecialtyChange}>
-                <SelectTrigger id="specialty" className="h-12 text-lg">
+                <SelectTrigger
+                  id="specialty"
+                  className="h-12 border-border bg-background text-base"
+                >
                   <SelectValue placeholder="Select specialty" />
                 </SelectTrigger>
                 <SelectContent>
                   {Object.entries(SPECIALTIES).map(([key, data]) => (
-                    <SelectItem key={key} value={key}>{data.label}</SelectItem>
+                    <SelectItem key={key} value={key}>
+                      {data.label}
+                    </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
 
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <Label htmlFor="patients" className="text-base font-medium">
-                  Monthly New Patients
-                </Label>
-                <span className="text-xl font-bold text-primary bg-blue-50 px-3 py-1 rounded">
-                  {monthlyPatients}
-                </span>
-              </div>
-              <Slider
-                id="patients"
-                min={5}
-                max={200}
-                step={1}
-                value={[monthlyPatients]}
-                onValueChange={(vals) => setMonthlyPatients(vals[0])}
-                className="py-2"
-              />
-              <p className="text-xs text-muted-foreground">
-                Average number of new patients you see per month.
-              </p>
-            </div>
+            <SliderField
+              label="Monthly new patients"
+              value={monthlyPatients}
+              display={String(monthlyPatients)}
+              min={5}
+              max={200}
+              step={1}
+              onChange={setMonthlyPatients}
+              help="Enter a current monthly baseline."
+            />
+            <SliderField
+              label="Revenue per patient"
+              value={patientValue}
+              display={`$${patientValue.toLocaleString()}`}
+              min={100}
+              max={10000}
+              step={50}
+              onChange={setPatientValue}
+              help="Use the lifetime value or initial-visit value you prefer."
+            />
+            <SliderField
+              label="Illustrative planning rate"
+              value={scenarioRate}
+              display={`${scenarioRate}%`}
+              min={5}
+              max={50}
+              step={1}
+              onChange={setScenarioRate}
+              help="Choose the scenario you want to explore. This is not a prediction."
+            />
 
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <Label htmlFor="value" className="text-base font-medium">
-                  Avg. Revenue per Patient ($)
-                </Label>
-                <span className="text-xl font-bold text-primary bg-blue-50 px-3 py-1 rounded">
-                  ${patientValue}
-                </span>
-              </div>
-              <Slider
-                id="value"
-                min={100}
-                max={10000}
-                step={50}
-                value={[patientValue]}
-                onValueChange={(vals) => setPatientValue(vals[0])}
-                className="py-2"
-              />
-              <p className="text-xs text-muted-foreground">
-                Average lifetime value or initial visit revenue per patient.
-              </p>
-            </div>
-
-            <div className="pt-4">
-              <Label htmlFor="email" className="text-base font-medium mb-2 block">
-                Where should we send your detailed report?
+            <div className="border-t border-border pt-6">
+              <Label htmlFor="email" className="mb-2 block text-sm font-medium">
+                Where should we send this planning scenario?
               </Label>
-              <div className="flex gap-2">
+              <div className="flex flex-col gap-2 sm:flex-row">
                 <Input
                   id="email"
                   type="email"
                   placeholder="doctor@practice.com"
                   required
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="h-12 text-lg"
+                  onChange={event => setEmail(event.target.value)}
+                  className="h-12 border-border bg-background text-base"
                 />
-                <Button 
-                  type="submit" 
-                  size="lg" 
-                  className="h-12 px-6 bg-secondary hover:bg-secondary/90 text-white font-bold"
+                <Button
+                  type="submit"
+                  className="signal-button h-12 bg-primary px-5 font-semibold text-primary-foreground hover:bg-[#ff9639]"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? "Calculating..." : "Calculate"} <ArrowRight className="ml-2 w-4 h-4" />
+                  {isSubmitting ? "Calculating…" : "Calculate"}{" "}
+                  <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </div>
-              <p className="text-xs text-muted-foreground mt-2 flex items-center gap-1">
-                <ShieldCheck className="w-3 h-3" /> Your data is secure. No spam.
+              <p className="mt-3 flex items-center gap-1.5 text-xs text-muted-foreground">
+                <ShieldCheck className="h-3.5 w-3.5 text-[#18b69b]" />
+                Your data is used to generate this planning scenario.
               </p>
             </div>
           </form>
         </div>
 
-        {/* Results Section */}
-        <div className="bg-primary text-white p-6 md:p-8 flex flex-col justify-center relative overflow-hidden">
-          {/* Background Pattern */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-secondary/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
-
+        <div className="relative flex min-h-[34rem] flex-col justify-center overflow-hidden bg-[#0f2740] p-6 sm:p-8">
+          <div className="pointer-events-none absolute right-[-6rem] top-[-6rem] h-60 w-60 rounded-full bg-secondary/10 blur-3xl" />
+          <div className="pointer-events-none absolute bottom-[-7rem] left-[-7rem] h-60 w-60 rounded-full bg-primary/15 blur-3xl" />
           <AnimatePresence mode="wait">
             {!showResults ? (
               <motion.div
@@ -191,74 +192,78 @@ export default function ROICalculator() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="text-center space-y-6 relative z-10"
+                className="relative z-10 text-center"
               >
-                <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <TrendingUp className="w-10 h-10 text-secondary" />
+                <div className="mx-auto flex h-16 w-16 items-center justify-center border border-secondary/40 bg-secondary/10 text-secondary">
+                  <TrendingUp className="h-8 w-8" />
                 </div>
-                <h3 className="text-2xl font-bold">Ready to see your growth?</h3>
-                <p className="text-blue-100 text-lg">
-                  Enter your metrics to unlock a personalized projection of your practice's potential revenue growth with DocPropel.
+                <p className="eyebrow mt-8 text-secondary">Scenario output</p>
+                <h3 className="mt-3 text-3xl font-semibold tracking-[-0.035em]">
+                  Set your inputs to see the planning view.
+                </h3>
+                <p className="mx-auto mt-4 max-w-sm leading-relaxed text-muted-foreground">
+                  The result will show the mathematical impact of the inputs and
+                  planning rate you select.
                 </p>
-                <div className="grid grid-cols-2 gap-4 mt-8 opacity-50 blur-[2px]">
-                  <div className="bg-white/10 p-4 rounded-lg">
-                    <div className="h-4 w-16 bg-white/20 rounded mb-2"></div>
-                    <div className="h-8 w-24 bg-white/40 rounded"></div>
-                  </div>
-                  <div className="bg-white/10 p-4 rounded-lg">
-                    <div className="h-4 w-16 bg-white/20 rounded mb-2"></div>
-                    <div className="h-8 w-24 bg-white/40 rounded"></div>
-                  </div>
+                <div className="mt-9 grid grid-cols-2 gap-3 text-left opacity-45">
+                  {["Additional patients", "Annual scenario"].map(label => (
+                    <div
+                      key={label}
+                      className="border border-border bg-background/30 p-4"
+                    >
+                      <p className="font-mono text-[10px] uppercase tracking-[0.1em] text-muted-foreground">
+                        {label}
+                      </p>
+                      <div className="mt-3 h-7 w-20 bg-muted" />
+                    </div>
+                  ))}
                 </div>
               </motion.div>
             ) : (
               <motion.div
                 key="results"
-                initial={{ opacity: 0, scale: 0.95 }}
+                initial={{ opacity: 0, scale: 0.96 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ type: "spring", bounce: 0.4 }}
-                className="space-y-8 relative z-10"
+                transition={{ type: "spring", bounce: 0.25 }}
+                className="relative z-10"
               >
-                <div className="text-center mb-6">
-                  <h3 className="text-xl font-medium text-blue-100 mb-1">Projected Annual Growth</h3>
-                  <div className="text-5xl md:text-6xl font-bold text-white tracking-tight">
-                    +${annualRevenueIncrease.toLocaleString()}
-                  </div>
+                <p className="eyebrow text-secondary">
+                  Illustrative annual scenario
+                </p>
+                <p className="metric-value mt-3 text-5xl font-semibold tracking-[-0.065em] text-foreground sm:text-6xl">
+                  ${annualRevenueIncrease.toLocaleString()}
+                </p>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  Based on your selected inputs and {scenarioRate}% planning
+                  rate.
+                </p>
+                <div className="mt-8 grid gap-3">
+                  <Metric
+                    label="Additional patients / year"
+                    value={`+${additionalPatients * 12}`}
+                    icon={Users}
+                    color="text-secondary"
+                  />
+                  <Metric
+                    label="Illustrative monthly amount"
+                    value={`$${monthlyRevenueIncrease.toLocaleString()}`}
+                    icon={DollarSign}
+                    color="text-primary"
+                  />
                 </div>
-
-                <div className="grid gap-4">
-                  <div className="bg-white/10 backdrop-blur-sm p-4 rounded-lg border border-white/10 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 bg-secondary/20 rounded-full">
-                        <Users className="w-5 h-5 text-secondary" />
-                      </div>
-                      <span className="font-medium">New Patients / Year</span>
-                    </div>
-                    <span className="text-2xl font-bold">+{additionalPatients * 12}</span>
-                  </div>
-
-                  <div className="bg-white/10 backdrop-blur-sm p-4 rounded-lg border border-white/10 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="p-2 bg-green-500/20 rounded-full">
-                        <DollarSign className="w-5 h-5 text-green-400" />
-                      </div>
-                      <span className="font-medium">Monthly Revenue</span>
-                    </div>
-                    <span className="text-2xl font-bold text-green-400">
-                      +${monthlyRevenueIncrease.toLocaleString()}
-                    </span>
-                  </div>
+                <div className="mt-7 border border-secondary/25 bg-secondary/5 p-4 text-sm leading-relaxed text-muted-foreground">
+                  This mathematical scenario is not a forecast. Performance
+                  depends on market conditions, practice capacity, patient
+                  behavior, and implementation.
                 </div>
-
-                <div className="bg-blue-900/50 p-4 rounded-lg text-sm text-blue-100 border border-blue-800">
-                  <p>
-                    <strong>Note:</strong> This projection is based on a conservative <strong>{Math.round(growthRate * 100)}% growth rate</strong>, typical for {SPECIALTIES[specialty as keyof typeof SPECIALTIES].label} practices in their first 6 months with DocPropel.
-                  </p>
-                </div>
-
-                <Button className="w-full bg-white text-primary hover:bg-blue-50 font-bold h-12 text-lg">
-                  Start Your Growth Plan
-                </Button>
+                <IntakeForm
+                  trigger={
+                    <Button className="signal-button mt-7 w-full bg-primary font-semibold text-primary-foreground hover:bg-[#ff9639]">
+                      Discuss this scenario{" "}
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  }
+                />
               </motion.div>
             )}
           </AnimatePresence>
@@ -268,22 +273,66 @@ export default function ROICalculator() {
   );
 }
 
-function ShieldCheck(props: any) {
+function SliderField({
+  label,
+  value,
+  display,
+  min,
+  max,
+  step,
+  onChange,
+  help,
+}: {
+  label: string;
+  value: number;
+  display: string;
+  min: number;
+  max: number;
+  step: number;
+  onChange: (value: number) => void;
+  help: string;
+}) {
   return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10" />
-      <path d="m9 12 2 2 4-4" />
-    </svg>
+    <div className="space-y-3">
+      <div className="flex items-center justify-between gap-4">
+        <Label className="text-sm font-medium">{label}</Label>
+        <span className="border border-secondary/35 bg-secondary/10 px-2.5 py-1 font-mono text-sm font-medium text-secondary">
+          {display}
+        </span>
+      </div>
+      <Slider
+        min={min}
+        max={max}
+        step={step}
+        value={[value]}
+        onValueChange={values => onChange(values[0])}
+        className="py-2"
+      />
+      <p className="text-xs text-muted-foreground">{help}</p>
+    </div>
+  );
+}
+
+function Metric({
+  label,
+  value,
+  icon: Icon,
+  color,
+}: {
+  label: string;
+  value: string;
+  icon: typeof Users;
+  color: string;
+}) {
+  return (
+    <div className="flex items-center justify-between border border-border bg-background/30 p-4">
+      <div className="flex items-center gap-3">
+        <Icon className={`h-5 w-5 ${color}`} />
+        <span className="text-sm text-muted-foreground">{label}</span>
+      </div>
+      <span className="font-mono text-xl font-semibold text-foreground">
+        {value}
+      </span>
+    </div>
   );
 }

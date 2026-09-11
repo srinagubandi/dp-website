@@ -1,300 +1,225 @@
-/**
- * =============================================================================
- * LAYOUT.TSX - Main Website Layout Component
- * =============================================================================
- *
- * Controls the overall structure of every page:
- *   - HEADER: Logo, navigation links, phone number, CTA button
- *   - MAIN CONTENT: Where each page's content is rendered
- *   - FOOTER: Company info, specialty links, company links, contact
- *
- * Design: Dark premium theme inspired by PropelDental, using DocPropel
- * brand colors (Orange = primary, Blue = secondary).
- *
- * HOW TO EDIT:
- *   - Logo: Update src="/images/logo.png" (lines ~80, ~175)
- *   - Nav links: Edit the navLinks array (lines ~55-65)
- *   - Phone number: Edit "1-800-DOC-PROPEL" and "tel:1-800-362-7767"
- *   - Footer columns: Edit the footer section (~lines 175+)
- *   - Colors: Defined in client/src/index.css CSS variables
- *
- * =============================================================================
- */
-
 import { Link, useLocation } from "wouter";
 import { useState } from "react";
-import { Menu, X, Phone } from "lucide-react";
+import { ArrowUpRight, Menu, Phone, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import IntakeForm from "@/components/IntakeForm";
-import {
-  DoctorIcon,
-  DentistIcon,
-  PharmacyIcon,
-  PTOTIcon,
-} from "@/components/BrandIcons";
+
+const navLinks = [
+  { href: "/services", label: "Capabilities" },
+  { href: "/how-it-works", label: "Operating Model" },
+  { href: "/compare", label: "Why Performance" },
+  { href: "/calculator", label: "Growth Calculator" },
+  { href: "/about", label: "About" },
+];
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  // ---------------------------------------------------------------------------
-  // NAVIGATION LINKS
-  // To add a page: add { href: "/page", label: "Page Name" }
-  // To remove: delete the entry
-  // To hide Results: it is commented out below
-  // ---------------------------------------------------------------------------
-  const navLinks = [
-    { href: "/services",     label: "Services" },
-    { href: "/how-it-works", label: "How It Works" },
-    { href: "/compare",      label: "Compare" },
-    { href: "/about",        label: "About Us" },
-    { href: "/calculator",   label: "ROI Calculator" },
-    { href: "/contact",      label: "Contact Us" },
-    // { href: "/results",   label: "Results" }, // Hidden — uncomment to show
-  ];
+  const closeMenu = () => setMobileMenuOpen(false);
 
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground">
+      <div className="border-b border-border bg-[#06131f]">
+        <div className="container flex min-h-8 items-center justify-between gap-3 py-1 text-[10px] uppercase tracking-[0.12em] text-muted-foreground sm:text-[11px]">
+          <span className="font-mono">
+            Healthcare practice growth / performance model
+          </span>
+          <a
+            href="tel:1-800-362-7767"
+            className="hidden font-mono text-secondary transition-colors hover:text-foreground sm:block"
+          >
+            1-800-DOC-PROPEL
+          </a>
+        </div>
+      </div>
 
-      {/* =====================================================================
-          HEADER
-          Sticky, dark background with subtle blur — matches PropelDental style.
-          TO CHANGE HEIGHT: edit h-16 / md:h-20
-      ===================================================================== */}
-      <header className="sticky top-0 z-50 border-b border-border/50 bg-background/95 backdrop-blur-md">
-        <div className="container flex items-center justify-between h-16 md:h-20">
-
-          {/* LOGO */}
-          <Link href="/" className="shrink-0">
+      <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur-xl">
+        <div className="container flex h-[4.6rem] items-center justify-between gap-4">
+          <Link
+            href="/"
+            className="flex shrink-0 items-center gap-3"
+            onClick={closeMenu}
+          >
             <img
               src="/images/logo.png"
               alt="DocPropel"
-              className="h-10 w-auto"
+              className="h-9 w-auto sm:h-10"
             />
+            <span className="hidden border-l border-border pl-3 font-mono text-[10px] uppercase tracking-[0.12em] text-muted-foreground xl:block">
+              Growth systems
+            </span>
           </Link>
 
-          {/* PHONE NUMBER — click-to-call, desktop only */}
-          <a
-            href="tel:1-800-362-7767"
-            className="hidden lg:flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+          <nav
+            className="hidden items-center gap-0.5 lg:flex"
+            aria-label="Primary navigation"
           >
-            <Phone className="w-4 h-4" />
-            <span>1-800-DOC-PROPEL</span>
-          </a>
-
-          {/* DESKTOP NAVIGATION */}
-          <nav className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => (
+            {navLinks.map((link, index) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-3 py-2 text-sm font-medium transition-colors rounded-md ${
+                className={`px-2.5 py-2 text-sm font-medium transition-colors xl:px-3 ${
                   location === link.href
-                    ? "text-primary bg-primary/10"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                    ? "text-secondary"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
+                <span className="mr-1 font-mono text-[10px] text-primary/75">
+                  0{index + 1}
+                </span>
                 {link.label}
               </Link>
             ))}
           </nav>
 
-          {/* DESKTOP CTA BUTTON */}
-          <div className="hidden lg:flex items-center">
+          <div className="hidden items-center gap-3 lg:flex">
+            <a
+              href="tel:1-800-362-7767"
+              className="hidden items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-secondary xl:flex"
+            >
+              <Phone className="h-3.5 w-3.5" />
+              1-800-DOC-PROPEL
+            </a>
             <IntakeForm
               trigger={
-                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-5">
-                  Request a Practice Growth Brief
+                <Button className="signal-button bg-primary px-4 font-semibold text-primary-foreground hover:bg-[#ff9639]">
+                  Start with a brief <ArrowUpRight className="ml-1.5 h-4 w-4" />
                 </Button>
               }
             />
           </div>
 
-          {/* MOBILE HAMBURGER BUTTON */}
           <button
-            className="lg:hidden p-2 text-foreground"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
+            type="button"
+            className="flex h-11 w-11 items-center justify-center border border-border text-foreground transition-colors hover:border-secondary hover:text-secondary lg:hidden"
+            onClick={() => setMobileMenuOpen(open => !open)}
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileMenuOpen}
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? (
+              <X className="h-5 w-5" />
+            ) : (
+              <Menu className="h-5 w-5" />
+            )}
           </button>
         </div>
 
-        {/* MOBILE MENU DROPDOWN */}
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-border bg-background">
-            <nav className="container py-4 space-y-1">
-              {navLinks.map((link) => (
+          <div className="border-t border-border bg-[#081b2c] lg:hidden">
+            <nav
+              className="container grid gap-1 py-5"
+              aria-label="Mobile navigation"
+            >
+              {navLinks.map((link, index) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`block px-4 py-3 text-base font-medium rounded-md transition-colors ${
+                  onClick={closeMenu}
+                  className={`flex items-center gap-3 px-3 py-3 text-base font-medium ${
                     location === link.href
-                      ? "text-primary bg-primary/10"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                      ? "bg-secondary/10 text-secondary"
+                      : "text-foreground hover:bg-muted"
                   }`}
                 >
+                  <span className="font-mono text-xs text-primary">
+                    0{index + 1}
+                  </span>
                   {link.label}
                 </Link>
               ))}
-              <div className="pt-4 px-4 space-y-3">
-                <a
-                  href="tel:1-800-362-7767"
-                  className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <Phone className="w-4 h-4" />
-                  <span>1-800-DOC-PROPEL</span>
-                </a>
-                <IntakeForm
-                  trigger={
-                    <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold">
-                      Request a Practice Growth Brief
-                    </Button>
-                  }
-                />
-              </div>
+              <a
+                href="tel:1-800-362-7767"
+                className="mt-3 flex items-center gap-2 px-3 py-3 text-sm text-muted-foreground"
+                onClick={closeMenu}
+              >
+                <Phone className="h-4 w-4 text-secondary" /> 1-800-DOC-PROPEL
+              </a>
+              <IntakeForm
+                trigger={
+                  <Button className="signal-button mt-2 w-full bg-primary font-semibold text-primary-foreground hover:bg-[#ff9639]">
+                    Request a Practice Growth Brief{" "}
+                    <ArrowUpRight className="ml-2 h-4 w-4" />
+                  </Button>
+                }
+              />
             </nav>
           </div>
         )}
       </header>
 
-      {/* =====================================================================
-          MAIN CONTENT AREA
-          Each page's content is injected here via {children}.
-          DO NOT EDIT unless changing overall page structure.
-      ===================================================================== */}
       <main className="flex-1">{children}</main>
 
-      {/* =====================================================================
-          FOOTER
-          Dark card background with 4-column grid.
-          TO CHANGE BACKGROUND: edit "bg-card"
-          TO CHANGE PADDING: edit "py-16"
-      ===================================================================== */}
-      <footer className="border-t border-border bg-card">
-        <div className="container py-16">
-
-          {/* Footer Grid: 4 columns on desktop, 1 on mobile */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
-
-            {/* COLUMN 1: Brand + description */}
-            <div className="md:col-span-1">
+      <footer className="section-rule bg-[#06131f]">
+        <div className="container py-12 lg:py-16">
+          <div className="grid gap-10 md:grid-cols-[1.45fr_0.8fr_0.8fr]">
+            <div>
               <img
                 src="/images/logo.png"
                 alt="DocPropel"
-                className="h-8 w-auto mb-4"
+                className="mb-5 h-9 w-auto"
               />
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                The only performance-based marketing partner for healthcare
-                practices. We grow your patient base — you only pay for results.
+              <p className="max-w-md text-base leading-relaxed text-muted-foreground">
+                A performance-based growth partner for healthcare practices that
+                want a clearer path from demand to patient opportunity.
               </p>
-              <a
-                href="tel:1-800-362-7767"
-                className="flex items-center gap-2 mt-4 text-sm text-primary hover:text-primary/80 transition-colors"
-              >
-                <Phone className="w-4 h-4" />
-                1-800-DOC-PROPEL
-              </a>
-            </div>
-
-            {/* COLUMN 2: Specialties */}
-            <div>
-              <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
-                Specialties
-              </h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li className="flex items-center gap-2">
-                  <DoctorIcon size={14} />
-                  <Link href="/services" className="hover:text-primary transition-colors">
-                    Doctors &amp; Physicians
-                  </Link>
-                </li>
-                <li className="flex items-center gap-2">
-                  <DentistIcon size={14} />
-                  <Link href="/services" className="hover:text-primary transition-colors">
-                    Dentists
-                  </Link>
-                </li>
-                <li className="flex items-center gap-2">
-                  <PharmacyIcon size={14} />
-                  <Link href="/services" className="hover:text-primary transition-colors">
-                    Pharmacies
-                  </Link>
-                </li>
-                <li className="flex items-center gap-2">
-                  <PTOTIcon size={14} />
-                  <Link href="/services" className="hover:text-primary transition-colors">
-                    PT / OT Clinics
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* COLUMN 3: Company links */}
-            <div>
-              <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
-                Company
-              </h4>
-              <ul className="space-y-2 text-sm text-muted-foreground">
-                <li><Link href="/about"        className="hover:text-primary transition-colors">About Us</Link></li>
-                <li><Link href="/how-it-works" className="hover:text-primary transition-colors">How It Works</Link></li>
-                <li><Link href="/compare"      className="hover:text-primary transition-colors">Compare</Link></li>
-                <li><Link href="/calculator"   className="hover:text-primary transition-colors">ROI Calculator</Link></li>
-                <li><Link href="/contact"      className="hover:text-primary transition-colors">Contact Us</Link></li>
-                {/* <li><Link href="/results" className="hover:text-primary transition-colors">Case Studies</Link></li> */}
-              </ul>
-            </div>
-
-            {/* COLUMN 4: Contact */}
-            <div>
-              <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
-                Contact
-              </h4>
-              <ul className="space-y-3 text-sm text-muted-foreground">
-                <li>
-                  <a
-                    href="tel:1-800-362-7767"
-                    className="flex items-center gap-2 hover:text-primary transition-colors"
-                  >
-                    <Phone className="h-4 w-4" />
-                    1-800-DOC-PROPEL
-                  </a>
-                </li>
-                <li>
-                  <IntakeForm
-                    trigger={
-                      <button className="hover:text-primary transition-colors text-left">
-                        Send us a message
-                      </button>
-                    }
-                  />
-                </li>
-                <li className="pt-1">
-                  <Link href="/contact">
-                    <Button
-                      variant="outline"
-                      className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+              <div className="mt-6 flex flex-wrap gap-3">
+                <a
+                  href="tel:1-800-362-7767"
+                  className="signal-link inline-flex min-h-11 items-center gap-2 px-4 text-sm font-semibold text-secondary"
+                >
+                  <Phone className="h-4 w-4" /> 1-800-DOC-PROPEL
+                </a>
+                <IntakeForm
+                  trigger={
+                    <button
+                      type="button"
+                      className="signal-link inline-flex min-h-11 items-center gap-2 px-4 text-sm font-semibold text-foreground"
                     >
-                      Contact Us
-                    </Button>
-                  </Link>
-                </li>
+                      Request a brief <ArrowUpRight className="h-4 w-4" />
+                    </button>
+                  }
+                />
+              </div>
+            </div>
+
+            <div>
+              <p className="eyebrow mb-4 text-secondary">Explore</p>
+              <ul className="grid gap-3 text-sm text-muted-foreground">
+                {navLinks.slice(0, 4).map(link => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="transition-colors hover:text-foreground"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <p className="eyebrow mb-4 text-secondary">Built for</p>
+              <ul className="grid gap-3 text-sm text-muted-foreground">
+                <li>Doctors &amp; physicians</li>
+                <li>Dentists &amp; specialist practices</li>
+                <li>Independent pharmacies</li>
+                <li>Physical therapy &amp; OT clinics</li>
               </ul>
             </div>
           </div>
 
-          {/* Footer bottom bar */}
-          <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-xs text-muted-foreground">
-              &copy; {new Date().getFullYear()} DocPropel. All rights reserved.
-              Serving Doctors, Dentists, Pharmacies &amp; PT/OT Clinics.
+          <div className="mt-12 flex flex-col justify-between gap-3 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row">
+            <p>
+              © {new Date().getFullYear()} DocPropel. Performance-based
+              healthcare marketing.
             </p>
-            <div className="flex gap-6 text-xs text-muted-foreground">
-              <span className="hover:text-primary transition-colors cursor-pointer">Privacy Policy</span>
-              <span className="hover:text-primary transition-colors cursor-pointer">Terms of Service</span>
-            </div>
+            <Link
+              href="/contact"
+              className="transition-colors hover:text-secondary"
+            >
+              Contact the team <ArrowUpRight className="inline h-3.5 w-3.5" />
+            </Link>
           </div>
         </div>
       </footer>
