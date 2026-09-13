@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { Phone } from "lucide-react";
 import { Link, useLocation } from "wouter";
 
 const nav = [
@@ -27,10 +28,12 @@ export default function Layout({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const menuButton = useRef<HTMLButtonElement>(null);
   const menu = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     setOpen(false);
     window.scrollTo(0, 0);
   }, [location]);
+
   useEffect(() => {
     if (!open) return;
     const previous = document.activeElement as HTMLElement;
@@ -43,6 +46,7 @@ export default function Layout({ children }: { children: ReactNode }) {
     focusable()[0]?.focus();
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
+        event.preventDefault();
         setOpen(false);
         menuButton.current?.focus();
       }
@@ -68,6 +72,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       previous?.focus();
     };
   }, [open]);
+
   return (
     <div className="site-shell">
       <a className="skip-link" href="#main-content">
@@ -88,10 +93,18 @@ export default function Layout({ children }: { children: ReactNode }) {
                 {label}
               </Link>
             ))}
-            <Link href="/contact" className="button small">
+            <Link href="/contact" className="button coral small">
               Get a Growth Brief <span aria-hidden="true">→</span>
             </Link>
           </nav>
+          <a
+            className="mobile-header-phone"
+            href="tel:+12028412941"
+            aria-label="Call DocPropel at 202 841 2941"
+          >
+            <Phone aria-hidden="true" />
+            <span>202 841 2941</span>
+          </a>
           <button
             ref={menuButton}
             className="menu-button"
@@ -115,24 +128,38 @@ export default function Layout({ children }: { children: ReactNode }) {
             aria-modal="true"
             aria-label="Mobile navigation"
           >
-            <button
-              className="menu-close"
-              type="button"
-              onClick={() => setOpen(false)}
-              aria-label="Close navigation"
-            >
-              ×
-            </button>
+            <div className="mobile-menu-bar">
+              <Link href="/" aria-label="DocPropel home">
+                <Logo />
+              </Link>
+              <button
+                className="menu-close"
+                type="button"
+                onClick={() => setOpen(false)}
+                aria-label="Close navigation"
+              >
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <p className="mobile-menu-label">Explore DocPropel</p>
             <nav aria-label="Mobile primary">
-              {nav.map(([href, label]) => (
+              {nav.map(([href, label], index) => (
                 <Link key={href} href={href}>
-                  {label}
+                  <span>{label}</span>
+                  <small>{String(index + 1).padStart(2, "0")}</small>
                 </Link>
               ))}
               <Link href="/contact" className="button coral">
-                Get a Growth Brief
+                Get a Growth Brief <span aria-hidden="true">→</span>
               </Link>
             </nav>
+            <p className="mobile-menu-note">
+              Healthcare-first growth, built around your practice and its
+              patients.
+            </p>
+            <a className="mobile-menu-phone" href="tel:+12028412941">
+              <Phone aria-hidden="true" /> Call 202 841 2941
+            </a>
           </div>
         )}
       </header>
@@ -158,12 +185,15 @@ export default function Layout({ children }: { children: ReactNode }) {
             <strong>Company</strong>
             <Link href="/about">About</Link>
             <Link href="/team">Team</Link>
+            <Link href="/faq">FAQ</Link>
             <Link href="/contact">Contact</Link>
             <Link href="/admin">Admin</Link>
           </div>
           <div>
             <strong>Contact</strong>
-            <a href="tel:+18003627767">1-800-DOC-PROPEL</a>
+            <a className="footer-phone" href="tel:+12028412941">
+              <Phone aria-hidden="true" /> 202 841 2941
+            </a>
             <a href="mailto:steve@docpropel.com">steve@docpropel.com</a>
             <span>Mon–Fri, 9am–6pm ET</span>
           </div>

@@ -229,7 +229,7 @@ export function Home() {
                 )}
               </p>
               <div className="actions">
-                <Link href="/contact" className="button">
+                <Link href="/contact" className="button coral">
                   See if your practice is a fit <ArrowRight />
                 </Link>
                 <Link href="/how-it-works" className="text-link">
@@ -237,32 +237,43 @@ export function Home() {
                 </Link>
               </div>
             </div>
-            <div
-              className="hero-visual"
-              aria-label="A coordinated path from local demand to measured practice growth"
-            >
-              <div className="orbit orbit-one" />
-              <div className="orbit orbit-two" />
-              <div className="visual-card">
-                <span className="visual-mark">
-                  <Target />
-                </span>
-                <strong>Patient path</strong>
-                <small>Find · Understand · Act</small>
-              </div>
-              <div className="visual-card secondary">
-                <span className="visual-mark">
-                  <BarChart3 />
-                </span>
-                <strong>Practice context</strong>
-                <small>Capacity · Market · Evidence</small>
-              </div>
+            <div className="hero-visual">
+              <img
+                src="/images/hero-doctor-patient-v6.webp"
+                alt="A physician listening attentively to a patient in a bright clinical setting"
+                width="1200"
+                height="1500"
+                fetchPriority="high"
+              />
               <div className="community-pill">
                 <HeartHandshake />
-                More patients.
-                <br />
-                Stronger communities.
+                <span>
+                  More informed patient paths.
+                  <br />
+                  Stronger communities.
+                </span>
               </div>
+            </div>
+          </div>
+        </section>
+      </Enabled>
+      <Enabled route={route} slug="pathway">
+        <section
+          className="home-proof-strip"
+          aria-label="DocPropel operating principles"
+        >
+          <div className="container">
+            <div>
+              <Stethoscope aria-hidden="true" />
+              <span>Healthcare-first</span>
+            </div>
+            <div>
+              <UsersRound aria-hidden="true" />
+              <span>Patient-path focus</span>
+            </div>
+            <div>
+              <BarChart3 aria-hidden="true" />
+              <span>Evidence-led review</span>
             </div>
           </div>
         </section>
@@ -328,7 +339,7 @@ export function Home() {
               </Link>
             </div>
             <div className="specialty-grid">
-              {specialtyCards.map(([slug, title]) => (
+              {specialtyCards.slice(0, 4).map(([slug, title]) => (
                 <Link
                   href={`/specialties#${slug}`}
                   className={slug === "aba-pediatric" ? "featured" : ""}
@@ -706,6 +717,37 @@ export function About() {
 
 export function Team() {
   const route = "/team" as const;
+  const { text } = useSite();
+  const profiles = [
+    {
+      key: "profile-1",
+      name: "Aurelia Vale",
+      role: "Growth strategy",
+      image: "/images/team-placeholder-01.webp",
+      bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus malesuada, arcu quis consequat dignissim, nibh libero posuere sem, vitae posuere enim lectus vel eros.",
+    },
+    {
+      key: "profile-2",
+      name: "Marcus Vero",
+      role: "Search & paid media",
+      image: "/images/team-placeholder-02.webp",
+      bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer facilisis, tellus at efficitur facilisis, velit tellus posuere mi, at pulvinar erat sapien non ligula.",
+    },
+    {
+      key: "profile-3",
+      name: "Livia Sera",
+      role: "Conversion & web experience",
+      image: "/images/team-placeholder-03.webp",
+      bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquet lectus at mi posuere, nec feugiat ligula posuere. Donec quis faucibus nunc, a rhoncus sem.",
+    },
+    {
+      key: "profile-4",
+      name: "Soren Atlas",
+      role: "Analytics & performance review",
+      image: "/images/team-placeholder-04.webp",
+      bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pellentesque, nisl vitae tincidunt faucibus, eros metus volutpat magna, id porttitor libero velit sed est.",
+    },
+  ];
   const roles = [
     [
       Target,
@@ -743,14 +785,100 @@ export function Team() {
       <Intro
         route={route}
         eyebrow="Team"
-        fallbackTitle="The roles behind a coordinated growth program."
-        fallbackBody="Approved team biographies and credentials have not yet been supplied. This page describes the work required without inventing people or qualifications."
+        fallbackTitle="The disciplines behind a coordinated growth program."
+        fallbackBody="DocPropel connects strategy, patient-path experience, local demand, and performance review so the practice sees one accountable operating picture."
       />
+      <Enabled route={route} slug="profiles">
+        <section className="section team-profiles-section">
+          <div className="container section-heading">
+            <div>
+              <p className="eyebrow">Meet the team</p>
+              <h2>Placeholder profiles, ready for approved bios.</h2>
+            </div>
+            <p className="team-placeholder-note">
+              Replace names, roles, bios, and image URLs in Admin before public
+              launch.
+            </p>
+          </div>
+          <div className="container team-profile-grid">
+            {profiles.map(profile => {
+              const name = text(
+                route,
+                "profiles",
+                `${profile.key}-name`,
+                profile.name
+              );
+              const role = text(
+                route,
+                "profiles",
+                `${profile.key}-role`,
+                profile.role
+              );
+              const image = text(
+                route,
+                "profiles",
+                `${profile.key}-image`,
+                profile.image
+              );
+              const bio = text(
+                route,
+                "profiles",
+                `${profile.key}-bio`,
+                profile.bio
+              );
+              return (
+                <article key={profile.key}>
+                  <img
+                    src={image}
+                    alt={`Placeholder portrait for ${name}`}
+                    width="720"
+                    height="720"
+                    loading="lazy"
+                  />
+                  <div>
+                    <p className="eyebrow">{role}</p>
+                    <h3>{name}</h3>
+                    <p>{bio}</p>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </section>
+      </Enabled>
       <Enabled route={route} slug="roles">
         <section className="section">
-          <div className="container role-grid">
-            {roles.map(([Icon, title, body]) => (
+          <div className="container team-intro">
+            <figure>
+              <img
+                src="/images/team-collaboration-v6.webp"
+                alt="Representative DocPropel collaborators reviewing a growth plan together"
+                width="1600"
+                height="900"
+                loading="lazy"
+              />
+              <figcaption>
+                Representative collaboration image. Named profiles and
+                credentials are added only after they are supplied and approved.
+              </figcaption>
+            </figure>
+            <div>
+              <p className="eyebrow">One accountable team</p>
+              <h2>Every channel should strengthen the same patient path.</h2>
+              <p>
+                The work is organized around clear ownership, useful evidence,
+                and decisions the practice can act on. Each discipline has a
+                specific role, but the program is planned and reviewed as one
+                system.
+              </p>
+            </div>
+          </div>
+          <div className="container role-grid team-role-grid">
+            {roles.map(([Icon, title, body], index) => (
               <article key={String(title)}>
+                <span className="role-number">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
                 <div className="step-icon">
                   <Icon />
                 </div>
@@ -763,6 +891,62 @@ export function Team() {
             Named profiles, employment claims, headshots, and credentials will
             be added only after they are supplied and approved.
           </p>
+        </section>
+      </Enabled>
+      <GrowthBrief route={route} />
+    </Page>
+  );
+}
+
+export function FAQ() {
+  const route = "/faq" as const;
+  const questions = [
+    [
+      "What does performance-based mean at DocPropel?",
+      "It means the engagement starts with agreed marketing actions, scope, and evidence. It does not mean a guarantee of patients, appointments, revenue, rankings, or clinical outcomes.",
+    ],
+    [
+      "Which practices are a fit?",
+      "DocPropel is designed for doctors and physicians, dental practices, independent pharmacies, PT/OT clinics, ABA and pediatric clinics, and urgent care teams that want their growth plan to reflect real capacity and patient access needs.",
+    ],
+    [
+      "Do you guarantee patient volume or revenue?",
+      "No. Patient decisions, clinical eligibility, appointment availability, follow-up, and local competition all affect outcomes. DocPropel reviews the patient path and marketing evidence without presenting promises as certainty.",
+    ],
+    [
+      "What happens in a Growth Brief?",
+      "The first review looks at the practice, local market, available capacity, current patient path, and the question you want to solve. The outcome is a practical view of priorities, tradeoffs, and useful next steps.",
+    ],
+    [
+      "How does DocPropel handle patient information?",
+      "The public Growth Brief form is for practice and marketing context only. Do not include patient or protected health information. Program measurement should use appropriate, approved systems and processes.",
+    ],
+    [
+      "Can we begin with one service or channel?",
+      "Yes. The plan can begin with the constraint that matters most, such as service clarity, local discovery, paid-search waste, website conversion, reputation operations, or reactivation. The broader patient path remains visible as decisions are made.",
+    ],
+  ];
+  return (
+    <Page route={route}>
+      <Intro
+        route={route}
+        eyebrow="FAQ"
+        fallbackTitle="Practical answers before the first conversation."
+        fallbackBody="A concise guide to the model, its boundaries, and what a useful first step looks like for a healthcare practice."
+      />
+      <Enabled route={route} slug="questions">
+        <section className="section faq-section">
+          <div className="container narrow faq-list">
+            {questions.map(([question, answer], index) => (
+              <details key={question} open={index === 0}>
+                <summary>
+                  <span>{question}</span>
+                  <span aria-hidden="true">+</span>
+                </summary>
+                <p>{answer}</p>
+              </details>
+            ))}
+          </div>
         </section>
       </Enabled>
       <GrowthBrief route={route} />
@@ -800,9 +984,9 @@ export function Contact() {
                 <a className="button coral" href="#growth-brief">
                   Request a Growth Brief <ArrowRight />
                 </a>
-                <a className="button outline" href="tel:+18003627767">
+                <a className="button outline" href="tel:+12028412941">
                   <Phone />
-                  Call 1-800-DOC-PROPEL
+                  Call 202 841 2941
                 </a>
               </div>
             </div>
@@ -835,11 +1019,11 @@ export function Contact() {
                 )}
               </span>
             </a>
-            <a href="tel:+18003627767">
+            <a href="tel:+12028412941">
               <Phone />
               <span>
                 <strong>Call</strong>
-                {text(route, "contact-channels", "phone", "1-800-DOC-PROPEL")}
+                {text(route, "contact-channels", "phone", "202 841 2941")}
               </span>
             </a>
             <div>
@@ -1001,8 +1185,8 @@ export function Legal({ kind }: { kind: "privacy" | "terms" }) {
               <p>
                 Questions about this draft may be sent to{" "}
                 <a href="mailto:steve@docpropel.com">steve@docpropel.com</a> or
-                discussed by calling{" "}
-                <a href="tel:+18003627767">1-800-DOC-PROPEL</a>.
+                discussed by calling <a href="tel:+12028412941">202 841 2941</a>
+                .
               </p>
             </section>
           </div>
