@@ -6,6 +6,8 @@
 dist/
 build/
 *.dist
+artifacts/
+design-handoff/
 
 # Environment variables
 .env
