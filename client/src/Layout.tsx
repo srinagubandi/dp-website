@@ -202,7 +202,8 @@ export default function Layout({ children }: { children: ReactNode }) {
           <span>© {new Date().getFullYear()} DocPropel</span>
           <span>
             <Link href="/privacy">Privacy</Link> ·{" "}
-            <Link href="/terms">Terms</Link>
+            <Link href="/terms">Terms</Link> ·{" "}
+            <Link href="/accessibility">Accessibility</Link>
           </span>
         </div>
       </footer>

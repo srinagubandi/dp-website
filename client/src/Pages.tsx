@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { Link } from "wouter";
 import {
   ArrowRight,
+  Accessibility,
   BarChart3,
   Building2,
   Check,
@@ -1100,36 +1101,50 @@ export function Contact() {
   );
 }
 
+type LegalKind = "privacy" | "terms" | "accessibility";
+
 const privacySections = [
   [
+    "Scope and effective date",
+    "Effective September 13, 2026, this interim Privacy Notice explains how DocPropel handles business-contact information submitted through this website. It does not apply to information handled by a healthcare practice in its own clinical systems, patient portals, or records. This notice is an interim policy and requires review and approval by qualified legal counsel before it is treated as final.",
+  ],
+  [
     "Information this site collects",
-    "The Growth Brief form collects your name, work email, practice name, specialty, and any optional phone, location, patient-volume range, message, source page, and campaign parameters you choose to provide. Do not submit patient or protected health information.",
+    "The Growth Brief form collects your name, work email, practice name, specialty, and any optional phone number, location, patient-volume range, message, source page, and campaign parameters you choose to provide. Basic technical information may also be processed by website hosting and security systems. Do not submit patient information or protected health information.",
   ],
   [
     "Purpose and use",
-    "The draft purpose is to evaluate and respond to business inquiries, maintain inquiry records, improve the inquiry experience, and protect the website from misuse.",
+    "DocPropel uses business-contact information to evaluate and respond to inquiries, maintain inquiry records, improve the inquiry experience, protect the website from misuse, and comply with applicable legal obligations. DocPropel does not use the Growth Brief form as a patient portal or clinical communication channel.",
   ],
   [
     "Retention",
-    "A final retention period has not been approved. Before launch, legal and operational owners should define documented retention and deletion periods for inquiries and related administrative notes.",
+    "DocPropel retains inquiry information for as long as reasonably necessary to respond to the request, maintain business records, resolve disputes, protect the service, and meet legal obligations. A documented retention schedule and deletion process remain subject to counsel and operational-owner approval.",
   ],
   [
     "Service providers",
-    "Hosting, database, security, email, analytics, or other providers may process data for approved business purposes under appropriate agreements. The final provider list and disclosures require review.",
+    "Approved hosting, database, security, email, analytics, and other service providers may process information on DocPropel’s behalf for the purposes described in this notice and subject to appropriate contractual and security controls. DocPropel may also disclose information when required by law or to protect rights, safety, security, or the integrity of the website.",
   ],
   [
     "Cookies and analytics",
-    "The application uses a necessary signed admin session cookie. Public analytics or advertising tools are not configured by this v6 code; any future tools require consent and disclosure review before activation.",
+    "The application uses a necessary signed administrator-session cookie for protected administration. Public analytics or advertising tools are not configured by this website release. Any future analytics, advertising, cookie, or tracking technology must undergo privacy, consent, and disclosure review before activation.",
   ],
   [
     "Security",
-    "Reasonable technical and organizational safeguards are intended, but no internet transmission or storage system can be guaranteed secure. Report concerns using the contact information below.",
+    "DocPropel uses reasonable technical and organizational safeguards designed to protect submitted business-contact information. No internet transmission or storage system can be guaranteed secure. Please do not send sensitive patient, payment-card, identity, or protected health information through this website.",
+  ],
+  [
+    "Your choices and questions",
+    "You may contact DocPropel to ask questions about this interim notice, update business-contact information, or request deletion subject to lawful and operational record-retention needs. Requests should not include patient or protected health information.",
   ],
 ];
 const termsSections = [
   [
+    "Acceptance and effective date",
+    "Effective September 13, 2026, these interim Website Terms govern your use of the DocPropel website. By using the website, you agree to these terms. They are provided for legal review and must be approved by qualified counsel before they are treated as final binding terms.",
+  ],
+  [
     "Informational purpose",
-    "Website content is general business information about marketing services. It is not medical, legal, compliance, financial, or other professional advice.",
+    "Website content provides general business information about healthcare marketing services. It is not medical, legal, compliance, financial, clinical, or other professional advice. You should obtain advice from qualified professionals for your circumstances.",
   ],
   [
     "No guarantees",
@@ -1137,41 +1152,93 @@ const termsSections = [
   ],
   [
     "Permitted use",
-    "Use the website lawfully and do not interfere with its security, availability, forms, administration, or other users. Do not submit patient or protected health information through the Growth Brief.",
+    "Use the website lawfully and do not interfere with its security, availability, forms, administration, or other users. Do not attempt unauthorized access, automated extraction that burdens the service, or submission of harmful code. Do not submit patient information or protected health information through the Growth Brief.",
   ],
   [
     "Intellectual property",
-    "The final terms should identify ownership and permitted use of site text, graphics, software, and brand assets. This clause requires legal review before launch.",
+    "Unless otherwise stated, DocPropel or its licensors own the website’s text, graphics, software, branding, and other content. You may view the site for lawful informational use. Any other use, reproduction, redistribution, or modification requires prior written permission unless applicable law allows it.",
   ],
   [
     "Third-party services",
     "Links or service-provider functionality may be subject to separate terms and policies. Their inclusion does not create a guarantee or endorsement beyond an approved agreement.",
   ],
   [
-    "Changes and governing terms",
-    "Effective dates, change notice, governing law, dispute language, and any limitation provisions must be supplied or approved by counsel before publication as final terms.",
+    "Availability and changes",
+    "DocPropel may update, suspend, or discontinue website content or functionality when reasonably necessary. DocPropel may revise these interim terms by posting an updated effective date. Governing law, dispute resolution, limitation, and indemnification provisions require counsel review before final publication.",
   ],
 ];
-export function Legal({ kind }: { kind: "privacy" | "terms" }) {
-  const route = (kind === "privacy" ? "/privacy" : "/terms") as PublicRoute;
-  const sections = kind === "privacy" ? privacySections : termsSections;
+const accessibilitySections = [
+  [
+    "Accessibility commitment",
+    "DocPropel seeks to make this website usable by people with disabilities. The engineering target for new and updated public website work is WCAG 2.2 Level AA. This statement describes an ongoing accessibility effort and is not a certification or a legal conclusion that every page, browser, device, or assistive-technology combination is free of barriers.",
+  ],
+  [
+    "Accessibility features",
+    "This release includes semantic page landmarks, skip-to-content navigation, visible keyboard focus, keyboard-operated mobile navigation, labeled form controls, error and status messaging, responsive reflow, text alternatives for informative images, and reduced-motion support. The Growth Brief form is intended for practice-level business context only and is not a patient portal.",
+  ],
+  [
+    "Feedback and alternative access",
+    "If you encounter an accessibility barrier, need information in an alternative format, or need help completing a website task, contact DocPropel by email at steve@docpropel.com or call 202 841 2941. Please describe the page or task, the barrier, and the best way to reach you. Do not include patient information or protected health information in an accessibility request.",
+  ],
+  [
+    "Scope and known limitations",
+    "This statement applies to the public DocPropel website at dp-website-production.up.railway.app and its public pages. It does not represent an audit of third-party websites linked from this site, a customer’s clinical systems, or future content supplied through the administration portal. Placeholder team profiles must be replaced with approved staff information before public use.",
+  ],
+  [
+    "Review and improvement",
+    "DocPropel reviews changed public templates and critical journeys as part of its release process. Reported barriers are logged for evaluation and remediation. Larger changes should be retested with keyboard-only use, responsive reflow, automated accessibility checks, and appropriate assistive-technology and user testing.",
+  ],
+];
+
+export function Legal({ kind }: { kind: LegalKind }) {
+  const route = (
+    kind === "privacy"
+      ? "/privacy"
+      : kind === "terms"
+        ? "/terms"
+        : "/accessibility"
+  ) as PublicRoute;
+  const sections =
+    kind === "privacy"
+      ? privacySections
+      : kind === "terms"
+        ? termsSections
+        : accessibilitySections;
+  const isAccessibility = kind === "accessibility";
+  const title =
+    kind === "privacy"
+      ? "Privacy Notice"
+      : kind === "terms"
+        ? "Website Terms & Conditions"
+        : "Accessibility Statement";
   return (
     <Page route={route}>
       <Intro
         route={route}
-        eyebrow="Draft for legal review"
-        fallbackTitle={kind === "privacy" ? "Privacy Notice" : "Website Terms"}
-        fallbackBody="This template is provided for legal and operational review. It is not a statement of final policy or legal compliance."
+        eyebrow={
+          isAccessibility ? "Accessibility" : "Interim policy for legal review"
+        }
+        fallbackTitle={title}
+        fallbackBody={
+          isAccessibility
+            ? "DocPropel is working to make its public website more usable and accessible for people with disabilities."
+            : "This interim policy is tailored to the current DocPropel website and requires review and approval by qualified legal counsel before final publication."
+        }
       />
       <Enabled route={route} slug="legal-template">
         <section className="section legal-content">
           <div className="container narrow">
             <div className="legal-warning">
-              <ShieldCheck />
+              {isAccessibility ? <Accessibility /> : <ShieldCheck />}
               <p>
-                <strong>Draft for legal review.</strong> This page must be
-                reviewed, completed, and approved by qualified counsel and
-                internal owners before release.
+                <strong>
+                  {isAccessibility
+                    ? "Ongoing accessibility commitment."
+                    : "Interim policy for legal review."}
+                </strong>{" "}
+                {isAccessibility
+                  ? "This statement reports the current engineering target and feedback route; it does not certify legal compliance or universal accessibility."
+                  : "This page must be reviewed, completed, and approved by qualified counsel and internal owners before it is treated as a final policy."}
               </p>
             </div>
             {sections.map(([title, body]) => (
@@ -1183,7 +1250,9 @@ export function Legal({ kind }: { kind: "privacy" | "terms" }) {
             <section>
               <h2>Contact</h2>
               <p>
-                Questions about this draft may be sent to{" "}
+                {isAccessibility
+                  ? "Accessibility feedback or alternative-format requests may be sent to "
+                  : "Questions about this interim policy may be sent to "}
                 <a href="mailto:steve@docpropel.com">steve@docpropel.com</a> or
                 discussed by calling <a href="tel:+12028412941">202 841 2941</a>
                 .

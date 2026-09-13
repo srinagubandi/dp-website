@@ -10,6 +10,7 @@ export const PUBLIC_ROUTES = [
   "/contact",
   "/privacy",
   "/terms",
+  "/accessibility",
 ] as const;
 
 export type PublicRoute = (typeof PUBLIC_ROUTES)[number];
@@ -55,6 +56,7 @@ const sectionMap: Record<PublicRoute, string[]> = {
   "/contact": ["hero", "contact-channels", "what-happens-next", "growth-brief"],
   "/privacy": ["hero", "legal-template"],
   "/terms": ["hero", "legal-template"],
+  "/accessibility": ["hero", "legal-template"],
 };
 
 export const DEFAULT_SECTIONS: SectionSeed[] = PUBLIC_ROUTES.flatMap(route =>
@@ -459,7 +461,24 @@ export const DEFAULT_CONTENT: ContentSeed[] = [
     2,
   ],
   ["/privacy", "hero", "title", "Privacy Notice", "text", "Page title", 0],
-  ["/terms", "hero", "title", "Website Terms", "text", "Page title", 0],
+  [
+    "/terms",
+    "hero",
+    "title",
+    "Website Terms & Conditions",
+    "text",
+    "Page title",
+    0,
+  ],
+  [
+    "/accessibility",
+    "hero",
+    "title",
+    "Accessibility Statement",
+    "text",
+    "Page title",
+    0,
+  ],
 ].map(([route, section, key, value, contentType, label, sortOrder]) => ({
   route,
   section,
@@ -545,6 +564,11 @@ export const DEFAULT_SEO: SeoSeed[] = [
     "Website Terms | DocPropel",
     "Draft website terms for legal review covering permitted use, informational boundaries, third parties, and contact details.",
     true
+  ),
+  seo(
+    "/accessibility",
+    "Accessibility Statement | DocPropel",
+    "Learn about DocPropel’s public-website accessibility effort, WCAG 2.2 AA engineering target, and accessibility feedback process."
   ),
 ];
 
