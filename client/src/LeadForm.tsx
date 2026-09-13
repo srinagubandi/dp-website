@@ -1,4 +1,4 @@
-import { useMemo, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import { Link } from "wouter";
 import { api } from "./api";
 import { SPECIALTIES } from "../../shared/site";
@@ -16,6 +16,7 @@ export default function LeadForm({ compact = false }: { compact?: boolean }) {
   const [pending, setPending] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
+  const confirmationRef = useRef<HTMLDivElement>(null);
   const attribution = useMemo(() => {
     const params = new URLSearchParams(window.location.search);
     return {
@@ -25,6 +26,9 @@ export default function LeadForm({ compact = false }: { compact?: boolean }) {
       utmCampaign: params.get("utm_campaign"),
     };
   }, []);
+  useEffect(() => {
+    if (success) confirmationRef.current?.focus();
+  }, [success]);
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setPending(true);
@@ -54,7 +58,13 @@ export default function LeadForm({ compact = false }: { compact?: boolean }) {
   }
   if (success)
     return (
-      <div className="form-confirmation" role="status" tabIndex={-1}>
+      <div
+        ref={confirmationRef}
+        className="form-confirmation"
+        role="status"
+        aria-live="polite"
+        tabIndex={-1}
+      >
         <span aria-hidden="true">✓</span>
         <h3>Your Growth Brief request was received.</h3>
         <p>

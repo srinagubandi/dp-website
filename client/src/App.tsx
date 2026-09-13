@@ -29,6 +29,9 @@ export default function App() {
       <Route path="/contact" component={Contact} />
       <Route path="/privacy">{() => <Legal kind="privacy" />}</Route>
       <Route path="/terms">{() => <Legal kind="terms" />}</Route>
+      <Route path="/accessibility">
+        {() => <Legal kind="accessibility" />}
+      </Route>
       <Route path="/admin/login" component={AdminLogin} />
       <Route path="/admin" component={Admin} />
       <Route path="/calculator">{() => <Redirect to="/contact" />}</Route>

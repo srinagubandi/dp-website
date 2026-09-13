@@ -10,6 +10,8 @@
     "check": "tsc --noEmit",
     "format": "prettier --write .",
     "test": "vitest run",
+    "test:a11y": "bash scripts/run-a11y-regression.sh",
+    "test:regression": "pnpm check && pnpm build && pnpm test && pnpm test:a11y",
     "migrate": "tsx server/migrate.ts"
   },
   "dependencies": {
@@ -87,8 +89,10 @@
     "@vitejs/plugin-react": "^5.0.4",
     "add": "^2.0.6",
     "autoprefixer": "^10.4.20",
+    "axe-core": "^4.13.0",
     "drizzle-kit": "^0.31.4",
     "esbuild": "^0.25.0",
+    "playwright-core": "^1.63.0",
     "pnpm": "^10.15.1",
     "postcss": "^8.4.47",
     "prettier": "^3.6.2",
