@@ -10,4 +10,17 @@ async function main() {
   console.log("PostgreSQL migrations completed.");
 }
 
-main().catch(error => { console.error("[migration]", error instanceof Error ? error.message : "Unknown error"); process.exit(1); });
+main().catch(error => {
+  const detail = error as Error & {
+    cause?: unknown;
+    code?: string;
+    detail?: string;
+  };
+  console.error("[migration]", {
+    message: detail instanceof Error ? detail.message : "Unknown error",
+    code: detail.code,
+    detail: detail.detail,
+    cause: detail.cause instanceof Error ? detail.cause.message : undefined,
+  });
+  process.exit(1);
+});
