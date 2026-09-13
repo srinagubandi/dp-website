@@ -1,179 +1,89 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import {
+  bigserial,
+  boolean,
+  index,
+  integer,
+  jsonb,
+  pgTable,
+  text,
+  timestamp,
+  uniqueIndex,
+  varchar,
+} from "drizzle-orm/pg-core";
 
-/**
- * Core user table backing auth flow.
- * Extend this file with additional tables as your product grows.
- * Columns use camelCase to match both database fields and generated types.
- */
-export const users = mysqlTable("users", {
-  /**
-   * Surrogate primary key. Auto-incremented numeric value managed by the database.
-   * Use this for relations between tables.
-   */
-  id: int("id").autoincrement().primaryKey(),
-  /** Manus OAuth identifier (openId) returned from the OAuth callback. Unique per user. */
-  openId: varchar("openId", { length: 64 }).notNull().unique(),
-  name: text("name"),
-  email: varchar("email", { length: 320 }),
-  loginMethod: varchar("loginMethod", { length: 64 }),
-  role: mysqlEnum("role", ["user", "admin"]).default("user").notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-  lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),
+export const leads = pgTable(
+  "leads",
+  {
+    id: bigserial("id", { mode: "number" }).primaryKey(),
+    name: varchar("name", { length: 140 }).notNull(),
+    email: varchar("email", { length: 254 }).notNull(),
+    phone: varchar("phone", { length: 40 }),
+    practiceName: varchar("practice_name", { length: 180 }).notNull(),
+    specialty: varchar("specialty", { length: 100 }).notNull(),
+    location: varchar("location", { length: 180 }),
+    monthlyPatients: varchar("monthly_patients", { length: 60 }),
+    message: text("message"),
+    source: varchar("source", { length: 120 }).notNull().default("website"),
+    utmSource: varchar("utm_source", { length: 160 }),
+    utmMedium: varchar("utm_medium", { length: 160 }),
+    utmCampaign: varchar("utm_campaign", { length: 160 }),
+    status: varchar("status", { length: 30 }).notNull().default("new"),
+    notes: text("notes"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  table => [index("leads_status_idx").on(table.status), index("leads_created_at_idx").on(table.createdAt)]
+);
+
+export const contentBlocks = pgTable(
+  "content_blocks",
+  {
+    id: bigserial("id", { mode: "number" }).primaryKey(),
+    route: varchar("route", { length: 120 }).notNull(),
+    section: varchar("section", { length: 100 }).notNull(),
+    key: varchar("key", { length: 100 }).notNull(),
+    value: text("value").notNull(),
+    contentType: varchar("content_type", { length: 30 }).notNull().default("text"),
+    label: varchar("label", { length: 180 }).notNull(),
+    sortOrder: integer("sort_order").notNull().default(0),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  table => [uniqueIndex("content_route_section_key_uq").on(table.route, table.section, table.key)]
+);
+
+export const siteSections = pgTable(
+  "site_sections",
+  {
+    id: bigserial("id", { mode: "number" }).primaryKey(),
+    route: varchar("route", { length: 120 }).notNull(),
+    slug: varchar("slug", { length: 100 }).notNull(),
+    title: varchar("title", { length: 180 }).notNull(),
+    enabled: boolean("enabled").notNull().default(true),
+    sortOrder: integer("sort_order").notNull().default(0),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  table => [uniqueIndex("sections_route_slug_uq").on(table.route, table.slug)]
+);
+
+export const seoRecords = pgTable("seo_records", {
+  route: varchar("route", { length: 120 }).primaryKey(),
+  title: varchar("title", { length: 180 }).notNull(),
+  description: varchar("description", { length: 320 }).notNull(),
+  canonicalPath: varchar("canonical_path", { length: 240 }).notNull(),
+  noindex: boolean("noindex").notNull().default(false),
+  ogTitle: varchar("og_title", { length: 180 }).notNull(),
+  ogDescription: varchar("og_description", { length: 320 }).notNull(),
+  ogImage: varchar("og_image", { length: 500 }).notNull(),
+  twitterImage: varchar("twitter_image", { length: 500 }).notNull(),
+  schemaJson: jsonb("schema_json"),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
-export type User = typeof users.$inferSelect;
-export type InsertUser = typeof users.$inferInsert;
-
-/**
- * =============================================================================
- * SITE CONTENT TABLE
- * =============================================================================
- * 
- * Stores editable content for the website. Each row represents a content block
- * that can be edited through the admin dashboard.
- * 
- * Content is organized by:
- *   - section: Which part of the site (e.g., "hero", "about", "contact")
- *   - key: Specific content item (e.g., "headline", "phone", "email")
- *   - value: The actual content text
- * 
- * Example entries:
- *   section: "contact", key: "phone", value: "1-800-DOC-PROPEL"
- *   section: "hero", key: "headline", value: "Stop Paying for Promises."
- *   section: "about", key: "description", value: "We built DocPropel..."
- * 
- * =============================================================================
- */
-export const siteContent = mysqlTable("site_content", {
-  id: int("id").autoincrement().primaryKey(),
-  
-  /** Section of the website (e.g., "hero", "about", "contact", "footer") */
-  section: varchar("section", { length: 64 }).notNull(),
-  
-  /** Unique key within the section (e.g., "headline", "phone", "email") */
-  key: varchar("key", { length: 64 }).notNull(),
-  
-  /** The actual content value */
-  value: text("value").notNull(),
-  
-  /** Optional label for admin UI display */
-  label: varchar("label", { length: 128 }),
-  
-  /** Content type for rendering (text, textarea, image, link) */
-  contentType: mysqlEnum("contentType", ["text", "textarea", "image", "link"]).default("text").notNull(),
-  
-  /** Order for display in admin UI */
-  sortOrder: int("sortOrder").default(0).notNull(),
-  
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-});
-
-export type SiteContent = typeof siteContent.$inferSelect;
-export type InsertSiteContent = typeof siteContent.$inferInsert;
-
-/**
- * =============================================================================
- * LEAD SUBMISSIONS TABLE
- * =============================================================================
- * 
- * Stores form submissions from the intake form (Practice Growth Brief requests).
- * This allows the admin to view and manage leads from the dashboard.
- * 
- * =============================================================================
- */
-export const leadSubmissions = mysqlTable("lead_submissions", {
-  id: int("id").autoincrement().primaryKey(),
-  
-  /** Contact information */
-  practiceName: varchar("practiceName", { length: 256 }),
-  contactName: varchar("contactName", { length: 256 }),
-  email: varchar("email", { length: 320 }),
-  phone: varchar("phone", { length: 32 }),
-  
-  /** Practice details */
-  specialty: varchar("specialty", { length: 128 }),
-  location: varchar("location", { length: 256 }),
-  
-  /** Additional notes or message */
-  message: text("message"),
-  
-  /** Lead status for tracking */
-  status: mysqlEnum("status", ["new", "contacted", "qualified", "converted", "closed"]).default("new").notNull(),
-  
-  /** Notes from admin */
-  adminNotes: text("adminNotes"),
-  
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-});
-
-export type LeadSubmission = typeof leadSubmissions.$inferSelect;
-export type InsertLeadSubmission = typeof leadSubmissions.$inferInsert;
-
-
-/**
- * =============================================================================
- * TESTIMONIALS TABLE
- * =============================================================================
- * 
- * Stores client testimonials and case study highlights for display on the
- * Results page and throughout the website.
- * 
- * Each testimonial includes:
- *   - Client/practice information
- *   - Quote or testimonial text
- *   - Metrics (growth percentage, new patients, etc.)
- *   - Display settings (featured, order, visibility)
- * 
- * =============================================================================
- */
-export const testimonials = mysqlTable("testimonials", {
-  id: int("id").autoincrement().primaryKey(),
-  
-  /** Client/Practice name */
-  clientName: varchar("clientName", { length: 256 }).notNull(),
-  
-  /** Practice name or business name */
-  practiceName: varchar("practiceName", { length: 256 }),
-  
-  /** Specialty (Doctors, Dentists, Pharmacies, PT/OT) */
-  specialty: varchar("specialty", { length: 128 }),
-  
-  /** Location (city, state) */
-  location: varchar("location", { length: 256 }),
-  
-  /** The testimonial quote */
-  quote: text("quote").notNull(),
-  
-  /** Client photo URL (optional) */
-  photoUrl: varchar("photoUrl", { length: 512 }),
-  
-  /** Growth metrics - percentage increase */
-  growthPercent: int("growthPercent"),
-  
-  /** Growth metrics - new patients per month */
-  newPatientsPerMonth: int("newPatientsPerMonth"),
-  
-  /** Growth metrics - revenue increase */
-  revenueIncrease: varchar("revenueIncrease", { length: 64 }),
-  
-  /** Star rating (1-5) */
-  rating: int("rating").default(5),
-  
-  /** Whether this testimonial is featured prominently */
-  isFeatured: mysqlEnum("isFeatured", ["true", "false"]).default("false").notNull(),
-  
-  /** Whether this testimonial is visible on the site */
-  isVisible: mysqlEnum("isVisible", ["true", "false"]).default("true").notNull(),
-  
-  /** Display order (lower = first) */
-  sortOrder: int("sortOrder").default(0).notNull(),
-  
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-});
-
-export type Testimonial = typeof testimonials.$inferSelect;
-export type InsertTestimonial = typeof testimonials.$inferInsert;
+export type Lead = typeof leads.$inferSelect;
+export type NewLead = typeof leads.$inferInsert;
+export type ContentBlock = typeof contentBlocks.$inferSelect;
+export type SiteSection = typeof siteSections.$inferSelect;
+export type SeoRecord = typeof seoRecords.$inferSelect;
