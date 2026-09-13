@@ -339,7 +339,7 @@ export function Home() {
               </Link>
             </div>
             <div className="specialty-grid">
-              {specialtyCards.slice(0, 4).map(([slug, title]) => (
+              {specialtyCards.map(([slug, title]) => (
                 <Link
                   href={`/specialties#${slug}`}
                   className={slug === "aba-pediatric" ? "featured" : ""}
