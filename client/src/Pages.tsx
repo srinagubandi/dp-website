@@ -238,14 +238,16 @@ export function Home() {
                 </Link>
               </div>
             </div>
-            <div className="hero-visual">
-              <img
-                src="/images/hero-doctor-patient-v6.webp"
-                alt="A physician listening attentively to a patient in a bright clinical setting"
-                width="1200"
-                height="1500"
-                fetchPriority="high"
-              />
+            <div className="hero-media">
+              <div className="hero-visual">
+                <img
+                  src="/images/hero-doctor-patient-v6.webp"
+                  alt="A physician listening attentively to a patient in a bright clinical setting"
+                  width="1200"
+                  height="1500"
+                  fetchPriority="high"
+                />
+              </div>
               <div className="community-pill">
                 <HeartHandshake />
                 <span>
