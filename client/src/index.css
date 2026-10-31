@@ -2770,3 +2770,68 @@ html {
     border-radius: 20px;
   }
 }
+
+/* Loop 09: clearer content, section, and SEO administration surfaces. */
+.admin-header {
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(7, 62, 77, 0.1);
+}
+
+.admin-header h1 {
+  color: var(--ink);
+}
+
+.route-filter,
+.admin-help,
+.editor-card,
+.section-editor,
+.seo-editor,
+.lead-table-wrap {
+  border-color: rgba(7, 62, 77, 0.12);
+  border-radius: 16px;
+  box-shadow: 0 10px 22px rgba(7, 62, 77, 0.03);
+}
+
+.editor-card,
+.section-editor,
+.seo-editor {
+  background: #fffdf8;
+}
+
+.section-editor > div {
+  gap: 12px;
+}
+
+.section-editor input[type="checkbox"] {
+  accent-color: var(--ink2);
+}
+
+.admin-sidebar nav button:focus-visible,
+.admin-sidebar a:focus-visible,
+.admin-menu:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+.editor-card:focus-within,
+.section-editor:focus-within,
+.seo-editor:focus-within {
+  border-color: rgba(10, 122, 184, 0.7);
+  box-shadow: 0 0 0 3px rgba(10, 122, 184, 0.15);
+}
+
+@media (max-width: 767px) {
+  .admin-header {
+    gap: 16px;
+    padding-bottom: 16px;
+  }
+
+  .route-filter,
+  .admin-help,
+  .editor-card,
+  .section-editor,
+  .seo-editor,
+  .lead-table-wrap {
+    border-radius: 14px;
+  }
+}
