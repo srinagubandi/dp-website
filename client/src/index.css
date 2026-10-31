@@ -2632,3 +2632,69 @@ html {
     border-radius: 22px;
   }
 }
+
+/* Loop 07: concise FAQ and policy reading surfaces. */
+.faq-list details {
+  border-color: rgba(7, 62, 77, 0.12);
+  background: #fffdf8;
+  box-shadow: 0 8px 18px rgba(7, 62, 77, 0.025);
+}
+
+.faq-list details[open] {
+  border-color: rgba(7, 62, 77, 0.2);
+  background: #eff7f3;
+}
+
+.faq-list summary {
+  gap: 20px;
+}
+
+.faq-list summary:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: -4px;
+  border-radius: 14px;
+}
+
+.legal-warning {
+  border-color: #d89b8f;
+  box-shadow: 0 10px 22px rgba(117, 31, 27, 0.05);
+}
+
+.legal-content section {
+  padding: 32px 28px;
+  border: 1px solid transparent;
+  border-bottom-color: var(--line);
+}
+
+.legal-content section:nth-of-type(odd) {
+  border-color: rgba(7, 62, 77, 0.1);
+  border-radius: 18px;
+  background: #fffdf8;
+}
+
+.legal-content section h2 {
+  color: var(--ink);
+}
+
+.legal-content section p {
+  max-width: 74ch;
+  color: var(--text);
+}
+
+@media (max-width: 767px) {
+  .faq-list {
+    gap: 12px;
+  }
+
+  .faq-list details {
+    border-radius: 15px;
+  }
+
+  .legal-warning {
+    padding: 18px;
+  }
+
+  .legal-content section {
+    padding: 24px 18px;
+  }
+}
