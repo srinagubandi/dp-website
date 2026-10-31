@@ -2305,3 +2305,124 @@ html {
     overflow-wrap: anywhere;
   }
 }
+
+/* Loop 03: service and specialty detail reading rhythm. */
+.service-row {
+  position: relative;
+  padding: 50px 30px;
+  border: 1px solid transparent;
+  border-top-color: var(--line);
+}
+
+.service-row:nth-child(even) {
+  border-color: rgba(7, 62, 77, 0.1);
+  border-radius: 24px;
+  background: rgba(240, 244, 239, 0.65);
+}
+
+.service-row:last-child {
+  border-bottom-color: var(--line);
+}
+
+.service-index {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border: 1px solid rgba(7, 62, 77, 0.12);
+  border-radius: 50%;
+  background: #fffdf8;
+  font-size: 24px;
+}
+
+.service-details {
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid rgba(7, 62, 77, 0.1);
+  border-radius: 16px;
+  background: #fffdf8;
+}
+
+.service-details > div {
+  min-height: 100%;
+  padding: 20px;
+  border-right: 1px solid rgba(7, 62, 77, 0.1);
+}
+
+.service-details > div:last-child {
+  border-right: 0;
+}
+
+.service-details h3 {
+  color: var(--ink2);
+}
+
+.specialty-details article {
+  padding: 40px 28px;
+  border: 1px solid transparent;
+  border-bottom-color: var(--line);
+}
+
+.specialty-details article:nth-child(odd) {
+  border-color: rgba(7, 62, 77, 0.1);
+  border-radius: 24px;
+  background: #fffdf8;
+}
+
+.specialty-details article > span {
+  display: grid;
+  width: 62px;
+  height: 62px;
+  place-items: center;
+  border-radius: 50%;
+  background: #e5f2ee;
+  font-size: 25px;
+}
+
+@media (max-width: 767px) {
+  .service-row {
+    gap: 16px;
+    padding: 28px 18px;
+  }
+
+  .service-row:nth-child(even),
+  .specialty-details article:nth-child(odd) {
+    border-radius: 18px;
+  }
+
+  .service-index {
+    width: 42px;
+    height: 42px;
+    font-size: 20px;
+  }
+
+  .service-details {
+    gap: 0;
+    margin: 20px 0;
+  }
+
+  .service-details > div {
+    padding: 17px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(7, 62, 77, 0.1);
+  }
+
+  .service-details > div:last-child {
+    border-bottom: 0;
+  }
+
+  .specialty-details article {
+    gap: 16px;
+    padding: 28px 18px;
+  }
+
+  .specialty-details article > span {
+    width: 48px;
+    height: 48px;
+    font-size: 20px;
+  }
+
+  .specialty-details article p {
+    font-size: 16px;
+  }
+}
