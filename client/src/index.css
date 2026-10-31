@@ -2191,3 +2191,117 @@ html {
     grid-template-columns: 1fr;
   }
 }
+
+/* Loop 02: make the post-hero patient path more legible and connected. */
+.home-proof-strip > .container {
+  border: 1px solid rgba(7, 62, 77, 0.08);
+  background: linear-gradient(90deg, #edf5f0 0%, #f7faf4 100%);
+}
+
+.home-proof-strip .container > div {
+  min-height: 88px;
+}
+
+.pathway {
+  position: relative;
+}
+
+.step-grid {
+  gap: 18px;
+}
+
+.step-card {
+  overflow: visible;
+  border-color: rgba(7, 62, 77, 0.12);
+  background: #fffdf8;
+  box-shadow: 0 12px 28px rgba(7, 62, 77, 0.045);
+}
+
+.step-card::after {
+  position: absolute;
+  right: -9px;
+  top: 50%;
+  z-index: 1;
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  transform: translateY(-50%);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--paper);
+  color: var(--ink2);
+  content: "→";
+  font-size: 16px;
+}
+
+.step-card:last-child::after {
+  display: none;
+}
+
+.step-icon {
+  background: #e5f2ee;
+}
+
+.specialties-section {
+  border-top: 1px solid rgba(7, 62, 77, 0.06);
+  border-bottom: 1px solid rgba(7, 62, 77, 0.06);
+}
+
+.specialty-grid a {
+  min-height: 98px;
+  border-color: rgba(7, 62, 77, 0.12);
+  box-shadow: 0 8px 20px rgba(7, 62, 77, 0.025);
+}
+
+.specialty-grid a:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+
+@media (max-width: 767px) {
+  .home-proof-strip {
+    padding-bottom: 20px;
+  }
+
+  .home-proof-strip > .container {
+    border-radius: 18px;
+  }
+
+  .home-proof-strip .container > div {
+    min-height: 78px;
+    padding: 10px 7px;
+    font-size: 10px;
+    line-height: 1.18;
+  }
+
+  .home-proof-strip svg {
+    width: 24px;
+  }
+
+  .pathway h2 {
+    margin-bottom: 26px;
+  }
+
+  .step-grid {
+    gap: 6px;
+  }
+
+  .step-card {
+    box-shadow: none;
+  }
+
+  .step-card::after {
+    right: -5px;
+    top: 31px;
+    width: 22px;
+    height: 22px;
+    border: 0;
+    background: transparent;
+  }
+
+  .specialty-grid a {
+    min-height: 84px;
+    overflow-wrap: anywhere;
+  }
+}
