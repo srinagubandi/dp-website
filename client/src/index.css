@@ -2698,3 +2698,75 @@ html {
     padding: 24px 18px;
   }
 }
+
+/* Loop 08: measured process and evidence-first surfaces. */
+.workflow {
+  display: grid;
+  gap: 14px;
+}
+
+.workflow article {
+  padding: 34px 28px;
+  border: 1px solid rgba(7, 62, 77, 0.1);
+  border-radius: 22px;
+  background: #fffdf8;
+  box-shadow: 0 10px 22px rgba(7, 62, 77, 0.03);
+}
+
+.workflow article:nth-child(even) {
+  background: #eff7f3;
+}
+
+.workflow article > span {
+  display: grid;
+  width: 56px;
+  height: 56px;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--ink);
+  color: #fff;
+  font-size: 21px;
+}
+
+.boundary-grid {
+  padding: 38px;
+  border-radius: 26px;
+  background: #fffdf8;
+  box-shadow: 0 12px 26px rgba(7, 62, 77, 0.035);
+}
+
+.empty-evidence {
+  padding: 48px;
+  border: 1px solid rgba(7, 62, 77, 0.1);
+  border-radius: 28px;
+  background: #fffdf8;
+  box-shadow: 0 12px 26px rgba(7, 62, 77, 0.035);
+}
+
+.empty-slots span {
+  border-color: rgba(7, 62, 77, 0.12);
+  background: #eff7f3;
+}
+
+@media (max-width: 767px) {
+  .workflow {
+    gap: 12px;
+  }
+
+  .workflow article {
+    padding: 26px 18px;
+    border-radius: 18px;
+  }
+
+  .workflow article > span {
+    width: 46px;
+    height: 46px;
+    font-size: 18px;
+  }
+
+  .boundary-grid,
+  .empty-evidence {
+    padding: 26px 18px;
+    border-radius: 20px;
+  }
+}
