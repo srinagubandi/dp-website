@@ -2893,3 +2893,22 @@ html {
     animation-iteration-count: 1 !important;
   }
 }
+
+/* Loop 11: avoid horizontal overflow from future CMS-entered text. */
+main p,
+main li,
+main dd,
+.lead-table-wrap td {
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 767px) {
+  .home-hero .eyebrow {
+    margin-bottom: 14px;
+  }
+
+  .home-proof-strip .container > div {
+    min-height: 84px;
+    font-size: 11px;
+  }
+}
