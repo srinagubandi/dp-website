@@ -120,6 +120,26 @@ textarea:focus-visible,
   place-items: center;
   min-height: 48px;
 }
+.desktop-header-phone {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink2);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.desktop-header-phone svg {
+  width: 16px;
+  color: var(--coral);
+}
+.desktop-header-phone:hover {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 5px;
+}
 .desktop-nav a[aria-current="page"],
 .desktop-nav > a:not(.button):hover {
   text-decoration: underline;
@@ -1572,6 +1592,9 @@ textarea {
   .desktop-nav {
     display: none;
   }
+  .mobile-header-phone {
+    display: inline-flex;
+  }
   .menu-button {
     display: block;
   }
@@ -1631,6 +1654,18 @@ textarea {
     grid-template-columns: 1fr 100px 110px auto;
   }
 }
+
+@media (min-width: 981px) and (max-width: 1080px) {
+  .desktop-nav {
+    gap: 18px;
+    font-size: 13px;
+  }
+
+  .desktop-header-phone {
+    font-size: 12px;
+  }
+}
+
 @media (max-width: 640px) {
   .container {
     width: min(var(--max), calc(100% - 28px));
@@ -2254,18 +2289,28 @@ html {
 }
 
 @media (max-width: 359px) {
-  .mobile-header-phone span {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
+  .header-inner {
+    gap: 4px;
+  }
+
+  .brand-logo {
+    width: 118px;
   }
 
   .mobile-header-phone {
-    width: 44px;
-    justify-content: center;
+    width: auto;
+    gap: 3px;
+    font-size: 10px;
+  }
+
+  .mobile-header-phone svg {
+    width: 14px;
+  }
+
+  .menu-button {
+    min-width: 42px;
+    width: 42px;
+    height: 42px;
   }
 
   .specialty-grid {
@@ -3030,5 +3075,73 @@ main dd,
     flex-direction: column;
     gap: 8px;
     padding: 17px 18px;
+  }
+}
+
+/* Loop 13: one consistent, visible call action across header breakpoints. */
+.desktop-header-phone {
+  gap: 8px;
+  font-size: 14px;
+}
+
+.desktop-nav > a.desktop-header-phone:not(.button) {
+  display: inline-flex;
+  align-items: center;
+}
+
+.desktop-header-phone svg {
+  width: 17px;
+}
+
+.desktop-header-phone:focus-visible,
+.mobile-header-phone:focus-visible,
+.mobile-menu-phone:focus-visible {
+  outline: 3px solid var(--coral);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+@media (max-width: 1080px) {
+  .header-inner {
+    justify-content: flex-start;
+    gap: 12px;
+  }
+
+  .desktop-nav {
+    display: none;
+  }
+
+  .mobile-header-phone {
+    display: inline-flex;
+    min-height: 48px;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+    color: var(--ink2);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .mobile-header-phone svg {
+    width: 17px;
+    color: var(--coral);
+  }
+
+  .menu-button {
+    display: block;
+    flex: 0 0 46px;
+  }
+}
+
+@media (max-width: 359px) {
+  .brand-logo {
+    width: 112px;
+  }
+
+  .mobile-header-phone {
+    gap: 4px;
+    font-size: 11px;
   }
 }

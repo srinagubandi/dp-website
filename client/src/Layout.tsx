@@ -93,6 +93,14 @@ export default function Layout({ children }: { children: ReactNode }) {
                 {label}
               </Link>
             ))}
+            <a
+              className="desktop-header-phone"
+              href="tel:+12028412941"
+              aria-label="Call DocPropel at 202 841 2941"
+            >
+              <Phone aria-hidden="true" />
+              <span>202 841 2941</span>
+            </a>
             <Link href="/contact" className="button coral small">
               Get a Growth Brief <span aria-hidden="true">→</span>
             </Link>
@@ -157,7 +165,11 @@ export default function Layout({ children }: { children: ReactNode }) {
               Healthcare-first growth, built around your practice and its
               patients.
             </p>
-            <a className="mobile-menu-phone" href="tel:+12028412941">
+            <a
+              className="mobile-menu-phone"
+              href="tel:+12028412941"
+              aria-label="Call DocPropel at 202 841 2941"
+            >
               <Phone aria-hidden="true" /> Call 202 841 2941
             </a>
           </div>
