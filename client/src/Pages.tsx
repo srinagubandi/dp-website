@@ -135,6 +135,14 @@ const noPressureSteps = [
   },
 ];
 
+const processAudience = [
+  ["physician", "Doctors & physicians"],
+  ["dental", "Dental practices"],
+  ["pharmacy", "Independent pharmacies"],
+  ["therapy", "PT / OT clinics"],
+  ["aba-pediatric", "ABA & pediatric clinics"],
+];
+
 function NoPressureProcess({ route }: { route: PublicRoute }) {
   const { text } = useSite();
   const isHome = route === "/";
@@ -189,15 +197,35 @@ function NoPressureProcess({ route }: { route: PublicRoute }) {
             ))}
           </ol>
           {isHome && (
-            <div className="no-pressure-specialties">
-              <p>
-                Built around the realities of doctors, dental practices,
-                independent pharmacies, PT/OT clinics, and ABA/pediatric care.
-              </p>
-              <Link href="/specialties" className="text-link">
-                Explore specialty context <ArrowRight />
-              </Link>
-            </div>
+            <aside
+              className="no-pressure-audience"
+              aria-labelledby="process-audience-title"
+            >
+              <div className="no-pressure-audience-heading">
+                <div>
+                  <p className="eyebrow">Built around your care setting</p>
+                  <h3 id="process-audience-title">
+                    A practical first step for the practice you run.
+                  </h3>
+                </div>
+                <Link href="/specialties" className="text-link">
+                  Explore all specialties <ArrowRight />
+                </Link>
+              </div>
+              <ul className="no-pressure-audience-list">
+                {processAudience.map(([slug, label]) => (
+                  <li key={slug}>
+                    <Link
+                      href={`/specialties#${slug}`}
+                      aria-label={`Explore growth context for ${label}`}
+                    >
+                      <Stethoscope aria-hidden="true" />
+                      <span>{label}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </aside>
           )}
         </div>
       </section>
