@@ -123,15 +123,15 @@ function GrowthBrief({ route }: { route: PublicRoute }) {
 const noPressureSteps = [
   {
     title: "Tell us about your practice",
-    body: "Share your priorities, constraints, capacity, and current growth challenge.",
+    body: "Tell us your priorities, constraints, capacity, and current growth challenge.",
   },
   {
     title: "Review the opportunity",
-    body: "We consider the market and patient path, then organize practical questions and options.",
+    body: "We look at your market and patient path, then bring back practical questions and options.",
   },
   {
     title: "Choose the next step",
-    body: "You decide whether any proposed direction makes sense for your practice.",
+    body: "You decide whether any next step fits your practice.",
   },
 ];
 
@@ -172,7 +172,7 @@ function NoPressureProcess({ route }: { route: PublicRoute }) {
                 route,
                 section,
                 "body",
-                "Start with the context that matters. There is no pressure to commit before the practice has a useful view of the options."
+                "Tell us what is working, what is not, and what the practice can handle. You do not need to commit before you have a clear view of the options."
               )}
             </p>
           </div>
@@ -444,19 +444,19 @@ export function Home() {
                   Target,
                   "01",
                   "Attract",
-                  "Reach relevant local demand with focused, responsible marketing.",
+                  "Help people in your area find the services your practice offers.",
                 ],
                 [
                   UsersRound,
                   "02",
                   "Convert",
-                  "Make it easier for people to understand services and take a useful next step.",
+                  "Make it easier to understand your services and know what to do next.",
                 ],
                 [
                   BarChart3,
                   "03",
                   "Grow",
-                  "Review meaningful actions and improve what the evidence supports.",
+                  "Review what happened, then improve what the evidence supports.",
                 ],
               ].map(([Icon, num, title, body]) => (
                 <article className="step-card" key={String(title)}>
@@ -515,7 +515,7 @@ export function Home() {
                   route,
                   "proof",
                   "body",
-                  "Before a case study is published, its baseline, timeframe, specialty, service mix, measurement method, and approval are reviewed together. Until that review is complete, this site does not publish performance figures or client claims."
+                  "Before we publish a case study, we review the baseline, timeframe, specialty, service mix, measurement method, and approval together. Until that review is complete, this site does not publish performance figures or client claims."
                 )}
               </p>
             </div>
@@ -1127,7 +1127,7 @@ export function Contact() {
                   route,
                   "hero",
                   "body",
-                  "Let’s discuss the practice, the market, your capacity, and the patient path you want to improve."
+                  "Let’s talk about your practice, your market, your capacity, and the patient path you want to improve."
                 )}
               </p>
               <div className="contact-actions">

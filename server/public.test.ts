@@ -20,6 +20,18 @@ describe("public release inventory", () => {
     ])
       expect(source).not.toContain(claim);
   });
+  it("retains the approved conversion headline and five core practice groups", () => {
+    expect(source).toContain("Stop paying for promises. Pay for patients.");
+    expect(source).toContain("A simple, no-pressure process.");
+    for (const practice of [
+      "Doctors & physicians",
+      "Dental practices",
+      "Independent pharmacies",
+      "PT / OT clinics",
+      "ABA & pediatric clinics",
+    ])
+      expect(source).toContain(practice);
+  });
   it("includes every indexable route in the sitemap", () => {
     const sitemap = fs.readFileSync(
       path.join(root, "client/public/sitemap.xml"),

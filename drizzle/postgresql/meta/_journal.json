@@ -29,6 +29,13 @@
       "when": 1789322820000,
       "tag": "0003_terms_title_refresh",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1793500372635,
+      "tag": "0004_human_copy_pass",
+      "breakpoints": true
     }
   ]
 }
