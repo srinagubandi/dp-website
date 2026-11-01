@@ -1,6 +1,7 @@
 import { useEffect, type ReactNode } from "react";
 import { Link } from "wouter";
 import {
+  ArrowLeft,
   ArrowRight,
   Accessibility,
   BarChart3,
@@ -851,32 +852,70 @@ export function About() {
   );
 }
 
+type TeamProfileDefinition = {
+  key: string;
+  route:
+    | "/team/rakesh-mittapelly"
+    | "/team/mike-tomasiello"
+    | "/team/sri-nagubandi";
+  name: string;
+  role: string;
+  image: string;
+  summary: string;
+  fullBio: string[];
+};
+
+const teamProfiles: TeamProfileDefinition[] = [
+  {
+    key: "profile-1",
+    route: "/team/rakesh-mittapelly",
+    name: "Rakesh Mittapelly",
+    role: "Performance & growth marketing",
+    image: "/images/team-rakesh-mittapelly.webp",
+    summary:
+      "Rakesh connects performance strategy, digital acquisition, and marketing efficiency to measurable growth outcomes.",
+    fullBio: [
+      "I help businesses turn digital marketing investments into measurable revenue growth. With more than 13 years of experience across agency, platform, and brand environments, I specialize in performance strategy, customer acquisition, marketing efficiency, and scalable growth.",
+      "My experience includes leading organizations such as TikTok, GroupM, iProspect, Performics, and Pinstorm, with experience managing media investments of approximately US$20–25 million.",
+      "I have driven performance and growth initiatives across the USA, UK, Australia, GCC markets, and India, delivering measurable improvements in customer acquisition costs, lead quality, sales performance, and marketing ROI.",
+      "My work has included BFSI and fintech, real estate, e-commerce and D2C, EdTech, FMCG, technology and SaaS, automotive, healthcare, and travel.",
+      "I combine commercial strategy, data-driven insight, and hands-on performance expertise to build high-impact marketing strategies that improve efficiency, accelerate growth, and deliver measurable business outcomes.",
+    ],
+  },
+  {
+    key: "profile-2",
+    route: "/team/mike-tomasiello",
+    name: "Mike Tomasiello",
+    role: "Founder, Propel Dental",
+    image: "/images/team-mike-tomasiello.webp",
+    summary:
+      "Mike brings strategic dental-practice marketing, patient trust, and operational workflow experience to sustainable growth planning.",
+    fullBio: [
+      "I founded Propel Dental with one mission: to help dental practices grow through smarter, more strategic marketing.",
+      "With more than 10 years of marketing experience and five years dedicated exclusively to the dental industry, I have worked alongside more than 200 practices across the country to develop marketing systems that attract high-quality patients, strengthen brands, and drive sustainable growth.",
+      "I believe successful marketing goes beyond generating leads. It requires understanding patient psychology, building trust, developing efficient internal workflows for lead management and sales, and creating strategies that produce real, measurable results.",
+      "My goal is to become an extension of every practice I work with, providing the expertise, innovation, and partnership needed to help them reach the next level.",
+    ],
+  },
+  {
+    key: "profile-3",
+    route: "/team/sri-nagubandi",
+    name: "Sri Nagubandi",
+    role: "Strategy & client partnership",
+    image: "/images/team-sri-nagubandi.webp",
+    summary:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus malesuada, arcu quis consequat dignissim.",
+    fullBio: [
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus malesuada, arcu quis consequat dignissim, nibh libero posuere sem, vitae posuere enim lectus vel eros.",
+      "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+      "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.",
+    ],
+  },
+];
+
 export function Team() {
   const route = "/team" as const;
   const { text } = useSite();
-  const profiles = [
-    {
-      key: "profile-1",
-      name: "Rakesh Mittapelly",
-      role: "Performance & growth marketing",
-      image: "/images/team-rakesh-mittapelly.webp",
-      bio: "Rakesh brings more than 13 years of performance marketing leadership across agency, platform, and brand environments. His work connects acquisition strategy, media efficiency, and measurable revenue outcomes across healthcare and other growth-focused categories.",
-    },
-    {
-      key: "profile-2",
-      name: "Mike Tomasiello",
-      role: "Founder, Propel Dental",
-      image: "/images/team-mike-tomasiello.webp",
-      bio: "Mike has spent more than a decade in marketing, including five years dedicated to dental practices. He helps teams pair patient trust, stronger internal workflows, and practical measurement to build sustainable growth.",
-    },
-    {
-      key: "profile-3",
-      name: "Sri Nagubandi",
-      role: "Strategy & client partnership",
-      image: "/images/team-sri-nagubandi.webp",
-      bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus malesuada, arcu quis consequat dignissim, nibh libero posuere sem, vitae posuere enim lectus vel eros.",
-    },
-  ];
   const roles = [
     [
       Target,
@@ -930,7 +969,7 @@ export function Team() {
             </p>
           </div>
           <div className="container team-profile-grid">
-            {profiles.map(profile => {
+            {teamProfiles.map(profile => {
               const name = text(
                 route,
                 "profiles",
@@ -943,17 +982,18 @@ export function Team() {
                 `${profile.key}-role`,
                 profile.role
               );
-              const image = text(
-                route,
-                "profiles",
-                `${profile.key}-image`,
-                profile.image
-              );
+              const image =
+                text(
+                  route,
+                  "profiles",
+                  `${profile.key}-image`,
+                  profile.image
+                ).trim() || profile.image;
               const bio = text(
                 route,
                 "profiles",
                 `${profile.key}-bio`,
-                profile.bio
+                profile.summary
               );
               return (
                 <article key={profile.key}>
@@ -961,13 +1001,19 @@ export function Team() {
                     src={image}
                     alt={`Portrait of ${name}`}
                     width="720"
-                    height="720"
+                    height="900"
                     loading="lazy"
                   />
                   <div>
                     <p className="eyebrow">{role}</p>
                     <h3>{name}</h3>
                     <p>{bio}</p>
+                    <Link
+                      href={profile.route}
+                      className="text-link team-profile-link"
+                    >
+                      View full profile <ArrowRight />
+                    </Link>
                   </div>
                 </article>
               );
@@ -1025,6 +1071,73 @@ export function Team() {
       <GrowthBrief route={route} />
     </Page>
   );
+}
+
+function TeamProfilePage({ profile }: { profile: TeamProfileDefinition }) {
+  const { text } = useSite();
+  const route = profile.route;
+  const title = text(route, "hero", "title", profile.name);
+  const introduction = text(route, "hero", "body", profile.role);
+  const role = text(route, "profile", "role", profile.role);
+  const image =
+    text(route, "profile", "image", profile.image).trim() || profile.image;
+  return (
+    <Page route={route}>
+      <section className="profile-page-hero">
+        <div className="container profile-page-grid">
+          <div className="profile-page-copy">
+            <Link href="/team" className="text-link profile-back-link">
+              <ArrowLeft aria-hidden="true" /> Back to DocPropel Team
+            </Link>
+            <p className="eyebrow">{role}</p>
+            <h1>{title}</h1>
+            <p className="lede">{introduction}</p>
+            <GrowthBriefTrigger className="button coral">
+              Request a Growth Brief <ArrowRight />
+            </GrowthBriefTrigger>
+          </div>
+          <figure className="profile-page-portrait">
+            <img
+              src={image}
+              alt={`Portrait of ${title}`}
+              width="960"
+              height="1200"
+            />
+          </figure>
+        </div>
+      </section>
+      <Enabled route={route} slug="profile">
+        <section className="section profile-bio-section">
+          <div className="container profile-bio-grid">
+            <aside>
+              <p className="eyebrow">Full profile</p>
+              <h2>Experience that informs the work.</h2>
+            </aside>
+            <article className="profile-bio-copy">
+              {profile.fullBio.map((paragraph, index) => (
+                <p key={index}>
+                  {text(route, "profile", `bio-${index + 1}`, paragraph)}
+                </p>
+              ))}
+            </article>
+          </div>
+        </section>
+      </Enabled>
+      <GrowthBrief route={route} />
+    </Page>
+  );
+}
+
+export function RakeshMittapellyProfile() {
+  return <TeamProfilePage profile={teamProfiles[0]} />;
+}
+
+export function MikeTomasielloProfile() {
+  return <TeamProfilePage profile={teamProfiles[1]} />;
+}
+
+export function SriNagubandiProfile() {
+  return <TeamProfilePage profile={teamProfiles[2]} />;
 }
 
 export function FAQ() {

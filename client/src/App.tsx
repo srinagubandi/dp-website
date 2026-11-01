@@ -13,6 +13,9 @@ import {
   Services,
   Specialties,
   Team,
+  RakeshMittapellyProfile,
+  MikeTomasielloProfile,
+  SriNagubandiProfile,
 } from "./Pages";
 import { GrowthBriefModalProvider } from "./GrowthBriefModal";
 
@@ -26,6 +29,12 @@ export default function App() {
         <Route path="/how-it-works" component={HowItWorks} />
         <Route path="/results" component={Results} />
         <Route path="/about" component={About} />
+        <Route
+          path="/team/rakesh-mittapelly"
+          component={RakeshMittapellyProfile}
+        />
+        <Route path="/team/mike-tomasiello" component={MikeTomasielloProfile} />
+        <Route path="/team/sri-nagubandi" component={SriNagubandiProfile} />
         <Route path="/team" component={Team} />
         <Route path="/faq" component={FAQ} />
         <Route path="/contact" component={Contact} />

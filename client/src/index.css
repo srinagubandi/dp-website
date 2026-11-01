@@ -3404,11 +3404,131 @@ main dd,
 }
 @media (max-width: 767px) {
   .team-profile-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
   }
-  .team-profile-grid article:last-child:nth-child(odd) {
-    grid-column: 1 / -1;
+  .team-profile-grid article > div {
+    padding: 20px;
+  }
+  .team-profile-grid p:not(.eyebrow) {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+}
+
+/* Dedicated profiles retain the Team page's editorial portrait and reading rhythm. */
+.team-profile-link {
+  min-height: 36px;
+  margin-top: 16px;
+  font-size: 14px;
+}
+.profile-page-hero {
+  padding: clamp(56px, 9vw, 124px) 0;
+  background: linear-gradient(
+    118deg,
+    #fff 0%,
+    #fff 54%,
+    #e5f0ee 54%,
+    #dcecf4 100%
+  );
+}
+.profile-page-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.82fr);
+  align-items: center;
+  gap: clamp(36px, 7vw, 100px);
+}
+.profile-page-copy {
+  max-width: 650px;
+}
+.profile-back-link {
+  min-height: 42px;
+  margin-bottom: 32px;
+}
+.profile-page-copy h1 {
+  max-width: 10ch;
+  margin: 10px 0 18px;
+  font-size: clamp(52px, 6vw, 88px);
+  line-height: 0.95;
+}
+.profile-page-copy .button {
+  margin-top: 28px;
+}
+.profile-page-portrait {
+  position: relative;
+  margin: 0;
+}
+.profile-page-portrait::before {
+  position: absolute;
+  z-index: 0;
+  inset: 18px -16px -18px 16px;
+  border-radius: 42px 42px 42px 50%;
+  background: #0b5665;
+  content: "";
+}
+.profile-page-portrait img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  max-width: 520px;
+  margin-left: auto;
+  aspect-ratio: 4 / 5;
+  border-radius: 42px 42px 42px 50%;
+  object-fit: cover;
+  object-position: center top;
+  box-shadow: 0 18px 42px rgba(7, 62, 77, 0.18);
+}
+.profile-bio-section {
+  background: #f1f3eb;
+}
+.profile-bio-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.7fr) minmax(0, 1.3fr);
+  gap: clamp(36px, 8vw, 120px);
+}
+.profile-bio-grid aside h2 {
+  max-width: 9ch;
+  margin-top: 8px;
+  font-size: clamp(38px, 4vw, 58px);
+  line-height: 0.99;
+}
+.profile-bio-copy {
+  max-width: 720px;
+}
+.profile-bio-copy p {
+  margin: 0 0 24px;
+  color: var(--text);
+  font-size: clamp(18px, 1.5vw, 21px);
+  line-height: 1.64;
+}
+.profile-bio-copy p:last-child {
+  margin-bottom: 0;
+}
+@media (max-width: 767px) {
+  .profile-page-hero {
+    padding: 44px 0 58px;
+  }
+  .profile-page-grid,
+  .profile-bio-grid {
+    grid-template-columns: 1fr;
+    gap: 34px;
+  }
+  .profile-page-copy h1 {
+    font-size: clamp(46px, 14vw, 64px);
+  }
+  .profile-page-portrait {
+    order: -1;
+  }
+  .profile-page-portrait img {
     max-width: 420px;
-    justify-self: center;
+    margin: 0 auto;
+  }
+  .profile-bio-grid aside h2 {
+    max-width: 12ch;
+  }
+  .profile-bio-copy p {
+    font-size: 17px;
+    line-height: 1.58;
   }
 }

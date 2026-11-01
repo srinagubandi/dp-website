@@ -57,6 +57,13 @@
       "when": 1793503603657,
       "tag": "0007_team_profiles_refresh",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1793504962000,
+      "tag": "0008_fill_blank_sri_portrait",
+      "breakpoints": true
     }
   ]
 }

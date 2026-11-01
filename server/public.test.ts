@@ -1,7 +1,12 @@
 import fs from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { DEFAULT_SEO, PUBLIC_ROUTES, SPECIALTIES } from "../shared/site";
+import {
+  DEFAULT_CONTENT,
+  DEFAULT_SEO,
+  PUBLIC_ROUTES,
+  SPECIALTIES,
+} from "../shared/site";
 
 const root = path.resolve(import.meta.dirname, "..");
 const source = ["client/src/Pages.tsx", "shared/site.ts", "client/index.html"]
@@ -54,6 +59,43 @@ describe("public release inventory", () => {
     expect(source).toContain("Lorem ipsum dolor sit amet");
     expect(source).not.toContain("Aurelia Vale");
     expect(source).not.toContain("Marcus Vero");
+  });
+  it("publishes dedicated, indexable full-profile routes for every team leader", () => {
+    for (const route of [
+      "/team/rakesh-mittapelly",
+      "/team/mike-tomasiello",
+      "/team/sri-nagubandi",
+    ]) {
+      expect(PUBLIC_ROUTES).toContain(route);
+      expect(DEFAULT_SEO.map(item => item.route)).toContain(route);
+      expect(source).toContain(route);
+    }
+    expect(source).toContain("View full profile");
+    expect(source).toContain("I founded Propel Dental with one mission");
+  });
+  it("registers full-profile routes before the Team overview route", () => {
+    const appSource = fs.readFileSync(
+      path.join(root, "client/src/App.tsx"),
+      "utf8"
+    );
+    expect(appSource.indexOf('path="/team/rakesh-mittapelly"')).toBeLessThan(
+      appSource.indexOf('path="/team" component={Team}')
+    );
+  });
+  it("seeds Admin-editable image and full-bio fields for every profile page", () => {
+    for (const route of [
+      "/team/rakesh-mittapelly",
+      "/team/mike-tomasiello",
+      "/team/sri-nagubandi",
+    ]) {
+      const profileFields = DEFAULT_CONTENT.filter(
+        item => item.route === route && item.section === "profile"
+      );
+      expect(profileFields.some(item => item.key === "image")).toBe(true);
+      expect(
+        profileFields.filter(item => item.key.startsWith("bio-")).length
+      ).toBeGreaterThan(0);
+    }
   });
   it("publishes only the five approved specialty options", () =>
     expect([...SPECIALTIES]).toEqual([
