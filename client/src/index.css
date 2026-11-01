@@ -3423,6 +3423,7 @@ main dd,
   font-size: 14px;
 }
 .profile-page-hero {
+  overflow-x: clip;
   padding: clamp(56px, 9vw, 124px) 0;
   background: linear-gradient(
     118deg,
@@ -3434,9 +3435,9 @@ main dd,
 }
 .profile-page-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.82fr);
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.52fr);
   align-items: center;
-  gap: clamp(36px, 7vw, 100px);
+  gap: clamp(40px, 6vw, 80px);
 }
 .profile-page-copy {
   max-width: 650px;
@@ -3456,13 +3457,14 @@ main dd,
 }
 .profile-page-portrait {
   position: relative;
-  margin: 0;
+  width: min(100%, clamp(260px, 24vw, 320px));
+  margin: 0 0 0 auto;
 }
 .profile-page-portrait::before {
   position: absolute;
   z-index: 0;
-  inset: 18px -16px -18px 16px;
-  border-radius: 42px 42px 42px 50%;
+  inset: 10px -10px -10px 10px;
+  border-radius: 24px 24px 24px 34px;
   background: #0b5665;
   content: "";
 }
@@ -3471,13 +3473,14 @@ main dd,
   z-index: 1;
   display: block;
   width: 100%;
-  max-width: 520px;
-  margin-left: auto;
+  height: auto;
+  max-width: none;
+  margin: 0;
   aspect-ratio: 4 / 5;
-  border-radius: 42px 42px 42px 50%;
+  border-radius: 24px 24px 24px 34px;
   object-fit: cover;
   object-position: center top;
-  box-shadow: 0 18px 42px rgba(7, 62, 77, 0.18);
+  box-shadow: 0 12px 28px rgba(7, 62, 77, 0.14);
 }
 .profile-bio-section {
   background: #f1f3eb;
@@ -3507,22 +3510,25 @@ main dd,
 }
 @media (max-width: 767px) {
   .profile-page-hero {
-    padding: 44px 0 58px;
+    padding: 36px 0 48px;
   }
   .profile-page-grid,
   .profile-bio-grid {
     grid-template-columns: 1fr;
-    gap: 34px;
+    gap: 24px;
   }
   .profile-page-copy h1 {
-    font-size: clamp(46px, 14vw, 64px);
+    font-size: clamp(40px, 11vw, 54px);
   }
   .profile-page-portrait {
-    order: -1;
+    order: initial;
+    width: clamp(104px, 30vw, 132px);
+    margin: 0;
   }
   .profile-page-portrait img {
-    max-width: 420px;
-    margin: 0 auto;
+    width: 100%;
+    max-width: none;
+    margin: 0;
   }
   .profile-bio-grid aside h2 {
     max-width: 12ch;
