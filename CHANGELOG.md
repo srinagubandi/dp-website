@@ -15,6 +15,8 @@ All notable DocPropel website changes are recorded in this file.
 ### Changed
 
 - The Team overview remains concise; full biographies now live on individual pages rather than expandable cards.
+- Reduced portrait footprint across Team cards and individual profile pages, while preserving responsive face framing and physical image aspect ratios.
+- Aligned desktop profile links to a shared baseline and retained a 44px interactive target at all tested widths.
 
 ### Validation planned
 

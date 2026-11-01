@@ -3398,14 +3398,34 @@ main dd,
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
 }
+.team-profile-grid article {
+  display: flex;
+  flex-direction: column;
+}
 .team-profile-grid img {
+  display: block;
+  width: clamp(96px, 9vw, 120px);
+  height: auto;
+  margin: 20px 20px 0;
   aspect-ratio: 4 / 5;
+  border-radius: 14px 14px 14px 20px;
   object-position: center top;
+}
+.team-profile-grid article > div {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+.team-profile-grid .eyebrow {
+  font-size: 12px;
 }
 @media (max-width: 767px) {
   .team-profile-grid {
     grid-template-columns: minmax(0, 1fr);
     gap: 16px;
+  }
+  .team-profile-grid img {
+    width: clamp(72px, 22vw, 88px);
   }
   .team-profile-grid article > div {
     padding: 20px;
@@ -3418,8 +3438,12 @@ main dd,
 
 /* Dedicated profiles retain the Team page's editorial portrait and reading rhythm. */
 .team-profile-link {
-  min-height: 36px;
-  margin-top: 16px;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 44px;
+  margin-top: auto;
+  padding-top: 16px;
   font-size: 14px;
 }
 .profile-page-hero {
@@ -3457,7 +3481,7 @@ main dd,
 }
 .profile-page-portrait {
   position: relative;
-  width: min(100%, clamp(260px, 24vw, 320px));
+  width: min(100%, clamp(200px, 16vw, 220px));
   margin: 0 0 0 auto;
 }
 .profile-page-portrait::before {
