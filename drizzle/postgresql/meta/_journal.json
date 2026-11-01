@@ -36,6 +36,13 @@
       "when": 1793500372635,
       "tag": "0004_human_copy_pass",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1793500719124,
+      "tag": "0005_cross_page_human_copy",
+      "breakpoints": true
     }
   ]
 }

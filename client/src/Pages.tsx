@@ -563,8 +563,8 @@ export function Services() {
       <Intro
         route={route}
         eyebrow="Services"
-        fallbackTitle="One coordinated system for the patient path."
-        fallbackBody="Search, paid media, web experience, reputation, reactivation, and content should work together around the needs and capacity of the practice."
+        fallbackTitle="Marketing services built around the patient path"
+        fallbackBody="Search, paid media, website experience, reputation, patient reactivation, and content work together. Each is planned around what the practice needs and can handle."
       />
       <Enabled route={route} slug="services">
         <section className="section">
@@ -611,8 +611,8 @@ export function Specialties() {
       <Intro
         route={route}
         eyebrow="Specialties"
-        fallbackTitle="Healthcare growth shaped by specialty context."
-        fallbackBody="Different care settings have different patient questions, referral paths, service areas, and capacity constraints. The plan should reflect them."
+        fallbackTitle="Marketing shaped by your specialty"
+        fallbackBody="Each care setting has its own patient questions, referral paths, service areas, and capacity limits. The plan should account for them."
       />
       <Enabled route={route} slug="specialties">
         <section className="section">
@@ -654,7 +654,7 @@ export function HowItWorks() {
         route={route}
         eyebrow="How it works"
         fallbackTitle="A measured path from context to improvement."
-        fallbackBody="DocPropel starts with the practice and market, connects channels to useful patient actions, and reviews evidence before recommending what comes next."
+        fallbackBody="DocPropel starts by learning the practice and its market. We tie each channel to patient actions that matter, then review the evidence before recommending next steps."
       />
       <Enabled route={route} slug="workflow">
         <section className="section">
@@ -716,7 +716,7 @@ export function Results() {
       <Intro
         route={route}
         eyebrow="Results"
-        fallbackTitle="Results should be specific, supported, and reviewable."
+        fallbackTitle="Results that are specific, supported, and reviewable"
         fallbackBody="We do not publish unnamed clients, invented quotes, or isolated numbers without the context needed to understand them."
       />
       <Enabled route={route} slug="evidence">
@@ -781,8 +781,8 @@ export function About() {
       <Intro
         route={route}
         eyebrow="About DocPropel"
-        fallbackTitle="Healthcare growth with accountability at the center."
-        fallbackBody="DocPropel exists to make marketing decisions clearer for healthcare practices while respecting patient trust and the realities of care delivery."
+        fallbackTitle="Healthcare marketing with accountability at the center"
+        fallbackBody="DocPropel helps healthcare practices make clearer marketing decisions while respecting patient trust and the realities of delivering care."
       />
       <Enabled route={route} slug="mission">
         <section className="section">
@@ -934,8 +934,8 @@ export function Team() {
       <Intro
         route={route}
         eyebrow="Team"
-        fallbackTitle="The disciplines behind a coordinated growth program."
-        fallbackBody="DocPropel connects strategy, patient-path experience, local demand, and performance review so the practice sees one accountable operating picture."
+        fallbackTitle="The disciplines behind a coordinated marketing program"
+        fallbackBody="DocPropel brings together strategy, patient-path experience, local demand, and performance review, so the practice has one accountable view of its marketing."
       />
       <Enabled route={route} slug="profiles">
         <section className="section team-profiles-section">
@@ -1080,8 +1080,8 @@ export function FAQ() {
       <Intro
         route={route}
         eyebrow="FAQ"
-        fallbackTitle="Practical answers before the first conversation."
-        fallbackBody="A concise guide to the model, its boundaries, and what a useful first step looks like for a healthcare practice."
+        fallbackTitle="Practical answers before the first conversation"
+        fallbackBody="A short guide to how DocPropel works, where its limits are, and what a useful first step looks like for a healthcare practice."
       />
       <Enabled route={route} slug="questions">
         <section className="section faq-section">
