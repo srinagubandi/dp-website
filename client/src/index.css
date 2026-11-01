@@ -3176,6 +3176,21 @@ main dd,
   border-radius: 8px;
 }
 
+#growth-brief {
+  scroll-margin-top: 98px;
+}
+
+#growth-brief-title:focus {
+  width: fit-content;
+  outline: 3px solid var(--blue);
+  outline-offset: 5px;
+  border-radius: 4px;
+}
+
+#growth-brief-title {
+  scroll-margin-top: 108px;
+}
+
 @media (max-width: 1080px) {
   .header-inner {
     justify-content: flex-start;

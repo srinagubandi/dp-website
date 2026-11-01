@@ -101,7 +101,7 @@ export default function Layout({ children }: { children: ReactNode }) {
               <Phone aria-hidden="true" />
               <span>202 841 2941</span>
             </a>
-            <Link href="/contact" className="button coral small">
+            <Link href="/contact#growth-brief" className="button coral small">
               Get a Growth Brief <span aria-hidden="true">→</span>
             </Link>
           </nav>
@@ -157,7 +157,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                   <small>{String(index + 1).padStart(2, "0")}</small>
                 </Link>
               ))}
-              <Link href="/contact" className="button coral">
+              <Link href="/contact#growth-brief" className="button coral">
                 Get a Growth Brief <span aria-hidden="true">→</span>
               </Link>
             </nav>

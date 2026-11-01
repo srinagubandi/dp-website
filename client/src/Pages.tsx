@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { Link } from "wouter";
 import {
   ArrowRight,
@@ -233,6 +233,37 @@ function NoPressureProcess({ route }: { route: PublicRoute }) {
   );
 }
 
+function useGrowthBriefHashNavigation() {
+  useEffect(() => {
+    let timer: number | undefined;
+
+    const scrollToGrowthBrief = () => {
+      if (window.location.hash !== "#growth-brief") return;
+      const target = document.getElementById("growth-brief-title");
+      if (!target) return;
+
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => {
+        target.scrollIntoView({
+          behavior: reduceMotion ? "auto" : "smooth",
+          block: "start",
+        });
+        target.focus({ preventScroll: true });
+      }, 500);
+    };
+
+    scrollToGrowthBrief();
+    window.addEventListener("hashchange", scrollToGrowthBrief);
+    return () => {
+      window.clearTimeout(timer);
+      window.removeEventListener("hashchange", scrollToGrowthBrief);
+    };
+  }, []);
+}
+
 const specialtyCards = [
   [
     "physician",
@@ -344,7 +375,7 @@ export function Home() {
                 )}
               </p>
               <div className="actions">
-                <Link href="/contact" className="button coral">
+                <Link href="/contact#growth-brief" className="button coral">
                   See if your practice is a fit <ArrowRight />
                 </Link>
                 <Link href="/how-it-works" className="text-link">
@@ -515,7 +546,7 @@ export function Home() {
           <div className="container">
             <p className="eyebrow light">A practical first step</p>
             <h2>Build around your practice—not a generic promise.</h2>
-            <Link className="button coral" href="/contact">
+            <Link className="button coral" href="/contact#growth-brief">
               Request a Growth Brief <ArrowRight />
             </Link>
           </div>
@@ -1075,6 +1106,7 @@ export function FAQ() {
 export function Contact() {
   const route = "/contact" as const;
   const { text } = useSite();
+  useGrowthBriefHashNavigation();
   return (
     <Page route={route}>
       <Enabled route={route} slug="hero">
@@ -1160,11 +1192,18 @@ export function Contact() {
         </section>
       </Enabled>
       <NoPressureProcess route={route} />
-      <section id="growth-brief" className="section contact-form-section">
+      <section
+        id="growth-brief"
+        className="section contact-form-section"
+        tabIndex={-1}
+        aria-labelledby="growth-brief-title"
+      >
         <div className="container contact-form-grid">
           <div>
             <p className="eyebrow">Growth Brief</p>
-            <h2>Start with the details that matter.</h2>
+            <h2 id="growth-brief-title" tabIndex={-1}>
+              Start with the details that matter.
+            </h2>
             <p>
               Use this general business form for practice-level information
               only. Do not share any patient details.
