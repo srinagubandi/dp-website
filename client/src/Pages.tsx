@@ -23,6 +23,7 @@ import Layout from "./Layout";
 import LeadForm from "./LeadForm";
 import Metadata from "./Metadata";
 import { useSite } from "./site-context";
+import { GrowthBriefTrigger } from "./GrowthBriefModal";
 
 function Page({
   route,
@@ -370,9 +371,9 @@ export function Home() {
                 )}
               </p>
               <div className="actions">
-                <Link href="/contact#growth-brief" className="button coral">
+                <GrowthBriefTrigger className="button coral">
                   See if your practice is a fit <ArrowRight />
-                </Link>
+                </GrowthBriefTrigger>
                 <Link href="/how-it-works" className="text-link">
                   Explore how the model works <ArrowRight />
                 </Link>
@@ -537,9 +538,9 @@ export function Home() {
           <div className="container">
             <p className="eyebrow light">A practical first step</p>
             <h2>Build around your practice—not a generic promise.</h2>
-            <Link className="button coral" href="/contact#growth-brief">
+            <GrowthBriefTrigger className="button coral">
               Request a Growth Brief <ArrowRight />
-            </Link>
+            </GrowthBriefTrigger>
           </div>
         </section>
       </Enabled>
@@ -856,31 +857,24 @@ export function Team() {
   const profiles = [
     {
       key: "profile-1",
-      name: "Aurelia Vale",
-      role: "Growth strategy",
-      image: "/images/team-placeholder-01.webp",
-      bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus malesuada, arcu quis consequat dignissim, nibh libero posuere sem, vitae posuere enim lectus vel eros.",
+      name: "Rakesh Mittapelly",
+      role: "Performance & growth marketing",
+      image: "/images/team-rakesh-mittapelly.webp",
+      bio: "Rakesh brings more than 13 years of performance marketing leadership across agency, platform, and brand environments. His work connects acquisition strategy, media efficiency, and measurable revenue outcomes across healthcare and other growth-focused categories.",
     },
     {
       key: "profile-2",
-      name: "Marcus Vero",
-      role: "Search & paid media",
-      image: "/images/team-placeholder-02.webp",
-      bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer facilisis, tellus at efficitur facilisis, velit tellus posuere mi, at pulvinar erat sapien non ligula.",
+      name: "Mike Tomasiello",
+      role: "Founder, Propel Dental",
+      image: "/images/team-mike-tomasiello.webp",
+      bio: "Mike has spent more than a decade in marketing, including five years dedicated to dental practices. He helps teams pair patient trust, stronger internal workflows, and practical measurement to build sustainable growth.",
     },
     {
       key: "profile-3",
-      name: "Livia Sera",
-      role: "Conversion & web experience",
-      image: "/images/team-placeholder-03.webp",
-      bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquet lectus at mi posuere, nec feugiat ligula posuere. Donec quis faucibus nunc, a rhoncus sem.",
-    },
-    {
-      key: "profile-4",
-      name: "Soren Atlas",
-      role: "Analytics & performance review",
-      image: "/images/team-placeholder-04.webp",
-      bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pellentesque, nisl vitae tincidunt faucibus, eros metus volutpat magna, id porttitor libero velit sed est.",
+      name: "Sri Nagubandi",
+      role: "Strategy & client partnership",
+      image: "/images/team-sri-nagubandi.webp",
+      bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus malesuada, arcu quis consequat dignissim, nibh libero posuere sem, vitae posuere enim lectus vel eros.",
     },
   ];
   const roles = [
@@ -928,11 +922,11 @@ export function Team() {
           <div className="container section-heading">
             <div>
               <p className="eyebrow">Meet the team</p>
-              <h2>Placeholder profiles, ready for approved bios.</h2>
+              <h2>Experienced growth partners, working as one team.</h2>
             </div>
             <p className="team-placeholder-note">
-              Replace names, roles, bios, and image URLs in Admin before public
-              launch.
+              Each discipline supports a clearer patient path and a more
+              accountable growth program.
             </p>
           </div>
           <div className="container team-profile-grid">
@@ -965,7 +959,7 @@ export function Team() {
                 <article key={profile.key}>
                   <img
                     src={image}
-                    alt={`Placeholder portrait for ${name}`}
+                    alt={`Portrait of ${name}`}
                     width="720"
                     height="720"
                     loading="lazy"
@@ -1117,9 +1111,9 @@ export function Contact() {
                 )}
               </p>
               <div className="contact-actions">
-                <a className="button coral" href="#growth-brief">
+                <GrowthBriefTrigger className="button coral">
                   Request a Growth Brief <ArrowRight />
-                </a>
+                </GrowthBriefTrigger>
                 <a className="button outline" href="tel:+12028412941">
                   <Phone />
                   Call 202 841 2941

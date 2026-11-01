@@ -1308,6 +1308,69 @@ textarea {
   border-top: 1px solid rgba(255, 255, 255, 0.15);
   font-size: 13px;
 }
+.growth-brief-modal-open {
+  overflow: hidden;
+}
+.growth-brief-backdrop {
+  position: fixed;
+  z-index: 200;
+  inset: 0;
+  display: grid;
+  overflow-y: auto;
+  place-items: start center;
+  padding: max(28px, 5vh) 20px;
+  background: rgba(2, 25, 31, 0.66);
+  overscroll-behavior: contain;
+}
+.growth-brief-modal {
+  width: min(900px, 100%);
+  margin: auto;
+  padding: clamp(24px, 4vw, 42px);
+  border: 1px solid rgba(7, 62, 77, 0.18);
+  border-radius: 28px;
+  background: var(--paper);
+  box-shadow: 0 26px 78px rgba(2, 25, 31, 0.34);
+}
+.growth-brief-modal-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: start;
+  margin-bottom: 24px;
+}
+.growth-brief-modal-header .eyebrow {
+  margin-bottom: 8px;
+}
+.growth-brief-modal-header h2 {
+  max-width: 620px;
+  font-size: clamp(34px, 5vw, 54px);
+}
+.growth-brief-modal-header p:not(.eyebrow) {
+  max-width: 650px;
+  margin: 12px 0 0;
+  color: var(--text);
+}
+.growth-brief-modal-close {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+}
+.growth-brief-modal-close:hover {
+  background: var(--mist);
+}
+.growth-brief-modal-close svg {
+  width: 22px;
+}
+.growth-brief-modal .lead-form {
+  box-shadow: none;
+}
 .auth-shell {
   display: grid;
   min-height: 100vh;
@@ -3035,6 +3098,32 @@ html {
 }
 
 @media (max-width: 767px) {
+  .growth-brief-backdrop {
+    display: block;
+    padding: 0;
+  }
+  .growth-brief-modal {
+    width: 100%;
+    min-height: 100dvh;
+    padding: 24px 16px max(24px, env(safe-area-inset-bottom));
+    border: 0;
+    border-radius: 0;
+  }
+  .growth-brief-modal-header {
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .growth-brief-modal-header h2 {
+    font-size: clamp(32px, 10vw, 44px);
+    line-height: 1;
+  }
+  .growth-brief-modal-close {
+    width: 44px;
+    height: 44px;
+  }
+  .growth-brief-modal .lead-form {
+    padding: 20px 16px;
+  }
   .admin-header {
     gap: 16px;
     padding-bottom: 16px;
@@ -3301,5 +3390,25 @@ main dd,
 
   .specialty-grid svg {
     flex: 0 0 24px;
+  }
+}
+
+/* Supplied team profiles: retain the site's quiet editorial card language. */
+.team-profile-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+.team-profile-grid img {
+  aspect-ratio: 4 / 5;
+  object-position: center top;
+}
+@media (max-width: 767px) {
+  .team-profile-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .team-profile-grid article:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    max-width: 420px;
+    justify-self: center;
   }
 }
