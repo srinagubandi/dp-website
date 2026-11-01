@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Phone } from "lucide-react";
 import { Link, useLocation } from "wouter";
+import { GrowthBriefTrigger } from "./GrowthBriefModal";
 
 const nav = [
   ["/services", "Services"],
@@ -101,9 +102,9 @@ export default function Layout({ children }: { children: ReactNode }) {
               <Phone aria-hidden="true" />
               <span>202 841 2941</span>
             </a>
-            <Link href="/contact#growth-brief" className="button coral small">
+            <GrowthBriefTrigger className="button coral small">
               Get a Growth Brief <span aria-hidden="true">→</span>
-            </Link>
+            </GrowthBriefTrigger>
           </nav>
           <a
             className="mobile-header-phone"
@@ -157,9 +158,9 @@ export default function Layout({ children }: { children: ReactNode }) {
                   <small>{String(index + 1).padStart(2, "0")}</small>
                 </Link>
               ))}
-              <Link href="/contact#growth-brief" className="button coral">
+              <GrowthBriefTrigger className="button coral">
                 Get a Growth Brief <span aria-hidden="true">→</span>
-              </Link>
+              </GrowthBriefTrigger>
             </nav>
             <p className="mobile-menu-note">
               Healthcare-first growth, built around your practice and its
@@ -199,7 +200,6 @@ export default function Layout({ children }: { children: ReactNode }) {
             <Link href="/team">Team</Link>
             <Link href="/faq">FAQ</Link>
             <Link href="/contact">Contact</Link>
-            <Link href="/admin">Admin</Link>
           </div>
           <div>
             <strong>Contact</strong>

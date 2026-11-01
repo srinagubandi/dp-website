@@ -10,6 +10,7 @@ const leadForm = read("client/src/LeadForm.tsx");
 const pages = read("client/src/Pages.tsx");
 const styles = read("client/src/index.css");
 const app = read("client/src/App.tsx");
+const growthBriefModal = read("client/src/GrowthBriefModal.tsx");
 
 describe("accessibility and legal regression controls", () => {
   it("keeps the public accessibility statement registered, indexed, and linked from legal navigation", () => {
@@ -33,12 +34,22 @@ describe("accessibility and legal regression controls", () => {
   });
 
   it("keeps accessible form labels, PHI guidance, errors, and submission status", () => {
-    expect(leadForm).toContain('htmlFor="lead-name"');
-    expect(leadForm).toContain('aria-describedby="phi-guidance"');
+    expect(leadForm).toContain("htmlFor={`${idPrefix}-name`}");
+    expect(leadForm).toContain("aria-describedby={phiGuidanceId}");
     expect(leadForm).toContain('role="alert"');
     expect(leadForm).toContain('role="status"');
     expect(leadForm).toContain("confirmationRef.current?.focus()");
     expect(leadForm).toContain("protected health information");
+  });
+
+  it("keeps the Growth Brief modal keyboard-operable and mobile-safe", () => {
+    expect(growthBriefModal).toContain('role="dialog"');
+    expect(growthBriefModal).toContain('aria-modal="true"');
+    expect(growthBriefModal).toContain('event.key === "Escape"');
+    expect(growthBriefModal).toContain('event.key !== "Tab"');
+    expect(growthBriefModal).toContain("triggerRef.current?.focus()");
+    expect(styles).toContain(".growth-brief-backdrop");
+    expect(styles).toContain("min-height: 100dvh");
   });
 
   it("retains tailored interim privacy and terms language", () => {

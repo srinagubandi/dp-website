@@ -1,6 +1,7 @@
 import { useEffect, type ReactNode } from "react";
 import { Link } from "wouter";
 import {
+  ArrowLeft,
   ArrowRight,
   Accessibility,
   BarChart3,
@@ -23,6 +24,7 @@ import Layout from "./Layout";
 import LeadForm from "./LeadForm";
 import Metadata from "./Metadata";
 import { useSite } from "./site-context";
+import { GrowthBriefTrigger } from "./GrowthBriefModal";
 
 function Page({
   route,
@@ -370,9 +372,9 @@ export function Home() {
                 )}
               </p>
               <div className="actions">
-                <Link href="/contact#growth-brief" className="button coral">
+                <GrowthBriefTrigger className="button coral">
                   See if your practice is a fit <ArrowRight />
-                </Link>
+                </GrowthBriefTrigger>
                 <Link href="/how-it-works" className="text-link">
                   Explore how the model works <ArrowRight />
                 </Link>
@@ -537,9 +539,9 @@ export function Home() {
           <div className="container">
             <p className="eyebrow light">A practical first step</p>
             <h2>Build around your practice—not a generic promise.</h2>
-            <Link className="button coral" href="/contact#growth-brief">
+            <GrowthBriefTrigger className="button coral">
               Request a Growth Brief <ArrowRight />
-            </Link>
+            </GrowthBriefTrigger>
           </div>
         </section>
       </Enabled>
@@ -850,39 +852,70 @@ export function About() {
   );
 }
 
+type TeamProfileDefinition = {
+  key: string;
+  route:
+    | "/team/rakesh-mittapelly"
+    | "/team/mike-tomasiello"
+    | "/team/sri-nagubandi";
+  name: string;
+  role: string;
+  image: string;
+  summary: string;
+  fullBio: string[];
+};
+
+const teamProfiles: TeamProfileDefinition[] = [
+  {
+    key: "profile-1",
+    route: "/team/rakesh-mittapelly",
+    name: "Rakesh Mittapelly",
+    role: "Performance & growth marketing",
+    image: "/images/team-rakesh-mittapelly.webp",
+    summary:
+      "Rakesh connects performance strategy, digital acquisition, and marketing efficiency to measurable growth outcomes.",
+    fullBio: [
+      "I help businesses turn digital marketing investments into measurable revenue growth. With more than 13 years of experience across agency, platform, and brand environments, I specialize in performance strategy, customer acquisition, marketing efficiency, and scalable growth.",
+      "My experience includes leading organizations such as TikTok, GroupM, iProspect, Performics, and Pinstorm, with experience managing media investments of approximately US$20–25 million.",
+      "I have driven performance and growth initiatives across the USA, UK, Australia, GCC markets, and India, delivering measurable improvements in customer acquisition costs, lead quality, sales performance, and marketing ROI.",
+      "My work has included BFSI and fintech, real estate, e-commerce and D2C, EdTech, FMCG, technology and SaaS, automotive, healthcare, and travel.",
+      "I combine commercial strategy, data-driven insight, and hands-on performance expertise to build high-impact marketing strategies that improve efficiency, accelerate growth, and deliver measurable business outcomes.",
+    ],
+  },
+  {
+    key: "profile-2",
+    route: "/team/mike-tomasiello",
+    name: "Mike Tomasiello",
+    role: "Founder, Propel Dental",
+    image: "/images/team-mike-tomasiello.webp",
+    summary:
+      "Mike brings strategic dental-practice marketing, patient trust, and operational workflow experience to sustainable growth planning.",
+    fullBio: [
+      "I founded Propel Dental with one mission: to help dental practices grow through smarter, more strategic marketing.",
+      "With more than 10 years of marketing experience and five years dedicated exclusively to the dental industry, I have worked alongside more than 200 practices across the country to develop marketing systems that attract high-quality patients, strengthen brands, and drive sustainable growth.",
+      "I believe successful marketing goes beyond generating leads. It requires understanding patient psychology, building trust, developing efficient internal workflows for lead management and sales, and creating strategies that produce real, measurable results.",
+      "My goal is to become an extension of every practice I work with, providing the expertise, innovation, and partnership needed to help them reach the next level.",
+    ],
+  },
+  {
+    key: "profile-3",
+    route: "/team/sri-nagubandi",
+    name: "Sri Nagubandi",
+    role: "Strategy & client partnership",
+    image: "/images/team-sri-nagubandi.webp",
+    summary:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus malesuada, arcu quis consequat dignissim.",
+    fullBio: [
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus malesuada, arcu quis consequat dignissim, nibh libero posuere sem, vitae posuere enim lectus vel eros.",
+      "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+      "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.",
+    ],
+  },
+];
+
 export function Team() {
   const route = "/team" as const;
   const { text } = useSite();
-  const profiles = [
-    {
-      key: "profile-1",
-      name: "Aurelia Vale",
-      role: "Growth strategy",
-      image: "/images/team-placeholder-01.webp",
-      bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus malesuada, arcu quis consequat dignissim, nibh libero posuere sem, vitae posuere enim lectus vel eros.",
-    },
-    {
-      key: "profile-2",
-      name: "Marcus Vero",
-      role: "Search & paid media",
-      image: "/images/team-placeholder-02.webp",
-      bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer facilisis, tellus at efficitur facilisis, velit tellus posuere mi, at pulvinar erat sapien non ligula.",
-    },
-    {
-      key: "profile-3",
-      name: "Livia Sera",
-      role: "Conversion & web experience",
-      image: "/images/team-placeholder-03.webp",
-      bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquet lectus at mi posuere, nec feugiat ligula posuere. Donec quis faucibus nunc, a rhoncus sem.",
-    },
-    {
-      key: "profile-4",
-      name: "Soren Atlas",
-      role: "Analytics & performance review",
-      image: "/images/team-placeholder-04.webp",
-      bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pellentesque, nisl vitae tincidunt faucibus, eros metus volutpat magna, id porttitor libero velit sed est.",
-    },
-  ];
   const roles = [
     [
       Target,
@@ -928,15 +961,15 @@ export function Team() {
           <div className="container section-heading">
             <div>
               <p className="eyebrow">Meet the team</p>
-              <h2>Placeholder profiles, ready for approved bios.</h2>
+              <h2>Experienced growth partners, working as one team.</h2>
             </div>
             <p className="team-placeholder-note">
-              Replace names, roles, bios, and image URLs in Admin before public
-              launch.
+              Each discipline supports a clearer patient path and a more
+              accountable growth program.
             </p>
           </div>
           <div className="container team-profile-grid">
-            {profiles.map(profile => {
+            {teamProfiles.map(profile => {
               const name = text(
                 route,
                 "profiles",
@@ -949,31 +982,38 @@ export function Team() {
                 `${profile.key}-role`,
                 profile.role
               );
-              const image = text(
-                route,
-                "profiles",
-                `${profile.key}-image`,
-                profile.image
-              );
+              const image =
+                text(
+                  route,
+                  "profiles",
+                  `${profile.key}-image`,
+                  profile.image
+                ).trim() || profile.image;
               const bio = text(
                 route,
                 "profiles",
                 `${profile.key}-bio`,
-                profile.bio
+                profile.summary
               );
               return (
                 <article key={profile.key}>
                   <img
                     src={image}
-                    alt={`Placeholder portrait for ${name}`}
+                    alt={`Portrait of ${name}`}
                     width="720"
-                    height="720"
+                    height="900"
                     loading="lazy"
                   />
                   <div>
                     <p className="eyebrow">{role}</p>
                     <h3>{name}</h3>
                     <p>{bio}</p>
+                    <Link
+                      href={profile.route}
+                      className="text-link team-profile-link"
+                    >
+                      View full profile <ArrowRight />
+                    </Link>
                   </div>
                 </article>
               );
@@ -1031,6 +1071,73 @@ export function Team() {
       <GrowthBrief route={route} />
     </Page>
   );
+}
+
+function TeamProfilePage({ profile }: { profile: TeamProfileDefinition }) {
+  const { text } = useSite();
+  const route = profile.route;
+  const title = text(route, "hero", "title", profile.name);
+  const introduction = text(route, "hero", "body", profile.role);
+  const role = text(route, "profile", "role", profile.role);
+  const image =
+    text(route, "profile", "image", profile.image).trim() || profile.image;
+  return (
+    <Page route={route}>
+      <section className="profile-page-hero">
+        <div className="container profile-page-grid">
+          <div className="profile-page-copy">
+            <Link href="/team" className="text-link profile-back-link">
+              <ArrowLeft aria-hidden="true" /> Back to DocPropel Team
+            </Link>
+            <p className="eyebrow">{role}</p>
+            <h1>{title}</h1>
+            <p className="lede">{introduction}</p>
+            <GrowthBriefTrigger className="button coral">
+              Request a Growth Brief <ArrowRight />
+            </GrowthBriefTrigger>
+          </div>
+          <figure className="profile-page-portrait">
+            <img
+              src={image}
+              alt={`Portrait of ${title}`}
+              width="960"
+              height="1200"
+            />
+          </figure>
+        </div>
+      </section>
+      <Enabled route={route} slug="profile">
+        <section className="section profile-bio-section">
+          <div className="container profile-bio-grid">
+            <aside>
+              <p className="eyebrow">Full profile</p>
+              <h2>Experience that informs the work.</h2>
+            </aside>
+            <article className="profile-bio-copy">
+              {profile.fullBio.map((paragraph, index) => (
+                <p key={index}>
+                  {text(route, "profile", `bio-${index + 1}`, paragraph)}
+                </p>
+              ))}
+            </article>
+          </div>
+        </section>
+      </Enabled>
+      <GrowthBrief route={route} />
+    </Page>
+  );
+}
+
+export function RakeshMittapellyProfile() {
+  return <TeamProfilePage profile={teamProfiles[0]} />;
+}
+
+export function MikeTomasielloProfile() {
+  return <TeamProfilePage profile={teamProfiles[1]} />;
+}
+
+export function SriNagubandiProfile() {
+  return <TeamProfilePage profile={teamProfiles[2]} />;
 }
 
 export function FAQ() {
@@ -1117,9 +1224,9 @@ export function Contact() {
                 )}
               </p>
               <div className="contact-actions">
-                <a className="button coral" href="#growth-brief">
+                <GrowthBriefTrigger className="button coral">
                   Request a Growth Brief <ArrowRight />
-                </a>
+                </GrowthBriefTrigger>
                 <a className="button outline" href="tel:+12028412941">
                   <Phone />
                   Call 202 841 2941

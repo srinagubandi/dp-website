@@ -12,11 +12,19 @@ const ranges = [
   "Prefer not to say",
 ];
 
-export default function LeadForm({ compact = false }: { compact?: boolean }) {
+export default function LeadForm({
+  compact = false,
+  idPrefix = "lead",
+}: {
+  compact?: boolean;
+  idPrefix?: string;
+}) {
   const [pending, setPending] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
   const confirmationRef = useRef<HTMLDivElement>(null);
+  const requiredFieldsNoteId = `${idPrefix}-required-fields-note`;
+  const phiGuidanceId = `${idPrefix}-phi-guidance`;
   const attribution = useMemo(() => {
     const params = new URLSearchParams(window.location.search);
     return {
@@ -80,50 +88,50 @@ export default function LeadForm({ compact = false }: { compact?: boolean }) {
       onSubmit={submit}
       noValidate={false}
     >
-      <p className="form-legend wide" id="required-fields-note">
+      <p className="form-legend wide" id={requiredFieldsNoteId}>
         <span aria-hidden="true">*</span> Required fields
       </p>
       <div className="field">
-        <label htmlFor="lead-name">
+        <label htmlFor={`${idPrefix}-name`}>
           Full name{" "}
           <span className="required-marker" aria-hidden="true">
             *
           </span>
         </label>
         <input
-          id="lead-name"
+          id={`${idPrefix}-name`}
           name="name"
           autoComplete="name"
           required
           aria-required="true"
-          aria-describedby="required-fields-note"
+          aria-describedby={requiredFieldsNoteId}
           maxLength={140}
         />
       </div>
       <div className="field">
-        <label htmlFor="lead-email">
+        <label htmlFor={`${idPrefix}-email`}>
           Work email{" "}
           <span className="required-marker" aria-hidden="true">
             *
           </span>
         </label>
         <input
-          id="lead-email"
+          id={`${idPrefix}-email`}
           name="email"
           type="email"
           autoComplete="email"
           required
           aria-required="true"
-          aria-describedby="required-fields-note"
+          aria-describedby={requiredFieldsNoteId}
           maxLength={254}
         />
       </div>
       <div className="field">
-        <label htmlFor="lead-phone">
+        <label htmlFor={`${idPrefix}-phone`}>
           Phone <span className="optional-marker">(optional)</span>
         </label>
         <input
-          id="lead-phone"
+          id={`${idPrefix}-phone`}
           name="phone"
           type="tel"
           autoComplete="tel"
@@ -131,35 +139,35 @@ export default function LeadForm({ compact = false }: { compact?: boolean }) {
         />
       </div>
       <div className="field">
-        <label htmlFor="lead-practice">
+        <label htmlFor={`${idPrefix}-practice`}>
           Practice name{" "}
           <span className="required-marker" aria-hidden="true">
             *
           </span>
         </label>
         <input
-          id="lead-practice"
+          id={`${idPrefix}-practice`}
           name="practiceName"
           autoComplete="organization"
           required
           aria-required="true"
-          aria-describedby="required-fields-note"
+          aria-describedby={requiredFieldsNoteId}
           maxLength={180}
         />
       </div>
       <div className="field">
-        <label htmlFor="lead-specialty">
+        <label htmlFor={`${idPrefix}-specialty`}>
           Specialization{" "}
           <span className="required-marker" aria-hidden="true">
             *
           </span>
         </label>
         <select
-          id="lead-specialty"
+          id={`${idPrefix}-specialty`}
           name="specialty"
           required
           aria-required="true"
-          aria-describedby="required-fields-note"
+          aria-describedby={requiredFieldsNoteId}
           defaultValue=""
         >
           <option value="" disabled>
@@ -171,11 +179,11 @@ export default function LeadForm({ compact = false }: { compact?: boolean }) {
         </select>
       </div>
       <div className="field">
-        <label htmlFor="lead-location">
+        <label htmlFor={`${idPrefix}-location`}>
           City / State <span className="optional-marker">(optional)</span>
         </label>
         <input
-          id="lead-location"
+          id={`${idPrefix}-location`}
           name="location"
           autoComplete="address-level2"
           maxLength={180}
@@ -183,11 +191,15 @@ export default function LeadForm({ compact = false }: { compact?: boolean }) {
       </div>
       {!compact && (
         <div className="field wide">
-          <label htmlFor="lead-monthly">
+          <label htmlFor={`${idPrefix}-monthly`}>
             Current monthly new-patient range{" "}
             <span className="optional-marker">(optional)</span>
           </label>
-          <select id="lead-monthly" name="monthlyPatients" defaultValue="">
+          <select
+            id={`${idPrefix}-monthly`}
+            name="monthlyPatients"
+            defaultValue=""
+          >
             <option value="">Select a range</option>
             {ranges.map(item => (
               <option key={item}>{item}</option>
@@ -196,15 +208,15 @@ export default function LeadForm({ compact = false }: { compact?: boolean }) {
         </div>
       )}
       <div className="field wide">
-        <label htmlFor="lead-message">
+        <label htmlFor={`${idPrefix}-message`}>
           Growth challenge <span className="optional-marker">(optional)</span>
         </label>
         <textarea
-          id="lead-message"
+          id={`${idPrefix}-message`}
           name="message"
           rows={compact ? 3 : 4}
           maxLength={3000}
-          aria-describedby="phi-guidance"
+          aria-describedby={phiGuidanceId}
         />
       </div>
       <div className="honeypot" aria-hidden="true">
@@ -213,7 +225,7 @@ export default function LeadForm({ compact = false }: { compact?: boolean }) {
           <input name="website" tabIndex={-1} autoComplete="off" />
         </label>
       </div>
-      <p id="phi-guidance" className="form-guidance wide">
+      <p id={phiGuidanceId} className="form-guidance wide">
         <strong>Do not include patient or protected health information.</strong>
       </p>
       <label className="consent wide">
@@ -222,7 +234,7 @@ export default function LeadForm({ compact = false }: { compact?: boolean }) {
           type="checkbox"
           required
           aria-required="true"
-          aria-describedby="required-fields-note"
+          aria-describedby={requiredFieldsNoteId}
         />{" "}
         <span>
           I agree that DocPropel may use this information to respond to my
