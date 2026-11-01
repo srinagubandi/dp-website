@@ -80,21 +80,32 @@ export default function LeadForm({ compact = false }: { compact?: boolean }) {
       onSubmit={submit}
       noValidate={false}
     >
+      <p className="form-legend wide" id="required-fields-note">
+        <span aria-hidden="true">*</span> Required fields
+      </p>
       <div className="field">
         <label htmlFor="lead-name">
-          Full name <b aria-hidden="true">*</b>
+          Full name{" "}
+          <span className="required-marker" aria-hidden="true">
+            *
+          </span>
         </label>
         <input
           id="lead-name"
           name="name"
           autoComplete="name"
           required
+          aria-required="true"
+          aria-describedby="required-fields-note"
           maxLength={140}
         />
       </div>
       <div className="field">
         <label htmlFor="lead-email">
-          Work email <b aria-hidden="true">*</b>
+          Work email{" "}
+          <span className="required-marker" aria-hidden="true">
+            *
+          </span>
         </label>
         <input
           id="lead-email"
@@ -102,12 +113,14 @@ export default function LeadForm({ compact = false }: { compact?: boolean }) {
           type="email"
           autoComplete="email"
           required
+          aria-required="true"
+          aria-describedby="required-fields-note"
           maxLength={254}
         />
       </div>
       <div className="field">
         <label htmlFor="lead-phone">
-          Phone <span>(optional)</span>
+          Phone <span className="optional-marker">(optional)</span>
         </label>
         <input
           id="lead-phone"
@@ -119,21 +132,36 @@ export default function LeadForm({ compact = false }: { compact?: boolean }) {
       </div>
       <div className="field">
         <label htmlFor="lead-practice">
-          Practice name <b aria-hidden="true">*</b>
+          Practice name{" "}
+          <span className="required-marker" aria-hidden="true">
+            *
+          </span>
         </label>
         <input
           id="lead-practice"
           name="practiceName"
           autoComplete="organization"
           required
+          aria-required="true"
+          aria-describedby="required-fields-note"
           maxLength={180}
         />
       </div>
       <div className="field">
         <label htmlFor="lead-specialty">
-          Specialization <b aria-hidden="true">*</b>
+          Specialization{" "}
+          <span className="required-marker" aria-hidden="true">
+            *
+          </span>
         </label>
-        <select id="lead-specialty" name="specialty" required defaultValue="">
+        <select
+          id="lead-specialty"
+          name="specialty"
+          required
+          aria-required="true"
+          aria-describedby="required-fields-note"
+          defaultValue=""
+        >
           <option value="" disabled>
             Select one
           </option>
@@ -144,7 +172,7 @@ export default function LeadForm({ compact = false }: { compact?: boolean }) {
       </div>
       <div className="field">
         <label htmlFor="lead-location">
-          City / State <span>(optional)</span>
+          City / State <span className="optional-marker">(optional)</span>
         </label>
         <input
           id="lead-location"
@@ -156,7 +184,8 @@ export default function LeadForm({ compact = false }: { compact?: boolean }) {
       {!compact && (
         <div className="field wide">
           <label htmlFor="lead-monthly">
-            Current monthly new-patient range <span>(optional)</span>
+            Current monthly new-patient range{" "}
+            <span className="optional-marker">(optional)</span>
           </label>
           <select id="lead-monthly" name="monthlyPatients" defaultValue="">
             <option value="">Select a range</option>
@@ -168,7 +197,7 @@ export default function LeadForm({ compact = false }: { compact?: boolean }) {
       )}
       <div className="field wide">
         <label htmlFor="lead-message">
-          Growth challenge <span>(optional)</span>
+          Growth challenge <span className="optional-marker">(optional)</span>
         </label>
         <textarea
           id="lead-message"
@@ -188,7 +217,13 @@ export default function LeadForm({ compact = false }: { compact?: boolean }) {
         <strong>Do not include patient or protected health information.</strong>
       </p>
       <label className="consent wide">
-        <input name="consent" type="checkbox" required />{" "}
+        <input
+          name="consent"
+          type="checkbox"
+          required
+          aria-required="true"
+          aria-describedby="required-fields-note"
+        />{" "}
         <span>
           I agree that DocPropel may use this information to respond to my
           request. See the <Link href="/privacy">Privacy Notice</Link>.
@@ -204,7 +239,7 @@ export default function LeadForm({ compact = false }: { compact?: boolean }) {
         <span aria-hidden="true">→</span>
       </button>
       <p className="form-note wide" aria-live="polite">
-        Required fields are marked with an asterisk.
+        We use your practice information only to respond to this request.
       </p>
     </form>
   );

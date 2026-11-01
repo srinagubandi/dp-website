@@ -1,12 +1,16 @@
 import fs from "node:fs";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { DEFAULT_SEO, PUBLIC_ROUTES } from "../shared/site";
+import { DEFAULT_SEO, PUBLIC_ROUTES, SPECIALTIES } from "../shared/site";
 
 const root = path.resolve(import.meta.dirname, "..");
 const source = ["client/src/Pages.tsx", "shared/site.ts", "client/index.html"]
   .map(file => fs.readFileSync(path.join(root, file), "utf8"))
   .join("\n");
+const leadFormSource = fs.readFileSync(
+  path.join(root, "client/src/LeadForm.tsx"),
+  "utf8"
+);
 describe("public release inventory", () => {
   it("has metadata for every public route", () =>
     expect(DEFAULT_SEO.map(item => item.route)).toEqual(PUBLIC_ROUTES));
@@ -31,6 +35,19 @@ describe("public release inventory", () => {
       "ABA & pediatric clinics",
     ])
       expect(source).toContain(practice);
+  });
+  it("publishes only the five approved specialty options", () =>
+    expect([...SPECIALTIES]).toEqual([
+      "Doctors & physicians",
+      "Dental practices",
+      "Independent pharmacies",
+      "PT / OT clinics",
+      "ABA & pediatric clinics",
+    ]));
+  it("keeps required-field guidance before the Growth Brief inputs", () => {
+    expect(leadFormSource).toContain('className="form-legend wide"');
+    expect(leadFormSource).toContain('aria-required="true"');
+    expect(leadFormSource).not.toContain("Urgent Care");
   });
   it("includes every indexable route in the sitemap", () => {
     const sitemap = fs.readFileSync(

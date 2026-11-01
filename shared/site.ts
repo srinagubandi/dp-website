@@ -673,7 +673,7 @@ export const DEFAULT_SEO: SeoSeed[] = [
   seo(
     "/specialties",
     "Healthcare Specialties | DocPropel",
-    "Growth planning for physician, dental, pharmacy, PT/OT, ABA and pediatric, and urgent care practices."
+    "Growth planning for doctors and physicians, dental practices, independent pharmacies, PT/OT clinics, and ABA and pediatric clinics."
   ),
   seo(
     "/how-it-works",
@@ -747,13 +747,11 @@ export const LEAD_STATUSES = [
   "closed",
 ] as const;
 export const SPECIALTIES = [
-  "Doctors / Physicians",
-  "Dental Practice",
-  "Independent Pharmacy",
-  "PT / OT Clinic",
-  "ABA & Pediatric Clinic",
-  "Urgent Care",
-  "Other Specialty",
+  "Doctors & physicians",
+  "Dental practices",
+  "Independent pharmacies",
+  "PT / OT clinics",
+  "ABA & pediatric clinics",
 ] as const;
 export const ALLOWED_SCHEMA_TYPES = [
   "WebPage",

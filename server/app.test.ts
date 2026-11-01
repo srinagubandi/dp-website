@@ -21,7 +21,7 @@ function memoryStore(): AppStore {
   };
 }
 const env={adminEmail:"admin@example.com",adminPassword:"correct horse battery staple",sessionSecret:"a-very-long-test-secret-that-is-over-thirty-two-characters",production:false};
-const validLead={name:"Alex Morgan",email:" ALEX@example.com ",practiceName:"Example Practice",specialty:"Dental Practice",consent:true,website:"",phone:"",location:"",monthlyPatients:"",message:"General growth planning only.",source:"/contact",utmSource:null,utmMedium:null,utmCampaign:null};
+const validLead={name:"Alex Morgan",email:" ALEX@example.com ",practiceName:"Example Practice",specialty:"Dental practices",consent:true,website:"",phone:"",location:"",monthlyPatients:"",message:"General growth planning only.",source:"/contact",utmSource:null,utmMedium:null,utmCampaign:null};
 let store:AppStore;
 beforeEach(()=>{store=memoryStore()});
 

@@ -290,11 +290,6 @@ const specialtyCards = [
     "ABA & pediatric clinics",
     "Family trust, referral pathways, intake clarity, service areas, and capacity-aware growth.",
   ],
-  [
-    "urgent-care",
-    "Urgent care",
-    "Accurate location, hours, service, and access information for time-sensitive local decisions.",
-  ],
 ];
 const services = [
   [
@@ -489,11 +484,7 @@ export function Home() {
             </div>
             <div className="specialty-grid">
               {specialtyCards.map(([slug, title]) => (
-                <Link
-                  href={`/specialties#${slug}`}
-                  className={slug === "aba-pediatric" ? "featured" : ""}
-                  key={slug}
-                >
+                <Link href={`/specialties#${slug}`} key={slug}>
                   <Stethoscope />
                   <span>{title}</span>
                 </Link>
@@ -623,11 +614,6 @@ export function Specialties() {
                 <div>
                   <h2>{title}</h2>
                   <p>{body}</p>
-                  <p>
-                    Planning starts with the services available, the people the
-                    practice can responsibly support, and the information
-                    patients and families need to make an informed next step.
-                  </p>
                 </div>
               </article>
             ))}
@@ -1056,7 +1042,7 @@ export function FAQ() {
     ],
     [
       "Which practices are a fit?",
-      "DocPropel is designed for doctors and physicians, dental practices, independent pharmacies, PT/OT clinics, ABA and pediatric clinics, and urgent care teams that want their growth plan to reflect real capacity and patient access needs.",
+      "DocPropel works with doctors and physicians, dental practices, independent pharmacies, PT/OT clinics, and ABA and pediatric clinics that want their growth plan to reflect real capacity and patient access needs.",
     ],
     [
       "Do you guarantee patient volume or revenue?",

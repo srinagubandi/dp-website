@@ -43,6 +43,13 @@
       "when": 1793500719124,
       "tag": "0005_cross_page_human_copy",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1793501458175,
+      "tag": "0006_exact_specialty_scope",
+      "breakpoints": true
     }
   ]
 }

@@ -643,9 +643,8 @@ h3 {
 .specialty-grid svg {
   width: 28px;
 }
-.specialty-grid .featured {
-  background: var(--ink);
-  color: #fff;
+.specialty-grid a:last-child:nth-child(3n + 2) {
+  grid-column: 2;
 }
 .proof-card {
   display: grid;
@@ -2537,14 +2536,11 @@ html {
 
 .specialty-details article {
   padding: 40px 28px;
-  border: 1px solid transparent;
-  border-bottom-color: var(--line);
-}
-
-.specialty-details article:nth-child(odd) {
   border-color: rgba(7, 62, 77, 0.1);
   border-radius: 24px;
   background: #fffdf8;
+  border: 1px solid rgba(7, 62, 77, 0.1);
+  margin-bottom: 16px;
 }
 
 .specialty-details article > span {
@@ -2563,8 +2559,7 @@ html {
     padding: 28px 18px;
   }
 
-  .service-row:nth-child(even),
-  .specialty-details article:nth-child(odd) {
+  .service-row:nth-child(even) {
     border-radius: 18px;
   }
 
@@ -2666,6 +2661,47 @@ html {
 .lead-form .field label,
 .lead-form > label {
   letter-spacing: 0.01em;
+}
+
+.lead-form .field label {
+  flex-direction: row;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.lead-form .required-marker {
+  color: var(--coral);
+  font-weight: 800;
+}
+
+.lead-form .optional-marker {
+  color: var(--text);
+  font-weight: 400;
+}
+
+.lead-form .form-legend {
+  margin: 0 0 -2px;
+  color: var(--text);
+  font-size: 14px;
+}
+
+.lead-form .form-legend > span {
+  color: var(--coral);
+  font-weight: 800;
+}
+
+.lead-form .consent > span,
+.lead-form .form-guidance,
+.lead-form .form-note {
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.lead-form .consent > span {
+  font-weight: 400;
 }
 
 .contact-form-grid > div > p:not(.eyebrow) {
@@ -3233,5 +3269,37 @@ main dd,
   .mobile-header-phone {
     gap: 4px;
     font-size: 11px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .specialty-grid a:last-child:nth-child(3n + 2) {
+    grid-column: 1 / -1;
+    justify-content: center;
+  }
+}
+
+@media (min-width: 981px) {
+  .specialty-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .specialty-grid a {
+    grid-column: span 2;
+  }
+
+  .specialty-grid a:nth-child(4),
+  .specialty-grid a:last-child:nth-child(3n + 2) {
+    grid-column: span 3;
+  }
+}
+
+@media (max-width: 980px) {
+  .specialty-grid a:last-child:nth-child(3n + 2) {
+    justify-content: flex-start;
+  }
+
+  .specialty-grid svg {
+    flex: 0 0 24px;
   }
 }
