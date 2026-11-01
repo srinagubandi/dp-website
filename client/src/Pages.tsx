@@ -119,6 +119,92 @@ function GrowthBrief({ route }: { route: PublicRoute }) {
     </Enabled>
   );
 }
+
+const noPressureSteps = [
+  {
+    title: "Tell us about your practice",
+    body: "Share your priorities, constraints, capacity, and current growth challenge.",
+  },
+  {
+    title: "Review the opportunity",
+    body: "We consider the market and patient path, then organize practical questions and options.",
+  },
+  {
+    title: "Choose the next step",
+    body: "You decide whether any proposed direction makes sense for your practice.",
+  },
+];
+
+function NoPressureProcess({ route }: { route: PublicRoute }) {
+  const { text } = useSite();
+  const isHome = route === "/";
+  const section = isHome ? "no-pressure-process" : "what-happens-next";
+  return (
+    <Enabled route={route} slug={section}>
+      <section
+        className={`section no-pressure-process ${isHome ? "no-pressure-home" : ""}`}
+      >
+        <div className="container">
+          <div className="no-pressure-heading">
+            <div>
+              <p className="eyebrow">
+                {isHome ? "A practical first step" : "What happens next"}
+              </p>
+              <h2>
+                {text(
+                  route,
+                  section,
+                  "title",
+                  "A simple, no-pressure process."
+                )}
+              </h2>
+            </div>
+            <p>
+              {text(
+                route,
+                section,
+                "body",
+                "Start with the context that matters. There is no pressure to commit before the practice has a useful view of the options."
+              )}
+            </p>
+          </div>
+          <ol className="no-pressure-steps">
+            {noPressureSteps.map((step, index) => (
+              <li key={step.title}>
+                <span>{String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <h3>
+                    {text(
+                      route,
+                      section,
+                      `step-${index + 1}-title`,
+                      step.title
+                    )}
+                  </h3>
+                  <p>
+                    {text(route, section, `step-${index + 1}-body`, step.body)}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ol>
+          {isHome && (
+            <div className="no-pressure-specialties">
+              <p>
+                Built around the realities of doctors, dental practices,
+                independent pharmacies, PT/OT clinics, and ABA/pediatric care.
+              </p>
+              <Link href="/specialties" className="text-link">
+                Explore specialty context <ArrowRight />
+              </Link>
+            </div>
+          )}
+        </div>
+      </section>
+    </Enabled>
+  );
+}
+
 const specialtyCards = [
   [
     "physician",
@@ -329,6 +415,7 @@ export function Home() {
           </div>
         </section>
       </Enabled>
+      <NoPressureProcess route={route} />
       <Enabled route={route} slug="specialties">
         <section className="section specialties-section">
           <div className="container">
@@ -1044,48 +1131,7 @@ export function Contact() {
           </div>
         </section>
       </Enabled>
-      <Enabled route={route} slug="what-happens-next">
-        <section className="section">
-          <div className="container next-card">
-            <div>
-              <p className="eyebrow light">What happens next</p>
-              <h2>A simple, no-pressure process.</h2>
-            </div>
-            <ol>
-              <li>
-                <span>1</span>
-                <div>
-                  <h3>Tell us about your practice</h3>
-                  <p>
-                    Share your priorities, constraints, capacity, and current
-                    growth challenge.
-                  </p>
-                </div>
-              </li>
-              <li>
-                <span>2</span>
-                <div>
-                  <h3>Review the opportunity</h3>
-                  <p>
-                    DocPropel considers the market and patient path, then
-                    organizes practical questions and options.
-                  </p>
-                </div>
-              </li>
-              <li>
-                <span>3</span>
-                <div>
-                  <h3>Choose the next step</h3>
-                  <p>
-                    You decide whether any proposed direction makes sense for
-                    your practice.
-                  </p>
-                </div>
-              </li>
-            </ol>
-          </div>
-        </section>
-      </Enabled>
+      <NoPressureProcess route={route} />
       <section id="growth-brief" className="section contact-form-section">
         <div className="container contact-form-grid">
           <div>
