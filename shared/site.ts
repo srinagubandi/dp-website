@@ -9,6 +9,8 @@ export const PUBLIC_ROUTES = [
   "/team/rakesh-mittapelly",
   "/team/mike-tomasiello",
   "/team/sri-nagubandi",
+  "/team/seifeldin-salah",
+  "/team/rishi-patil",
   "/faq",
   "/contact",
   "/privacy",
@@ -66,6 +68,8 @@ const sectionMap: Record<PublicRoute, string[]> = {
   "/team/rakesh-mittapelly": ["hero", "profile", "growth-brief"],
   "/team/mike-tomasiello": ["hero", "profile", "growth-brief"],
   "/team/sri-nagubandi": ["hero", "profile", "growth-brief"],
+  "/team/seifeldin-salah": ["hero", "profile", "growth-brief"],
+  "/team/rishi-patil": ["hero", "profile", "growth-brief"],
   "/faq": ["hero", "questions", "growth-brief"],
   "/contact": ["hero", "contact-channels", "what-happens-next", "growth-brief"],
   "/privacy": ["hero", "legal-template"],
@@ -897,6 +901,16 @@ export const DEFAULT_SEO: SeoSeed[] = [
     "Meet Sri Nagubandi, a DocPropel strategy and client partnership team member."
   ),
   seo(
+    "/team/seifeldin-salah",
+    "Seifeldin Salah | DocPropel",
+    "Software, apps, and technical systems, built with a practical engineering approach."
+  ),
+  seo(
+    "/team/rishi-patil",
+    "Rishi Patil | DocPropel",
+    "SEO, social media, content planning, and research to build a stronger online presence."
+  ),
+  seo(
     "/faq",
     "Healthcare Growth FAQ | DocPropel",
     "Answers to common questions about DocPropel’s performance-based healthcare growth model, its boundaries, and the Growth Brief process."
@@ -1017,3 +1031,198 @@ export function validateSchemaJson(
     return { valid: false, message: "Schema JSON is malformed." };
   }
 }
+
+// Supplied team biographies, November 2026.
+DEFAULT_CONTENT.push(
+  {
+    route: "/team",
+    section: "profiles",
+    key: "profile-4-name",
+    value: "Seifeldin Salah",
+    contentType: "text",
+    label: "Name",
+    sortOrder: 0,
+  },
+  {
+    route: "/team",
+    section: "profiles",
+    key: "profile-4-role",
+    value: "Software engineering",
+    contentType: "text",
+    label: "Role",
+    sortOrder: 1,
+  },
+  {
+    route: "/team",
+    section: "profiles",
+    key: "profile-4-image",
+    value: "/images/team-seifeldin-salah.jpg",
+    contentType: "url",
+    label: "Portrait image URL",
+    sortOrder: 2,
+  },
+  {
+    route: "/team",
+    section: "profiles",
+    key: "profile-4-bio",
+    value:
+      "Software, apps, and technical systems, built with a practical engineering approach.",
+    contentType: "textarea",
+    label: "Short biography",
+    sortOrder: 3,
+  },
+  {
+    route: "/team/seifeldin-salah",
+    section: "hero",
+    key: "title",
+    value: "Seifeldin Salah",
+    contentType: "text",
+    label: "Page title",
+    sortOrder: 0,
+  },
+  {
+    route: "/team/seifeldin-salah",
+    section: "hero",
+    key: "body",
+    value:
+      "Software, apps, and technical systems, built with a practical engineering approach.",
+    contentType: "textarea",
+    label: "Page introduction",
+    sortOrder: 1,
+  },
+  {
+    route: "/team/seifeldin-salah",
+    section: "profile",
+    key: "role",
+    value: "Software engineering",
+    contentType: "text",
+    label: "Role",
+    sortOrder: 2,
+  },
+  {
+    route: "/team/seifeldin-salah",
+    section: "profile",
+    key: "image",
+    value: "/images/team-seifeldin-salah.jpg",
+    contentType: "url",
+    label: "Portrait image URL",
+    sortOrder: 3,
+  },
+  {
+    route: "/team/seifeldin-salah",
+    section: "profile",
+    key: "bio-1",
+    value:
+      "Software engineer with a bachelor's in CS and four years of experience building software, apps and technical systems.",
+    contentType: "textarea",
+    label: "Bio paragraph 1",
+    sortOrder: 4,
+  }
+);
+
+DEFAULT_CONTENT.push(
+  {
+    route: "/team",
+    section: "profiles",
+    key: "profile-5-name",
+    value: "Rishi Patil",
+    contentType: "text",
+    label: "Name",
+    sortOrder: 0,
+  },
+  {
+    route: "/team",
+    section: "profiles",
+    key: "profile-5-role",
+    value: "Digital Marketing Associate",
+    contentType: "text",
+    label: "Role",
+    sortOrder: 1,
+  },
+  {
+    route: "/team",
+    section: "profiles",
+    key: "profile-5-image",
+    value: "/images/team-rishi-patil.jpg",
+    contentType: "url",
+    label: "Portrait image URL",
+    sortOrder: 2,
+  },
+  {
+    route: "/team",
+    section: "profiles",
+    key: "profile-5-bio",
+    value:
+      "SEO, social media, content planning, and research to build a stronger online presence.",
+    contentType: "textarea",
+    label: "Short biography",
+    sortOrder: 3,
+  },
+  {
+    route: "/team/rishi-patil",
+    section: "hero",
+    key: "title",
+    value: "Rishi Patil",
+    contentType: "text",
+    label: "Page title",
+    sortOrder: 0,
+  },
+  {
+    route: "/team/rishi-patil",
+    section: "hero",
+    key: "body",
+    value:
+      "SEO, social media, content planning, and research to build a stronger online presence.",
+    contentType: "textarea",
+    label: "Page introduction",
+    sortOrder: 1,
+  },
+  {
+    route: "/team/rishi-patil",
+    section: "profile",
+    key: "role",
+    value: "Digital Marketing Associate",
+    contentType: "text",
+    label: "Role",
+    sortOrder: 2,
+  },
+  {
+    route: "/team/rishi-patil",
+    section: "profile",
+    key: "image",
+    value: "/images/team-rishi-patil.jpg",
+    contentType: "url",
+    label: "Portrait image URL",
+    sortOrder: 3,
+  },
+  {
+    route: "/team/rishi-patil",
+    section: "profile",
+    key: "bio-1",
+    value:
+      "Rishi Patil is a Digital Marketing Associate at Health Scale Digital, where he works on SEO, social media marketing, content planning, and marketing research. His work involves researching topics, planning content, managing social media activities, and keeping track of how marketing efforts are performing.",
+    contentType: "textarea",
+    label: "Bio paragraph 1",
+    sortOrder: 4,
+  },
+  {
+    route: "/team/rishi-patil",
+    section: "profile",
+    key: "bio-2",
+    value:
+      "He enjoys the creative side of digital marketing as well as understanding what works behind the numbers. He is particularly interested in how businesses can use content and digital platforms to connect with their audiences and build a stronger online presence.",
+    contentType: "textarea",
+    label: "Bio paragraph 2",
+    sortOrder: 5,
+  },
+  {
+    route: "/team/rishi-patil",
+    section: "profile",
+    key: "bio-3",
+    value:
+      "Rishi enjoys keeping up with new developments in digital marketing and is always open to learning new skills, exploring different ideas, and finding better ways to approach his work.",
+    contentType: "textarea",
+    label: "Bio paragraph 3",
+    sortOrder: 6,
+  }
+);

@@ -16,6 +16,8 @@ import {
   RakeshMittapellyProfile,
   MikeTomasielloProfile,
   SriNagubandiProfile,
+  SeifeldinSalahProfile,
+  RishiPatilProfile,
 } from "./Pages";
 import { GrowthBriefModalProvider } from "./GrowthBriefModal";
 
@@ -35,6 +37,8 @@ export default function App() {
         />
         <Route path="/team/mike-tomasiello" component={MikeTomasielloProfile} />
         <Route path="/team/sri-nagubandi" component={SriNagubandiProfile} />
+        <Route path="/team/seifeldin-salah" component={SeifeldinSalahProfile} />
+        <Route path="/team/rishi-patil" component={RishiPatilProfile} />
         <Route path="/team" component={Team} />
         <Route path="/faq" component={FAQ} />
         <Route path="/contact" component={Contact} />

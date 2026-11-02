@@ -65,6 +65,8 @@ describe("public release inventory", () => {
       "/team/rakesh-mittapelly",
       "/team/mike-tomasiello",
       "/team/sri-nagubandi",
+      "/team/seifeldin-salah",
+      "/team/rishi-patil",
     ]) {
       expect(PUBLIC_ROUTES).toContain(route);
       expect(DEFAULT_SEO.map(item => item.route)).toContain(route);
@@ -87,6 +89,8 @@ describe("public release inventory", () => {
       "/team/rakesh-mittapelly",
       "/team/mike-tomasiello",
       "/team/sri-nagubandi",
+      "/team/seifeldin-salah",
+      "/team/rishi-patil",
     ]) {
       const profileFields = DEFAULT_CONTENT.filter(
         item => item.route === route && item.section === "profile"

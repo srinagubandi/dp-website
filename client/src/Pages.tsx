@@ -857,7 +857,9 @@ type TeamProfileDefinition = {
   route:
     | "/team/rakesh-mittapelly"
     | "/team/mike-tomasiello"
-    | "/team/sri-nagubandi";
+    | "/team/sri-nagubandi"
+    | "/team/seifeldin-salah"
+    | "/team/rishi-patil";
   name: string;
   role: string;
   image: string;
@@ -911,6 +913,32 @@ const teamProfiles: TeamProfileDefinition[] = [
       "Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.",
     ],
   },
+  {
+    key: "profile-4",
+    name: "Seifeldin Salah",
+    role: "Software engineering",
+    summary:
+      "Software, apps, and technical systems, built with a practical engineering approach.",
+    fullBio: [
+      "Software engineer with a bachelor's in CS and four years of experience building software, apps and technical systems.",
+    ],
+    route: "/team/seifeldin-salah",
+    image: "/images/team-seifeldin-salah.jpg",
+  },
+  {
+    key: "profile-5",
+    name: "Rishi Patil",
+    role: "Digital Marketing Associate",
+    summary:
+      "SEO, social media, content planning, and research to build a stronger online presence.",
+    fullBio: [
+      "Rishi Patil is a Digital Marketing Associate at Health Scale Digital, where he works on SEO, social media marketing, content planning, and marketing research. His work involves researching topics, planning content, managing social media activities, and keeping track of how marketing efforts are performing.",
+      "He enjoys the creative side of digital marketing as well as understanding what works behind the numbers. He is particularly interested in how businesses can use content and digital platforms to connect with their audiences and build a stronger online presence.",
+      "Rishi enjoys keeping up with new developments in digital marketing and is always open to learning new skills, exploring different ideas, and finding better ways to approach his work.",
+    ],
+    route: "/team/rishi-patil",
+    image: "/images/team-rishi-patil.jpg",
+  },
 ];
 
 export function Team() {
@@ -950,12 +978,14 @@ export function Team() {
   ];
   return (
     <Page route={route}>
-      <Intro
-        route={route}
-        eyebrow="Team"
-        fallbackTitle="The disciplines behind a coordinated marketing program"
-        fallbackBody="DocPropel brings together strategy, patient-path experience, local demand, and performance review, so the practice has one accountable view of its marketing."
-      />
+      <div className="team-page-intro">
+        <Intro
+          route={route}
+          eyebrow="Team"
+          fallbackTitle="The disciplines behind a coordinated marketing program"
+          fallbackBody="DocPropel brings together strategy, patient-path experience, local demand, and performance review, so the practice has one accountable view of its marketing."
+        />
+      </div>
       <Enabled route={route} slug="profiles">
         <section className="section team-profiles-section">
           <div className="container section-heading">
@@ -964,8 +994,8 @@ export function Team() {
               <h2>Experienced growth partners, working as one team.</h2>
             </div>
             <p className="team-placeholder-note">
-              Each discipline supports a clearer patient path and a more
-              accountable growth program.
+              Strategy, marketing, and engineering support a clearer patient
+              path and a more accountable growth program.
             </p>
           </div>
           <div className="container team-profile-grid">
@@ -997,22 +1027,28 @@ export function Team() {
               );
               return (
                 <article key={profile.key}>
-                  <img
-                    src={image}
-                    alt={`Portrait of ${name}`}
-                    width="720"
-                    height="900"
-                    loading="lazy"
-                  />
-                  <div>
-                    <p className="eyebrow">{role}</p>
-                    <h3>{name}</h3>
+                  <div className="team-card-heading">
+                    <img
+                      src={image}
+                      alt={`Portrait of ${name}`}
+                      width="720"
+                      height="900"
+                      loading="lazy"
+                    />
+                    <div>
+                      <p className="eyebrow">{role}</p>
+                      <h3>{name}</h3>
+                    </div>
+                  </div>
+                  <div className="team-card-body">
                     <p>{bio}</p>
                     <Link
                       href={profile.route}
                       className="text-link team-profile-link"
                     >
-                      View full profile <ArrowRight />
+                      View full profile{" "}
+                      <span className="sr-only">of {name}</span>
+                      <ArrowRight aria-hidden="true" />
                     </Link>
                   </div>
                 </article>
@@ -1033,8 +1069,7 @@ export function Team() {
                 loading="lazy"
               />
               <figcaption>
-                Representative collaboration image. Named profiles and
-                credentials are added only after they are supplied and approved.
+                A representative view of a collaborative planning session.
               </figcaption>
             </figure>
             <div>
@@ -1062,10 +1097,6 @@ export function Team() {
               </article>
             ))}
           </div>
-          <p className="container content-note">
-            Named profiles, employment claims, headshots, and credentials will
-            be added only after they are supplied and approved.
-          </p>
         </section>
       </Enabled>
       <GrowthBrief route={route} />
@@ -1078,40 +1109,72 @@ function TeamProfilePage({ profile }: { profile: TeamProfileDefinition }) {
   const route = profile.route;
   const title = text(route, "hero", "title", profile.name);
   const introduction = text(route, "hero", "body", profile.role);
+  const summary = text(
+    "/team",
+    "profiles",
+    `${profile.key}-bio`,
+    profile.summary
+  );
   const role = text(route, "profile", "role", profile.role);
   const image =
     text(route, "profile", "image", profile.image).trim() || profile.image;
   return (
     <Page route={route}>
       <section className="profile-page-hero">
-        <div className="container profile-page-grid">
-          <div className="profile-page-copy">
-            <Link href="/team" className="text-link profile-back-link">
-              <ArrowLeft aria-hidden="true" /> Back to DocPropel Team
-            </Link>
-            <p className="eyebrow">{role}</p>
-            <h1>{title}</h1>
-            <p className="lede">{introduction}</p>
-            <GrowthBriefTrigger className="button coral">
-              Request a Growth Brief <ArrowRight />
-            </GrowthBriefTrigger>
+        <div className="container">
+          <Link href="/team" className="text-link profile-back-link">
+            <ArrowLeft aria-hidden="true" /> Back to the team
+          </Link>
+          <div className="profile-page-grid">
+            <div className="profile-page-copy">
+              <p className="eyebrow">Meet the team · {role}</p>
+              <h1>{title}</h1>
+              <p className="lede">
+                {introduction.trim() === role.trim() ? summary : introduction}
+              </p>
+              <a className="text-link profile-bio-jump" href="#biography">
+                Read biography <ArrowRight aria-hidden="true" />
+              </a>
+              <GrowthBriefTrigger className="button coral">
+                Request a Growth Brief <ArrowRight />
+              </GrowthBriefTrigger>
+            </div>
+            <figure className="profile-page-portrait">
+              <img
+                src={image}
+                alt={`Portrait of ${title}`}
+                width="960"
+                height="1200"
+              />
+            </figure>
           </div>
-          <figure className="profile-page-portrait">
-            <img
-              src={image}
-              alt={`Portrait of ${title}`}
-              width="960"
-              height="1200"
-            />
-          </figure>
         </div>
       </section>
       <Enabled route={route} slug="profile">
-        <section className="section profile-bio-section">
+        <section id="biography" className="section profile-bio-section">
           <div className="container profile-bio-grid">
             <aside>
-              <p className="eyebrow">Full profile</p>
-              <h2>Experience that informs the work.</h2>
+              <p className="eyebrow">Background & approach</p>
+              <h2>Experience behind the partnership.</h2>
+              <nav
+                className="profile-colleagues"
+                aria-label="More team profiles"
+              >
+                <p className="eyebrow">Meet the rest of the team</p>
+                {teamProfiles
+                  .filter(member => member.key !== profile.key)
+                  .map(member => (
+                    <Link key={member.key} href={member.route}>
+                      {text(
+                        "/team",
+                        "profiles",
+                        `${member.key}-name`,
+                        member.name
+                      )}{" "}
+                      <ArrowRight aria-hidden="true" />
+                    </Link>
+                  ))}
+              </nav>
             </aside>
             <article className="profile-bio-copy">
               {profile.fullBio.map((paragraph, index) => (
@@ -1134,6 +1197,14 @@ export function RakeshMittapellyProfile() {
 
 export function MikeTomasielloProfile() {
   return <TeamProfilePage profile={teamProfiles[1]} />;
+}
+
+export function SeifeldinSalahProfile() {
+  return <TeamProfilePage profile={teamProfiles[3]} />;
+}
+
+export function RishiPatilProfile() {
+  return <TeamProfilePage profile={teamProfiles[4]} />;
 }
 
 export function SriNagubandiProfile() {
