@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Phone } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { GrowthBriefTrigger } from "./GrowthBriefModal";
+import { HeaderBrand } from "./branding/HeaderBrand";
 
 const nav = [
   ["/services", "Services"],
@@ -16,10 +17,14 @@ function Logo({ light = false }: { light?: boolean }) {
   return (
     <img
       className="brand-logo"
-      src={light ? "/docpropel-logo-light.svg" : "/docpropel-logo-dark.svg"}
-      alt="DocPropel"
+      src={
+        light
+          ? "/docpropel-logo-light.svg?v=20261111"
+          : "/docpropel-logo-dark.svg?v=20261111"
+      }
+      alt="Propeldock logo artwork for DocPropel"
       width="180"
-      height="36"
+      height="41"
     />
   );
 }
@@ -81,9 +86,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       </a>
       <header className="site-header">
         <div className="container header-inner">
-          <Link href="/" className="logo-link" aria-label="DocPropel home">
-            <Logo />
-          </Link>
+          <HeaderBrand />
           <nav className="desktop-nav" aria-label="Primary">
             {nav.map(([href, label]) => (
               <Link
@@ -138,7 +141,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             aria-label="Mobile navigation"
           >
             <div className="mobile-menu-bar">
-              <Link href="/" aria-label="DocPropel home">
+              <Link href="/" aria-label="DocPropel home — Propeldock logo">
                 <Logo />
               </Link>
               <button
@@ -182,7 +185,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       <footer className="site-footer">
         <div className="container footer-grid">
           <div className="footer-brand">
-            <Link href="/" aria-label="DocPropel home">
+            <Link href="/" aria-label="DocPropel home — Propeldock logo">
               <Logo light />
             </Link>
             <p>Accountable growth systems for healthcare practices.</p>

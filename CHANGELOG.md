@@ -2,6 +2,14 @@
 
 All notable DocPropel website changes are recorded in this file.
 
+## 2026-11-11 — Supplied logo and favicon update
+
+- Added the supplied Propeldock vector artwork and header-only loop with keyboard pause and reduced-motion support.
+- Updated static footer/admin/menu logos and all browser/touch/install/pinned-tab/Windows favicon variants.
+- Preserved DocPropel site copy, domains, contacts, manifest identity, layouts and database.
+- Added four asset regression cases and five-width browser checks; release is preview-only pending owner review.
+
+
 ## 2026-11-02 - Team directory and profile redesign
 
 ### Changed
