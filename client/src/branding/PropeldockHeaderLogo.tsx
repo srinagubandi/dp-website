@@ -1,9 +1,8 @@
 import { useId, type SVGProps } from "react";
 import "./header-logo-loop.css";
-type Props = SVGProps<SVGSVGElement> & { paused?: boolean; label?: string };
-/** Always loops automatically; paused is only for an explicit user pause. */
+type Props = SVGProps<SVGSVGElement> & { label?: string };
+/** Loops automatically; device reduced-motion preferences make it static. */
 export function PropeldockHeaderLogo({
-  paused = false,
   label = "Propeldock",
   className = "",
   ...props
@@ -15,7 +14,6 @@ export function PropeldockHeaderLogo({
       height="45"
       viewBox="0 0 600 136"
       className={`pd-header-logo-loop ${className}`}
-      data-paused={paused}
       role="img"
       aria-labelledby={id}
       focusable="false"

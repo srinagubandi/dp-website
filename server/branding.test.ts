@@ -51,16 +51,34 @@ describe("supplied logo and favicon integration", () => {
       )
     ).toHaveLength(2);
   });
-  it("adds a separately focusable pause control and static reduced-motion behavior", () => {
+  it("loops without an on-site motion control and retains device reduced-motion behavior", () => {
     const wrapper = read("client/src/branding/HeaderBrand.tsx").toString();
     const css = read("client/src/branding/header-brand.css").toString();
-    expect(wrapper).toContain("aria-pressed={paused}");
-    expect(wrapper).toContain("Pause logo animation");
-    expect(wrapper).toContain("Resume logo animation");
+    const loop = read("client/src/branding/header-logo-loop.css").toString();
+    const artwork = read(
+      "client/src/branding/PropeldockHeaderLogo.tsx"
+    ).toString();
+    expect(wrapper).not.toMatch(
+      /<button\b|useState|aria-pressed|data-motion-paused|paused=/
+    );
+    expect(css).not.toMatch(/logo-motion-toggle|data-motion-paused/);
+    expect(artwork).not.toMatch(/paused\??:|data-paused/);
+    expect(loop).toContain("4.8s");
+    expect(loop).toContain("infinite");
+    expect(loop).not.toMatch(
+      /data-paused|data-pd-motion-paused|animation-play-state/
+    );
     expect(css).toContain("prefers-reduced-motion: reduce");
-    expect(css).toContain('data-motion-paused="true"');
     expect(css).toContain("animation: none !important");
     expect(css).toContain("opacity: 1 !important");
-    expect(css).toContain("min-height: 24px");
+    expect(css).toContain("transform: none !important");
+  });
+  it("discloses the known continuous-motion criterion failure instead of claiming conformance", () => {
+    const pages = read("client/src/Pages.tsx").toString();
+    expect(pages).toContain("has no on-site pause or stop control");
+    expect(pages).toContain("when your device requests reduced motion");
+    expect(pages).toContain(
+      "does not meet WCAG 2.2 Success Criterion 2.2.2 (Pause, Stop, Hide)"
+    );
   });
 });

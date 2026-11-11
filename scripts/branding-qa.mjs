@@ -13,7 +13,7 @@ const browser = await chromium.launch({
 });
 const evidence = [];
 try {
-  for (const width of [320, 390, 768, 1081, 1440]) {
+  for (const width of [320, 390, 768, 1079, 1080, 1081, 1440]) {
     const context = await browser.newContext({
       viewport: { width, height: 900 },
       reducedMotion: "no-preference",
@@ -44,12 +44,10 @@ try {
       ].find(visible);
       const brand = document.querySelector(".header-brand");
       const logo = brand.querySelector("svg");
-      const pause = brand.querySelector("button");
       return {
         overflow: document.documentElement.scrollWidth > innerWidth + 1,
         brand: box(brand),
         logo: box(logo),
-        pause: box(pause),
         header: box(document.querySelector(".site-header")),
         phone: box(phone),
         phoneHref: phone.getAttribute("href"),
@@ -69,21 +67,25 @@ try {
       Math.abs(layout.logo.width / layout.logo.height - 600 / 136) < 0.05,
       `logo distorted at ${width}`
     );
-    assert(layout.pause.height >= 24 && layout.pause.width >= 24);
     assert.equal(layout.phoneHref, "tel:+12028412941");
     assert(layout.phone.height >= 44);
     assert(layout.phone.right <= width);
-    const pause = page.getByRole("button", {
-      name: "Pause logo animation",
-      exact: true,
-    });
-    await pause.focus();
-    await page.keyboard.press("Enter");
-    const paused = page.getByRole("button", {
-      name: "Resume logo animation",
-      exact: true,
-    });
-    assert.equal(await paused.getAttribute("aria-pressed"), "true");
+    assert.equal(
+      await page
+        .locator(
+          ".header-brand button,.logo-motion-toggle,[data-motion-paused],[data-paused]"
+        )
+        .count(),
+      0
+    );
+    assert.equal(
+      await page
+        .getByRole("button", {
+          name: /(?:pause|resume|reduce).*(?:logo|motion|animation)/i,
+        })
+        .count(),
+      0
+    );
     const sample = () =>
       page.locator(".header-brand .pd-header-ribbon").evaluateAll(elements =>
         elements.map(e => {
@@ -92,23 +94,80 @@ try {
             animation: s.animationName,
             opacity: s.opacity,
             transform: s.transform,
+            animations: e.getAnimations().map(a => ({
+              playState: a.playState,
+              currentTime: a.currentTime,
+              iterations:
+                a.effect.getTiming().iterations === Infinity
+                  ? "Infinity"
+                  : a.effect.getTiming().iterations,
+              duration: a.effect.getTiming().duration,
+            })),
           };
         })
       );
-    const a = await sample();
-    await page.waitForTimeout(200);
-    const b = await sample();
-    assert.deepEqual(a, b);
-    assert(
-      a.every(
-        s =>
-          s.animation === "none" && s.opacity === "1" && s.transform === "none"
+    const initial = await sample();
+    const baseline = Math.max(
+      ...initial.flatMap(s => s.animations.map(a => Number(a.currentTime)))
+    );
+    assert(Number.isFinite(baseline));
+    const phases = [];
+    for (const elapsed of [500, 1200, 2400, 3600, 5500, 7000]) {
+      const target = baseline + elapsed;
+      await page.waitForFunction(
+        target => {
+          const ribbons = [
+            ...document.querySelectorAll(".header-brand .pd-header-ribbon"),
+          ];
+          return (
+            ribbons.length === 3 &&
+            ribbons.every(e =>
+              e
+                .getAnimations()
+                .some(
+                  a =>
+                    a.playState === "running" && Number(a.currentTime) >= target
+                )
+            )
+          );
+        },
+        target,
+        { timeout: 15000 }
+      );
+      const current = await sample();
+      assert.equal(current.length, 3);
+      assert(
+        current.every(
+          s =>
+            s.animation === "pd-header-logo-cycle" &&
+            s.animations.some(
+              a =>
+                a.playState === "running" &&
+                a.iterations === "Infinity" &&
+                a.currentTime >= target &&
+                a.duration === 4800
+            )
+        )
+      );
+      assert.equal(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth > innerWidth + 1
+        ),
+        false,
+        `animated overflow at ${width}/${elapsed}`
+      );
+      phases.push({ elapsed, target, ribbons: current });
+    }
+    const renderedStates = new Set(
+      phases.map(p =>
+        JSON.stringify(p.ribbons.map(s => [s.opacity, s.transform]))
       )
     );
+    assert(
+      renderedStates.size >= 3,
+      `insufficient changing motion frames at ${width}`
+    );
     await page.screenshot({ path: path.join(out, `header-${width}.png`) });
-    await page.keyboard.press("Space");
-    assert.equal(await pause.getAttribute("aria-pressed"), "false");
-    assert((await sample()).every(s => s.animation === "pd-header-logo-cycle"));
     await page.addScriptTag({ path: require.resolve("axe-core/axe.min.js") });
     const scan = await page.evaluate(() =>
       window.axe.run(document.querySelector(".site-header"), {
@@ -161,7 +220,9 @@ try {
       width,
       layout,
       axeViolations: scan.violations.length,
-      pauseResume: "passed",
+      onSiteMotionControls: "absent as owner requested",
+      continuousMotion: "running past seven seconds with infinite iterations",
+      motionPhases: phases,
       menu: "passed or desktop not applicable",
       footer: "static loaded",
     });
@@ -173,15 +234,48 @@ try {
   });
   const page = await reduce.newPage();
   await page.goto(base, { waitUntil: "networkidle" });
-  assert.equal(await page.locator(".logo-motion-toggle").isVisible(), false);
-  assert(
-    (
-      await page
-        .locator(".header-brand .pd-header-ribbon")
-        .evaluateAll(es => es.map(e => getComputedStyle(e).animationName))
-    ).every(n => n === "none")
+  assert.equal(
+    await page.locator(".logo-motion-toggle,.header-brand button").count(),
+    0
   );
+  const staticSample = () =>
+    page.locator(".header-brand .pd-header-ribbon").evaluateAll(es =>
+      es.map(e => {
+        const s = getComputedStyle(e);
+        return {
+          animation: s.animationName,
+          opacity: s.opacity,
+          transform: s.transform,
+          animationCount: e.getAnimations().length,
+        };
+      })
+    );
+  const initialStatic = await staticSample();
+  assert(
+    initialStatic.every(
+      s =>
+        s.animation === "none" &&
+        s.opacity === "1" &&
+        s.transform === "none" &&
+        s.animationCount === 0
+    )
+  );
+  await page.waitForTimeout(5500);
+  assert.deepEqual(await staticSample(), initialStatic);
   await page.screenshot({ path: path.join(out, "reduced-motion-390.png") });
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.waitForFunction(() =>
+    [...document.querySelectorAll(".header-brand .pd-header-ribbon")].every(e =>
+      e.getAnimations().some(a => a.playState === "running")
+    )
+  );
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.waitForFunction(() =>
+    [...document.querySelectorAll(".header-brand .pd-header-ribbon")].every(
+      e => e.getAnimations().length === 0
+    )
+  );
+  assert.deepEqual(await staticSample(), initialStatic);
   const manifest = await (
     await page.request.get(base + "/site.webmanifest")
   ).json();
@@ -201,12 +295,31 @@ try {
     assert.equal(response.status(), 200, file);
     assert((await response.body()).length > 0);
   }
+  await page.goto(base + "/accessibility", { waitUntil: "networkidle" });
+  const disclosure = await page.locator(".legal-content").innerText();
+  assert(disclosure.includes("has no on-site pause or stop control"));
+  assert(
+    disclosure.includes(
+      "does not meet WCAG 2.2 Success Criterion 2.2.2 (Pause, Stop, Hide)"
+    )
+  );
+  assert.equal(
+    await page
+      .getByRole("button", {
+        name: /(?:pause|resume|reduce).*(?:logo|motion|animation)/i,
+      })
+      .count(),
+    0
+  );
   await page.goto(base + "/admin/login", { waitUntil: "networkidle" });
   const adminLogo = page.locator(".auth-card img");
   assert(await adminLogo.evaluate(el => el.complete && el.naturalWidth > 0));
   await page.screenshot({ path: path.join(out, "admin-login.png") });
   evidence.push({
     reducedMotion: "passed",
+    runtimePreferenceChanges: "passed",
+    motionCriterion:
+      "WCAG 2.2 SC 2.2.2 not met; owner-selected limitation disclosed",
     icons: "all declared assets HTTP200",
     manifest: "DocPropel unchanged",
     adminLoginLogo: "loaded",
@@ -220,9 +333,12 @@ try {
       {
         result: "PASS",
         base,
-        viewports: 5,
+        viewports: 7,
         scopedAxeViolations: 0,
-        states: "pause/resume/reduced-motion/menu/footer/admin/icons",
+        states:
+          "continuous-loop/no-controls/reduced-motion/preference-changes/menu/footer/admin/icons/disclosure",
+        knownLimitation:
+          "WCAG 2.2 SC 2.2.2 is not met; automated axe results do not establish conformance",
       },
       null,
       2
