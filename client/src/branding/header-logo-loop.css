@@ -10,7 +10,6 @@ svg.pd-header-logo-loop .pd-header-ribbon {
   transform-origin: center;
   animation: pd-header-logo-cycle 4.8s cubic-bezier(0.22, 1, 0.36, 1) infinite
     both;
-  animation-play-state: var(--pd-header-logo-play-state, running);
 }
 svg.pd-header-logo-loop .pd-header-ribbon-teal {
   --pd-header-x: -7px;
@@ -29,10 +28,6 @@ svg.pd-header-logo-loop .pd-header-ribbon-orange {
 }
 svg.pd-header-logo-loop .pd-header-wordmark {
   opacity: 1;
-}
-svg.pd-header-logo-loop[data-paused="true"] .pd-header-ribbon,
-[data-pd-motion-paused="true"] svg.pd-header-logo-loop .pd-header-ribbon {
-  animation-play-state: paused !important;
 }
 @keyframes pd-header-logo-cycle {
   0%,

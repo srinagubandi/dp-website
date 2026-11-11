@@ -1461,7 +1461,7 @@ const accessibilitySections = [
   ],
   [
     "Scope and known limitations",
-    "This statement applies to the public DocPropel website at dp-website-production.up.railway.app and its public pages. It does not represent an audit of third-party websites linked from this site, a customer’s clinical systems, or future content supplied through the administration portal. Placeholder team profiles must be replaced with approved staff information before public use.",
+    "This statement applies to the public DocPropel website at dp-website-production.up.railway.app and its public pages. It does not represent an audit of third-party websites linked from this site, a customer’s clinical systems, or future content supplied through the administration portal. Placeholder team profiles must be replaced with approved staff information before public use. The header logo loops continuously by default and has no on-site pause or stop control. It becomes static when your device requests reduced motion. Without an on-site pause, stop or hide mechanism, this animation does not meet WCAG 2.2 Success Criterion 2.2.2 (Pause, Stop, Hide).",
   ],
   [
     "Review and improvement",
