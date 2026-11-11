@@ -31,3 +31,7 @@ The owner approved a US$1 OpenRouter ceiling. Call IDs, native token counts, ver
 ## Deployment gate
 
 Commit only the scoped sources/assets/tests/docs, push the feature branch, open a PR to the production release branch, and deploy that exact Git SHA to the existing isolated preview. Verify Railway SUCCESS, health and changed logo states. Do not merge/promote to production until the owner approves the mixed visual/text identity on preview.
+
+## CI prerequisite repair
+
+The first GitHub workflow failed before running any application tests: `actions/setup-node` requested pnpm caching before `pnpm/action-setup` installed the executable. A separate minimal CI commit moves the existing pinned pnpm setup before Node caching in both jobs. Versions, permissions, branch triggers and test commands are unchanged. Source: https://github.com/pnpm/action-setup. Application asset/source bytes are unchanged by this follow-up; the live preview smoke test on the branding commit passed all five widths.
