@@ -106,8 +106,14 @@ try {
           };
         })
       );
+    const initial = await sample();
+    const baseline = Math.max(
+      ...initial.flatMap(s => s.animations.map(a => Number(a.currentTime)))
+    );
+    assert(Number.isFinite(baseline));
     const phases = [];
     for (const elapsed of [500, 1200, 2400, 3600, 5500, 7000]) {
+      const target = baseline + elapsed;
       await page.waitForFunction(
         target => {
           const ribbons = [
@@ -125,7 +131,7 @@ try {
             )
           );
         },
-        elapsed,
+        target,
         { timeout: 15000 }
       );
       const current = await sample();
@@ -138,7 +144,7 @@ try {
               a =>
                 a.playState === "running" &&
                 a.iterations === "Infinity" &&
-                a.currentTime >= elapsed &&
+                a.currentTime >= target &&
                 a.duration === 4800
             )
         )
@@ -150,11 +156,16 @@ try {
         false,
         `animated overflow at ${width}/${elapsed}`
       );
-      phases.push({ elapsed, ribbons: current });
+      phases.push({ elapsed, target, ribbons: current });
     }
-    assert.notDeepEqual(
-      phases[0].ribbons.map(s => [s.opacity, s.transform]),
-      phases.at(-1).ribbons.map(s => [s.opacity, s.transform])
+    const renderedStates = new Set(
+      phases.map(p =>
+        JSON.stringify(p.ribbons.map(s => [s.opacity, s.transform]))
+      )
+    );
+    assert(
+      renderedStates.size >= 3,
+      `insufficient changing motion frames at ${width}`
     );
     await page.screenshot({ path: path.join(out, `header-${width}.png`) });
     await page.addScriptTag({ path: require.resolve("axe-core/axe.min.js") });
