@@ -16,13 +16,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: pnpm
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10.4.1
       - run: pnpm install --frozen-lockfile
       - run: pnpm check
       - run: pnpm build
@@ -34,13 +32,11 @@ jobs:
     needs: quality
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: pnpm
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10.4.1
       - uses: browser-actions/setup-chrome@v1
         id: chrome
       - run: pnpm install --frozen-lockfile

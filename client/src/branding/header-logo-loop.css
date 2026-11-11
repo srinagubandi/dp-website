@@ -1,0 +1,55 @@
+/* Import this AFTER existing motion styles. Scope is only this header logo. */
+svg.pd-header-logo-loop {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  overflow: visible;
+}
+svg.pd-header-logo-loop .pd-header-ribbon {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pd-header-logo-cycle 4.8s cubic-bezier(0.22, 1, 0.36, 1) infinite
+    both;
+  animation-play-state: var(--pd-header-logo-play-state, running);
+}
+svg.pd-header-logo-loop .pd-header-ribbon-teal {
+  --pd-header-x: -7px;
+  --pd-header-y: 0px;
+  animation-delay: 0ms;
+}
+svg.pd-header-logo-loop .pd-header-ribbon-foam {
+  --pd-header-x: 0px;
+  --pd-header-y: 6px;
+  animation-delay: 100ms;
+}
+svg.pd-header-logo-loop .pd-header-ribbon-orange {
+  --pd-header-x: -11px;
+  --pd-header-y: 5px;
+  animation-delay: 200ms;
+}
+svg.pd-header-logo-loop .pd-header-wordmark {
+  opacity: 1;
+}
+svg.pd-header-logo-loop[data-paused="true"] .pd-header-ribbon,
+[data-pd-motion-paused="true"] svg.pd-header-logo-loop .pd-header-ribbon {
+  animation-play-state: paused !important;
+}
+@keyframes pd-header-logo-cycle {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: translate(var(--pd-header-x, 0px), var(--pd-header-y, 0px));
+  }
+  24%,
+  60% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  svg.pd-header-logo-loop .pd-header-ribbon {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+}

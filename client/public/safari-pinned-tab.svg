@@ -1,3 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <path d="M14 10h19L20 54H1zm25 0h19L45 54H26z"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"><title>Propeldock</title><path d="M30 16H83C106 16 119 30 119 49C119 66 110 82 94 90L75 99L83 73C96 67 101 60 99 53C98 48 92 45 83 45H15Z" fill="#123F49"/><path d="M83 45C98 45 105 53 100 65L89 94L54 106L67 72L83 66C92 62 94 53 83 45Z" fill="#123F49"/><path d="M17 78L70 62L54 106L2 121Z" fill="#123F49"/></svg>
