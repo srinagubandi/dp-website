@@ -35,3 +35,5 @@ Commit only the scoped sources/assets/tests/docs, push the feature branch, open 
 ## CI prerequisite repair
 
 The first GitHub workflow failed before running any application tests: `actions/setup-node` requested pnpm caching before `pnpm/action-setup` installed the executable. A separate minimal CI commit moves the existing pinned pnpm setup before Node caching in both jobs. Versions, permissions, branch triggers and test commands are unchanged. Source: https://github.com/pnpm/action-setup. Application asset/source bytes are unchanged by this follow-up; the live preview smoke test on the branding commit passed all five widths.
+
+A second existing setup issue appeared after ordering was repaired: the action rejected an explicit workflow version alongside the integrity-qualified `package.json` package-manager pin. The duplicated workflow `version` inputs were removed; the action now reads the existing package pin directly, as documented by pnpm. No package-manager version, lockfile or application source was changed.
