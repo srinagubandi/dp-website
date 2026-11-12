@@ -13,7 +13,7 @@ const browser = await chromium.launch({
 });
 const evidence = [];
 try {
-  for (const width of [320, 390, 768, 1079, 1080, 1081, 1440]) {
+  for (const width of [320, 359, 375, 390, 768, 1079, 1080, 1081, 1440]) {
     const context = await browser.newContext({
       viewport: { width, height: 900 },
       reducedMotion: "no-preference",
@@ -64,7 +64,7 @@ try {
       `logo overlaps phone at ${width}`
     );
     assert(
-      Math.abs(layout.logo.width / layout.logo.height - 600 / 136) < 0.05,
+      Math.abs(layout.logo.width / layout.logo.height - 630 / 136) < 0.05,
       `logo distorted at ${width}`
     );
     assert.equal(layout.phoneHref, "tel:+12028412941");
@@ -333,7 +333,7 @@ try {
       {
         result: "PASS",
         base,
-        viewports: 7,
+        viewports: 9,
         scopedAxeViolations: 0,
         states:
           "continuous-loop/no-controls/reduced-motion/preference-changes/menu/footer/admin/icons/disclosure",

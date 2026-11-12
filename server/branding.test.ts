@@ -9,8 +9,8 @@ describe("supplied logo and favicon integration", () => {
   it("keeps static logos outlined, proportional, and free of external resources", () => {
     for (const name of ["dark", "light"]) {
       const svg = read(`client/public/docpropel-logo-${name}.svg`).toString();
-      expect(svg).toContain('viewBox="0 0 600 136"');
-      expect(svg).toContain("Propeldock");
+      expect(svg).toContain('viewBox="0 0 630 136"');
+      expect(svg).toContain("DocPropel");
       expect(svg).not.toMatch(
         /<text\b|<script\b|<foreignObject\b|https?:\/\/[^\s"]+\.(?:js|woff|png)/i
       );
@@ -56,7 +56,7 @@ describe("supplied logo and favicon integration", () => {
     const css = read("client/src/branding/header-brand.css").toString();
     const loop = read("client/src/branding/header-logo-loop.css").toString();
     const artwork = read(
-      "client/src/branding/PropeldockHeaderLogo.tsx"
+      "client/src/branding/DocPropelHeaderLogo.tsx"
     ).toString();
     expect(wrapper).not.toMatch(
       /<button\b|useState|aria-pressed|data-motion-paused|paused=/
