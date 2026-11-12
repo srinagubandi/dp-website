@@ -1,4 +1,5 @@
 import "dotenv/config";
+import { versionBrandImage } from "../shared/branding";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -179,10 +180,10 @@ async function main() {
         "__META_ROBOTS__",
         record.noindex ? "noindex,follow" : "index,follow"
       )
-      .replaceAll("__META_OG_IMAGE__", escape(absolute(record.ogImage)))
+      .replaceAll("__META_OG_IMAGE__", escape(absolute(versionBrandImage(record.ogImage))))
       .replaceAll(
         "__META_TWITTER_IMAGE__",
-        escape(absolute(record.twitterImage))
+        escape(absolute(versionBrandImage(record.twitterImage)))
       )
       .replace("__ROOT_SCHEMA__", schema);
   }

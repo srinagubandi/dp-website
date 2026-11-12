@@ -94,7 +94,7 @@ export default function Admin() {
       <aside className="admin-sidebar">
         <Link href="/" aria-label="DocPropel public site">
           <img
-            src="/docpropel-logo-light.svg?v=20261111"
+            className="admin-brand-logo" src="/docpropel-logo-light.svg?v=20261111-option2"
             alt="DocPropel"
             width="165"
             height="33"

@@ -19,10 +19,10 @@ function Logo({ light = false }: { light?: boolean }) {
       className="brand-logo"
       src={
         light
-          ? "/docpropel-logo-light.svg?v=20261111"
-          : "/docpropel-logo-dark.svg?v=20261111"
+          ? "/docpropel-logo-light.svg?v=20261111-option2"
+          : "/docpropel-logo-dark.svg?v=20261111-option2"
       }
-      alt="Propeldock logo artwork for DocPropel"
+      alt="DocPropel logo"
       width="180"
       height="41"
     />
@@ -141,7 +141,7 @@ export default function Layout({ children }: { children: ReactNode }) {
             aria-label="Mobile navigation"
           >
             <div className="mobile-menu-bar">
-              <Link href="/" aria-label="DocPropel home — Propeldock logo">
+              <Link href="/" aria-label="DocPropel home">
                 <Logo />
               </Link>
               <button
@@ -185,7 +185,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       <footer className="site-footer">
         <div className="container footer-grid">
           <div className="footer-brand">
-            <Link href="/" aria-label="DocPropel home — Propeldock logo">
+            <Link href="/" aria-label="DocPropel home">
               <Logo light />
             </Link>
             <p>Accountable growth systems for healthcare practices.</p>

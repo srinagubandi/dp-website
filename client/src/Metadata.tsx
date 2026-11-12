@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { versionBrandImage } from "../../shared/branding";
 import { ORGANIZATION_SCHEMA, WEBSITE_SCHEMA, type PublicRoute } from "../../shared/site";
 import { useSite } from "./site-context";
 
@@ -24,10 +25,10 @@ export default function Metadata({ route }: { route: PublicRoute }) {
     setMeta('meta[property="og:title"]', "property", "og:title", seo.ogTitle);
     setMeta('meta[property="og:description"]', "property", "og:description", seo.ogDescription);
     setMeta('meta[property="og:url"]', "property", "og:url", `${siteUrl}${seo.canonicalPath}`);
-    setMeta('meta[property="og:image"]', "property", "og:image", absolute(seo.ogImage));
+    setMeta('meta[property="og:image"]', "property", "og:image", absolute(versionBrandImage(seo.ogImage)));
     setMeta('meta[name="twitter:title"]', "name", "twitter:title", seo.ogTitle);
     setMeta('meta[name="twitter:description"]', "name", "twitter:description", seo.ogDescription);
-    setMeta('meta[name="twitter:image"]', "name", "twitter:image", absolute(seo.twitterImage));
+    setMeta('meta[name="twitter:image"]', "name", "twitter:image", absolute(versionBrandImage(seo.twitterImage)));
     let canonical = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (!canonical) { canonical = document.createElement("link"); canonical.rel = "canonical"; document.head.append(canonical); }
     canonical.href = `${siteUrl}${seo.canonicalPath}`;

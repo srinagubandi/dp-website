@@ -3790,3 +3790,8 @@ main dd,
     transition: none;
   }
 }
+
+/* Option 2: preserve the outlined wordmark aspect ratio in protected surfaces. */
+.admin-brand-logo {
+  height: auto;
+}

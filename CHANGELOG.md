@@ -2,6 +2,10 @@
 
 All notable DocPropel website changes are recorded in this file.
 
+## 2026-11-11 — DocPropel Option 2 wordmark
+
+Applied the owner-selected Plus Jakarta Sans Doc 500 / Propel 700 lettering to the shared header, footer, mobile menu and protected admin branding. Replaced the legacy PNG alias and branding in the default social images, preserved the supplied ribbon symbol and icon bitmap artwork, and versioned the updated assets. DocPropel copy, contacts, identity and database behavior are unchanged. Local type/build/36-unit-test, nine-width branding and 26-state automated accessibility regressions passed; exact-SHA CI/preview/production verification remains a release gate. The owner-selected continuous-motion limitation remains disclosed. See `docs/docpropel-option2-wordmark.md`.
+
 ## 2026-11-11 — Supplied logo and favicon update
 
 - Added the supplied Propeldock vector artwork and header-only loop with keyboard pause and reduced-motion support.

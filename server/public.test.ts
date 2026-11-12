@@ -132,7 +132,7 @@ describe("public release inventory", () => {
   });
   it("uses approved root-relative icons and an absolute production social default", () => {
     const html = fs.readFileSync(path.join(root, "client/index.html"), "utf8");
-    expect(html).toContain('href="/favicon.svg?v=20261111"');
+    expect(html).toContain('href="/favicon.svg?v=20261111-option2"');
     expect(html).toContain("__META_OG_IMAGE__");
   });
 });
