@@ -1,351 +1,214 @@
-import { eq, and, asc } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users, siteContent, InsertSiteContent, SiteContent, leadSubmissions, InsertLeadSubmission, LeadSubmission, testimonials, InsertTestimonial, Testimonial } from "../drizzle/schema";
-import { ENV } from './_core/env';
+import { and, asc, desc, eq, ilike, or, sql } from "drizzle-orm";
+import { drizzle } from "drizzle-orm/node-postgres";
+import { Pool } from "pg";
+import {
+  contentBlocks,
+  leads,
+  seoRecords,
+  siteSections,
+  type NewLead,
+} from "../drizzle/schema";
+import { DEFAULT_CONTENT, DEFAULT_SECTIONS, DEFAULT_SEO } from "../shared/site";
 
-let _db: ReturnType<typeof drizzle> | null = null;
+export type Database = ReturnType<typeof drizzle>;
+let pool: Pool | null = null;
+let database: Database | null = null;
 
-// Lazily create the drizzle instance so local tooling can run without a DB.
-export async function getDb() {
-  if (!_db && process.env.DATABASE_URL) {
-    try {
-      _db = drizzle(process.env.DATABASE_URL);
-    } catch (error) {
-      console.warn("[Database] Failed to connect:", error);
-      _db = null;
-    }
-  }
-  return _db;
-}
-
-// =============================================================================
-// USER QUERIES
-// =============================================================================
-
-export async function upsertUser(user: InsertUser): Promise<void> {
-  if (!user.openId) {
-    throw new Error("User openId is required for upsert");
-  }
-
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot upsert user: database not available");
-    return;
-  }
-
-  try {
-    const values: InsertUser = {
-      openId: user.openId,
-    };
-    const updateSet: Record<string, unknown> = {};
-
-    const textFields = ["name", "email", "loginMethod"] as const;
-    type TextField = (typeof textFields)[number];
-
-    const assignNullable = (field: TextField) => {
-      const value = user[field];
-      if (value === undefined) return;
-      const normalized = value ?? null;
-      values[field] = normalized;
-      updateSet[field] = normalized;
-    };
-
-    textFields.forEach(assignNullable);
-
-    if (user.lastSignedIn !== undefined) {
-      values.lastSignedIn = user.lastSignedIn;
-      updateSet.lastSignedIn = user.lastSignedIn;
-    }
-    if (user.role !== undefined) {
-      values.role = user.role;
-      updateSet.role = user.role;
-    } else if (user.openId === ENV.ownerOpenId) {
-      values.role = 'admin';
-      updateSet.role = 'admin';
-    }
-
-    if (!values.lastSignedIn) {
-      values.lastSignedIn = new Date();
-    }
-
-    if (Object.keys(updateSet).length === 0) {
-      updateSet.lastSignedIn = new Date();
-    }
-
-    await db.insert(users).values(values).onDuplicateKeyUpdate({
-      set: updateSet,
+export function getDb(): Database | null {
+  if (!database && process.env.DATABASE_URL) {
+    pool = new Pool({
+      connectionString: process.env.DATABASE_URL,
+      ssl:
+        process.env.DATABASE_SSL === "true"
+          ? { rejectUnauthorized: false }
+          : undefined,
     });
-  } catch (error) {
-    console.error("[Database] Failed to upsert user:", error);
-    throw error;
+    database = drizzle(pool);
   }
+  return database;
 }
 
-export async function getUserByOpenId(openId: string) {
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot get user: database not available");
-    return undefined;
-  }
-
-  const result = await db.select().from(users).where(eq(users.openId, openId)).limit(1);
-
-  return result.length > 0 ? result[0] : undefined;
+export async function closeDb() {
+  if (pool) await pool.end();
+  pool = null;
+  database = null;
 }
 
-// =============================================================================
-// SITE CONTENT QUERIES
-// =============================================================================
-
-/**
- * Get all site content entries
- */
-export async function getAllSiteContent(): Promise<SiteContent[]> {
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot get site content: database not available");
-    return [];
-  }
-
-  return await db.select().from(siteContent).orderBy(asc(siteContent.section), asc(siteContent.sortOrder));
+export async function seedDefaults(db: Database) {
+  await db
+    .insert(siteSections)
+    .values(DEFAULT_SECTIONS)
+    .onConflictDoNothing({ target: [siteSections.route, siteSections.slug] });
+  await db
+    .insert(contentBlocks)
+    .values(DEFAULT_CONTENT)
+    .onConflictDoNothing({
+      target: [contentBlocks.route, contentBlocks.section, contentBlocks.key],
+    });
+  await db
+    .insert(seoRecords)
+    .values(
+      DEFAULT_SEO.map(item => ({
+        ...item,
+        schemaJson: item.schemaJson ? JSON.parse(item.schemaJson) : null,
+      }))
+    )
+    .onConflictDoNothing({ target: seoRecords.route });
 }
 
-/**
- * Get site content by section
- */
-export async function getSiteContentBySection(section: string): Promise<SiteContent[]> {
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot get site content: database not available");
-    return [];
-  }
-
-  return await db.select().from(siteContent).where(eq(siteContent.section, section)).orderBy(asc(siteContent.sortOrder));
+export async function ping(db: Database) {
+  await db.execute(sql`select 1`);
 }
 
-/**
- * Get a specific site content entry by section and key
- */
-export async function getSiteContentValue(section: string, key: string): Promise<string | null> {
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot get site content: database not available");
-    return null;
-  }
-
-  const result = await db.select().from(siteContent)
-    .where(and(eq(siteContent.section, section), eq(siteContent.key, key)))
-    .limit(1);
-
-  return result.length > 0 ? result[0].value : null;
+export async function createLead(db: Database, lead: NewLead) {
+  return (
+    await db
+      .insert(leads)
+      .values(lead)
+      .returning({ id: leads.id, createdAt: leads.createdAt })
+  )[0];
 }
 
-/**
- * Upsert site content (create or update)
- */
-export async function upsertSiteContent(content: InsertSiteContent): Promise<void> {
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot upsert site content: database not available");
-    return;
+export type LeadFilter = {
+  status?: string;
+  search?: string;
+  specialty?: string;
+};
+function leadWhere(filter: LeadFilter) {
+  const clauses = [];
+  if (filter.status) clauses.push(eq(leads.status, filter.status));
+  if (filter.specialty) clauses.push(eq(leads.specialty, filter.specialty));
+  if (filter.search) {
+    const term = `%${filter.search.replace(/[%_]/g, "\\$&")}%`;
+    clauses.push(
+      or(
+        ilike(leads.name, term),
+        ilike(leads.email, term),
+        ilike(leads.practiceName, term)
+      )!
+    );
   }
+  return clauses.length ? and(...clauses) : undefined;
+}
 
-  // Check if entry exists
-  const existing = await db.select().from(siteContent)
-    .where(and(eq(siteContent.section, content.section), eq(siteContent.key, content.key)))
-    .limit(1);
+export async function listLeads(db: Database, filter: LeadFilter) {
+  return db
+    .select()
+    .from(leads)
+    .where(leadWhere(filter))
+    .orderBy(desc(leads.createdAt));
+}
 
-  if (existing.length > 0) {
-    // Update existing
-    await db.update(siteContent)
-      .set({ 
-        value: content.value, 
-        label: content.label,
-        contentType: content.contentType,
-        sortOrder: content.sortOrder,
+export async function updateLead(
+  db: Database,
+  id: number,
+  patch: { status?: string; notes?: string | null }
+) {
+  return (
+    (
+      await db
+        .update(leads)
+        .set({ ...patch, updatedAt: new Date() })
+        .where(eq(leads.id, id))
+        .returning()
+    )[0] ?? null
+  );
+}
+
+export async function leadCounts(db: Database) {
+  const rows = await db
+    .select({ status: leads.status, count: sql<number>`count(*)::int` })
+    .from(leads)
+    .groupBy(leads.status);
+  const counts = { all: 0, new: 0, contacted: 0, qualified: 0, closed: 0 };
+  for (const row of rows) {
+    counts.all += row.count;
+    if (row.status in counts)
+      counts[row.status as "new" | "contacted" | "qualified" | "closed"] =
+        row.count;
+  }
+  return counts;
+}
+
+export async function getPublicConfig(db: Database | null) {
+  if (!db) return { content: [], sections: [], seo: [] };
+  const [content, sections, seo] = await Promise.all([
+    db
+      .select()
+      .from(contentBlocks)
+      .orderBy(asc(contentBlocks.route), asc(contentBlocks.sortOrder)),
+    db
+      .select()
+      .from(siteSections)
+      .orderBy(asc(siteSections.route), asc(siteSections.sortOrder)),
+    db.select().from(seoRecords).orderBy(asc(seoRecords.route)),
+  ]);
+  return { content, sections, seo };
+}
+
+export const getAllContent = (db: Database) =>
+  db
+    .select()
+    .from(contentBlocks)
+    .orderBy(
+      asc(contentBlocks.route),
+      asc(contentBlocks.section),
+      asc(contentBlocks.sortOrder)
+    );
+export async function updateContent(
+  db: Database,
+  id: number,
+  patch: {
+    value: string;
+    label?: string;
+    contentType?: string;
+    sortOrder?: number;
+  }
+) {
+  return (
+    (
+      await db
+        .update(contentBlocks)
+        .set({ ...patch, updatedAt: new Date() })
+        .where(eq(contentBlocks.id, id))
+        .returning()
+    )[0] ?? null
+  );
+}
+export const getAllSections = (db: Database) =>
+  db
+    .select()
+    .from(siteSections)
+    .orderBy(asc(siteSections.route), asc(siteSections.sortOrder));
+export async function updateSection(
+  db: Database,
+  id: number,
+  patch: { enabled?: boolean; title?: string; sortOrder?: number }
+) {
+  return (
+    (
+      await db
+        .update(siteSections)
+        .set({ ...patch, updatedAt: new Date() })
+        .where(eq(siteSections.id, id))
+        .returning()
+    )[0] ?? null
+  );
+}
+export const getAllSeo = (db: Database) =>
+  db.select().from(seoRecords).orderBy(asc(seoRecords.route));
+export async function putSeo(
+  db: Database,
+  value: typeof seoRecords.$inferInsert
+) {
+  return (
+    await db
+      .insert(seoRecords)
+      .values(value)
+      .onConflictDoUpdate({
+        target: seoRecords.route,
+        set: { ...value, updatedAt: new Date() },
       })
-      .where(eq(siteContent.id, existing[0].id));
-  } else {
-    // Insert new
-    await db.insert(siteContent).values(content);
-  }
-}
-
-/**
- * Update site content by ID
- */
-export async function updateSiteContentById(id: number, value: string): Promise<void> {
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot update site content: database not available");
-    return;
-  }
-
-  await db.update(siteContent).set({ value }).where(eq(siteContent.id, id));
-}
-
-/**
- * Delete site content by ID
- */
-export async function deleteSiteContentById(id: number): Promise<void> {
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot delete site content: database not available");
-    return;
-  }
-
-  await db.delete(siteContent).where(eq(siteContent.id, id));
-}
-
-// =============================================================================
-// LEAD SUBMISSION QUERIES
-// =============================================================================
-
-/**
- * Create a new lead submission
- */
-export async function createLeadSubmission(lead: InsertLeadSubmission): Promise<void> {
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot create lead: database not available");
-    return;
-  }
-
-  await db.insert(leadSubmissions).values(lead);
-}
-
-/**
- * Get all lead submissions
- */
-export async function getAllLeadSubmissions(): Promise<LeadSubmission[]> {
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot get leads: database not available");
-    return [];
-  }
-
-  return await db.select().from(leadSubmissions).orderBy(asc(leadSubmissions.createdAt));
-}
-
-/**
- * Update lead submission status
- */
-export async function updateLeadStatus(id: number, status: LeadSubmission['status'], adminNotes?: string): Promise<void> {
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot update lead: database not available");
-    return;
-  }
-
-  const updateData: Partial<LeadSubmission> = { status };
-  if (adminNotes !== undefined) {
-    updateData.adminNotes = adminNotes;
-  }
-
-  await db.update(leadSubmissions).set(updateData).where(eq(leadSubmissions.id, id));
-}
-
-/**
- * Delete lead submission by ID
- */
-export async function deleteLeadSubmission(id: number): Promise<void> {
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot delete lead: database not available");
-    return;
-  }
-
-  await db.delete(leadSubmissions).where(eq(leadSubmissions.id, id));
-}
-
-
-// =============================================================================
-// TESTIMONIAL QUERIES
-// =============================================================================
-
-/**
- * Get all testimonials (for admin)
- */
-export async function getAllTestimonials(): Promise<Testimonial[]> {
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot get testimonials: database not available");
-    return [];
-  }
-
-  return await db.select().from(testimonials).orderBy(asc(testimonials.sortOrder));
-}
-
-/**
- * Get visible testimonials (for public display)
- */
-export async function getVisibleTestimonials(): Promise<Testimonial[]> {
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot get testimonials: database not available");
-    return [];
-  }
-
-  return await db.select()
-    .from(testimonials)
-    .where(eq(testimonials.isVisible, "true"))
-    .orderBy(asc(testimonials.sortOrder));
-}
-
-/**
- * Get featured testimonials
- */
-export async function getFeaturedTestimonials(): Promise<Testimonial[]> {
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot get testimonials: database not available");
-    return [];
-  }
-
-  return await db.select()
-    .from(testimonials)
-    .where(and(
-      eq(testimonials.isVisible, "true"),
-      eq(testimonials.isFeatured, "true")
-    ))
-    .orderBy(asc(testimonials.sortOrder));
-}
-
-/**
- * Create a new testimonial
- */
-export async function createTestimonial(testimonial: InsertTestimonial): Promise<void> {
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot create testimonial: database not available");
-    return;
-  }
-
-  await db.insert(testimonials).values(testimonial);
-}
-
-/**
- * Update a testimonial
- */
-export async function updateTestimonial(id: number, data: Partial<InsertTestimonial>): Promise<void> {
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot update testimonial: database not available");
-    return;
-  }
-
-  await db.update(testimonials).set(data).where(eq(testimonials.id, id));
-}
-
-/**
- * Delete a testimonial
- */
-export async function deleteTestimonial(id: number): Promise<void> {
-  const db = await getDb();
-  if (!db) {
-    console.warn("[Database] Cannot delete testimonial: database not available");
-    return;
-  }
-
-  await db.delete(testimonials).where(eq(testimonials.id, id));
+      .returning()
+  )[0];
 }
